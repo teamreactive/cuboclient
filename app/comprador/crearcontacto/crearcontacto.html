@@ -1,0 +1,18 @@
+<div ng-controller="CrearContactoController">
+	<h3>Crear contacto</h3>
+	<form name='crearContactoForm' novalidate>
+		<select ng-option='opt for opt in clienteproveedor'></select>
+		<input type='text' placeholder='Cliente*' required>
+		<input type='text' placeholder='Proveedor*' required>
+		<input type='text' placeholder='Nombre*' required>
+		<input type='text' placeholder='Apellido*' required>
+		<input type='text' placeholder='Telefono fijo*' required>
+		<input type='text' placeholder='Extension*' required>
+		<input type='text' placeholder='Celular*' required>
+		<input type='text' placeholder='Correo electronico*' required>
+		<input type='text' placeholder='Cargo*' required>
+		<input type='text' placeholder='Perfil*' required>
+		<input type='text' placeholder='Familia-proveedor*' required>
+		<button ng-click='crearcontacto()'>Crear contacto</button>
+	</form>
+</div>

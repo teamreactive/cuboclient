@@ -1,101 +1,20 @@
 <!doctype html>
 <html ng-app='solicitante'>
 <head>
-
-	<!-- Some meta headers -->
-
-	<meta charset='utf-8'>
-	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-	<meta name='description' content='Compras 10.0 official website'>
-	<meta name='author' content='Reactive'>
-
-	<!-- Some CSS imports -->
-
-	<link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css'>
-	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
-	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
-	<link rel='stylesheet' href='solicitante.css'>
-
-	<!-- Some JS scripts -->
-
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
-	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
 	<script src='solicitante.js'></script>
 	<script src='crearsolicitud/crearsolicitud.js'></script>
+	<script src='solicitudescompra/solicitudescompra.js'></script>
+	<script src='crearlugar/crearlugar.js'></script>
+	<script src='crearproducto/crearproducto.js'></script>
 	<script src='../common/crud.js'></script>
-
-	<!-- The page title -->
-
-	<title>Bienvenido solicitante</title>
 </head>
-<body ng-controller='MainController'>
-
-	<div class='container-fluid'>
-
-		<!-- Banner -->
-
-		<div class='row' id='banner'>
-			<h1>Bienvenido solicitante</h1>
-		</div>
-
-		<!-- Container -->
-
-		<div class='container'>
-
-			<!-- Separator -->
-
-			<div class='row'>
-				<hr class='col-md-11'>
-			</div>
-
-			<!-- Content -->
-
-			<div class='row'>
-
-				<!-- Nav pills -->
-
-				<div class='col-md-3' id='navigation'>
-					<div class='panel panel-default col-md-11'>
-						<div class='panel-body'>
-							<h3>Opciones</h3>
-							<hr>
-							<ul class='nav nav-pills nav-stacked'>
-								<li ng-class='nav == "1" ? "active" : ""'>
-									<a ng-click='setNav("1")'>Crear solicitud</a>
-								</li>
-								<li ng-class='nav == "2" ? "active" : ""'>
-									<a ng-click='setNav("2")'>Crear producto</a>
-								</li>
-								<li ng-class='nav == "3" ? "active" : ""'>
-									<a ng-click='setNav("3")'>Crear lugar</a>
-								</li>
-								<li ng-class='nav == "4" ? "active" : ""'>
-									<a ng-click='setNav("4")'>Ver solicitudes</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<!-- View frame -->
-
-				<div class='col-md-9' id='view'>
-					<div crearsolicitud></div>
-					<div crearproducto></div>
-					<div crearlugar></div>
-					<div solicitudes></div>
-				</div>
-			</div>
-			<div class='row'><hr class='col-md-11'></div>
-			<div class='row' id='footer'>
-				<h4>
-					<span class='glyphicon glyphicon-copyright-mark'></span>
-					Copyright 2014
-				</h4>
-			</div>
-		</div>
-	</div>
+<body>
+	<h1>Compras 10.0</h1>
+	<h2>Bienvenido solicitante</h2>
+	<div crearsolicitud></div>
+	<div solicitudescompra></div>
+	<div crearlugar></div>
+	<div crearproducto></div>
 </body>
 </html>

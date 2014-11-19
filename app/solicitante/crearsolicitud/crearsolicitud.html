@@ -1,91 +1,20 @@
-<div id='solicitudForm' ng-show='nav == "1"'>
-	<div class='panel panel-default col-md-11'>
-		<div class='panel-body'>
-			<h3>Crear solicitud</h3>
-			<hr>
-			<form name='solicitudForm' novalidate>
-
-				<!-- Messages -->
-
-				<div ng-class='message.css' ng-show='message.message != ""'>
-					<p>{{ message.message }}</p>                        
-				</div>
-
-				<!-- Fields -->
-
-				<div class='form-group'>
-					<label for='solicitanteSolicitud'>Solicitante *</label>
-					<select class='form-control' id='solicitanteSolicitud' ng-options='solicitante.nombre for solicitante in opciones.solicitantes' ng-model='form.solicitante' required></select>
-					<span class='alerts' ng-show='!form.solicitante'>Este campo es requerido</span>
-				</div>
-
-				<div class='form-group'>
-					<label for='fechaSolicitud'>Fecha requerida *</label>
-					<input type='text' class='form-control datepicker' id='fechaSolicitud' placeholder='Fecha requerida' autocomplete='off' ng-model='form.fecha' required>
-					<span class='alerts' ng-show='!form.fecha'>Este campo es requerido</span>
-				</div>
-
-				<div class='form-group'>
-					<label for='lugarSolicitud'>Lugar de entrega *</label>
-					<select class='form-control' id='lugarSolicitud' ng-options='lugar.nombre for lugar in opciones.lugares' ng-model='form.lugar' required></select>
-					<span class='alerts' ng-show='!form.lugar'>Este campo es requerido</span>
-					<br>
-					<span>Si necesitas otro lugar, haz click en <a ng-click='setNav("3")'>crear lugar</a> y vuelve aca cuando termines</span>
-				</div>
-
-				<div class='form-group'>
-					<label for='proyectoSolicitud'>Proyecto *</label>
-					<input type='text' class='form-control' id='proyectoSolicitud' placeholder='Proyecto' autocomplete='off' ng-model='form.proyecto' required>
-					<span class='alerts' ng-show='!form.proyecto'>Este campo es requerido</span>
-				</div>
-
-				<div class='form-group'>
-					<label for='productosSolicitud'>Productos *</label>
-					<select class='form-control' id='productosSolicitud' ng-options='producto.nombre for producto in opciones.productos' ng-model='form.productos' multiple required></select>
-					<span class='alerts' ng-show='!form.productos'>Este campo es requerido</span>
-					<br>
-					<span>Si necesitas otro producto, haz click en <a ng-click='setNav("2")'>crear producto</a> y vuelve aca cuando termines</span>
-				</div>
-				
-				<div class='form-group panel panel-default' ng-show='form.productos.length > 0'>
-					<div class='panel-body'>
-						<h3>Tus productos</h3>
-						<hr>
-						<ol class='producto'>
-							<li ng-repeat='producto in form.productos'>
-								<h4>{{ producto.nombre }}</h4>
-								<div class='form-group col-md-6'>
-									<label for='cantidadProducto'>Cantidad *</label>
-									<input type='number' class='form-control' id='cantidadProducto' placeholder='Cantidad' autocomplete='off' ng-model='producto.cantidad' required>
-									<span class='alerts' ng-show='!producto.cantidad'>Este campo es requerido</span>
-								</div>
-								<div class='form-group col-md-6'>
-									<label for='unidadProducto'>Unidad *</label>
-									<select class='form-control' id='unidadProducto' ng-options='unidad.nombre for unidad in producto.unidades' ng-model='producto.unidad' required></select>
-									<span class='alerts' ng-show='!producto.unidad'>Este campo es requerido</span>
-								</div>
-								<hr ng-hide='producto == form.productos[form.productos.length-1]'>
-							</li>
-						</ol>
-					</div>
-				</div>
-				
-				<div class='form-group'>
-					<label for='comentarioSolicitante'>Comentarios *</label>
-					<textarea class='form-control' id='comentarioSolicitante' placeholder='Comentarios' ng-model='form.comentario' required></textarea>
-					<span class='alerts' ng-show='!form.comentario'>Este campo es requerido</span>
-				</div>
-
-				<div class='form-group'>
-					<label for='imagenProducto'>Imagen</label>
-					<input type='file' id='imagenProducto' ng-model='form.imagen'>
-				</div>
-
-				<button class='btn btn-default' ng-click='setSubmit("1") && submit()' ng-disabled='!solicitudForm.$valid'>
-					Crear solicitud
-				</button>
-				<span>Asegurese de llenar todos los campos marcados con *</span>
-			</form>
+<div ng-controller="CrearSolicitudController">
+	<h3>Crear solicitud</h3>
+	<form name='solicitudForm' novalidate>
+		<div ng-repeat='producto in productos'>
+			<input type='text' placeholder='Producto*' required>
+			<input type='text' placeholder='Cantidad*' required>
+			<input type='text' placeholder='Unidad*' required>
+			<button ng-click='quitarproducto()'>Quitar producto</button>
 		</div>
-	</div>
+		<button ng-click='agregarproducto'>Agregar producto</button>
+		<input type='text' placeholder='Lugar de entrega*' required>
+		<input type='text' placeholder='Fecha requerida*' required>
+		<select ng-option='opt for opt in centroequipo'></select>
+		<input type='text' placeholder='Centro de costo*' required>
+		<input type='text' placeholder='Equipo*' required>
+		<input type='text' placeholder='Solicitante*' required>
+		<textarea placeholder='Comentarios*' required></textarea>
+		<button ng-click='crearsolicitud()'>Crear solicitud</button>
+	</form>
 </div>

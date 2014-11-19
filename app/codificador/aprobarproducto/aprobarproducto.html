@@ -1,0 +1,9 @@
+<div ng-controller='AprobarProductoController'>
+	<h3>Aprobar producto</h3>
+	<div ng-repeat='producto in productos'>
+		<form name='productoForm' novalidate>
+			{{ producto }}
+			<button ng-click='aprobarproducto(producto)'>Aprobar producto</button>
+		</form>
+	</div>
+</div>
