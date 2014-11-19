@@ -1,0 +1,190 @@
+{% verbatim %}
+<!doctype html>
+<html ng-app='AprobadorDeSolicitudes'>
+<head>
+
+	<!-- Some meta headers -->
+
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<meta name='description' content='Compras 10.0 official website'>
+	<meta name='author' content='Reactive'>
+
+	<!-- Some CSS imports -->
+
+	{% endverbatim %}
+	{% load staticfiles %}
+	<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.min.css'>
+	<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css'>
+	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
+
+
+	<!-- Some JS scripts -->
+
+	<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+	<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js'></script>
+	<script src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
+	<script src='//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js'></script>
+	<script src='//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.proto.min.js'></script>
+	<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+	<script src='{% static 'usuarios/js/aprobadorsolicitudes.js' %}'></script>
+	<title></title>
+</head>
+{% verbatim %}
+<body>
+	<div ng-controller='tabController as tabCtrl'>
+		<div id='menu'>
+			<ul id='menu_options'>
+				<li>
+					<a href ng-click='tabCtrl.setTab(1)'>solicitudes pendientes</a>
+				</li>
+				<li>
+					<a href ng-click='tabCtrl.setTab(2)'>Historial de Compras</a>
+				</li>
+			</ul>
+		</div>
+		<div ng-controller='mainController as mainCtrl'>
+			<div id='solicitudes_pendientes' ng-show='tabCtrl.isTab(1)'>
+				<h2>Solicitudes Pendientes</h2>
+				<div id='solicitud_pendiente' ng-repeat='solicitud in mainCtrl.solicitudes'>
+					<div class='col-md-6'>
+							<p><strong>Lugar:</strong> {{ solicitud.lugar }}</p>
+							<p><strong>producto:</strong> {{ solicitud.producto }}</p>
+							<p><strong>Fecha:</strong> {{ solicitud.fecha }}</p>
+							<p><strong>Estado:</strong> {{ solicitud.estado }}</p>
+							<strong>Comentarios:</strong>
+							<p ng-show='solicitud.comentario != null'>{{ solicitud.comentario }}</p>
+						</div>
+
+						<div class='col-md-6'>
+							<strong>Productos</strong>
+							<p ng-repeat='producto in solicitud.productos'>
+								<span class='glyphicon glyphicon-record'></span>
+								{{ producto.nombre }} ({{ producto.cantidad }} {{ producto.unidad.nombre }} {{producto.estado}})
+							</p>
+						</div>
+						<button ng-click='mainCtrl.aprobarSolicitud(solicitud)' ng-show='solicitud.estado == "pendiente"'>Aprobar</button>
+						<div ng-show='solicitud.estado == "en rechazo"'>
+							<label for='rechazo'>Ingrese el motivo de rechazo:</label>
+							<input id = 'rechazo' ng-model='solicitud.mensaje'>
+						</div>
+						<button ng-click='mainCtrl.rechazarSolicitud(solicitud)' ng-show='solicitud.estado == "pendiente" || solicitud.estado == "en rechazo" '>Rechazar</button>
+						<div ng-show='solicitud.estado == "en pregunta"'>
+							<label for='pregunta'>Ingrese su pregunta:</label>
+							<input id = 'pregunta' ng-model='solicitud.mensaje'>
+						</div>
+						<button ng-show='solicitud.estado == "pendiente" || solicitud.estado == "en pregunta" ' ng-click='mainCtrl.preguntarSolicitud(solicitud)'>Preguntar</button>
+					</div>
+				</div>
+			</div>
+			<div id='historial_de_compras' ng-show='tabCtrl.isTab(2)' ng-controller='historialController as historialCtrl'>
+				<h2>Historial de compras</h2>
+				<div ng-controller='historialTabController as historialTabCtrl'>
+					<div id='menu_historial_de_compras'>
+						<ul>
+							<li>
+								<a href ng-click='historialTabCtrl.setTab(0); historialCtrl.setGraphics("general")'>General</a>
+							</li>
+							<li>
+								<a href ng-click='historialTabCtrl.setTab(1); historialCtrl.setGraphics("proyecto")'>Proyectos</a>
+							</li>
+							<li>
+								<a href ng-click='historialTabCtrl.setTab(2); historialCtrl.setGraphics("familiaProveedor")'>Familias Proveedor</a>
+							</li>
+							<li>
+								<a href ng-click='historialTabCtrl.setTab(3); historialCtrl.setGraphics("centroDeCostos")'>Centros de Costo</a>
+							</li>
+							<li>
+								<a href ng-click='historialTabCtrl.setTab(4); historialCtrl.setGraphics("equipo")'>Equipos</a>
+							</li>
+							<li>
+								<a href ng-click='historialTabCtrl.setTab(5); historialCtrl.setGraphics("producto")'>Productos</a>
+							</li>
+						</ul>
+					</div>
+					<div id='main_historial_de_compras'>
+						<div ng-show='historialTabCtrl.isTab(0)'>
+							<h3>General</h3>
+								<h4>Año Transcurrido</h4>
+								<p>{{historialCtrl.sumYear}}</p>
+								<h4>Ultimo mes</h4>
+								<p>{{historialCtrl.sumMonth}}</p>
+								<h4>Pendientes de Aprobar</h4>
+								<p>{{historialCtrl.sumPendientes}}</p>
+							<div class='graficos'>
+							</div>
+						</div>
+						<div ng-show='historialTabCtrl.isTab(1)'>
+							<h3>Proyectos</h3>
+							<h2>{{historialCtrl.proyecto.nombre}}</h2>
+							<select ng-options='proyecto.nombre for proyecto in historialCtrl.proyectos' ng-model='historialCtrl.proyecto' ng-change='historialCtrl.setGraphics("proyecto")'></select>
+							<div class='graficos'>
+								<h4>Año Transcurrido</h4>
+								<p>{{historialCtrl.sumYear}}</p>
+								<h4>Ultimo mes</h4>
+								<p>{{historialCtrl.sumMonth}}</p>
+								<h4>Pendientes de Aprobar</h4>
+								<p>{{historialCtrl.sumPendientes}}</p>
+							</div>
+						</div>
+						<div ng-show='historialTabCtrl.isTab(2)'>
+							<h3>Familias Proveedor</h3>
+							<h2>{{historialCtrl.familiaProveedor.nombre}}</h2>
+							<select ng-options='familia.nombre for familia in historialCtrl.familiasProveedor' ng-model='historialCtrl.familiaProveedor' ng-change='historialCtrl.setGraphics("familiaProveedor")'></select>
+							<div class='graficos'>
+								<h4>Año Transcurrido</h4>
+								<p>{{historialCtrl.sumYear}}</p>
+								<h4>Ultimo mes</h4>
+								<p>{{historialCtrl.sumMonth}}</p>
+								<h4>Pendientes de Aprobar</h4>
+								<p>{{historialCtrl.sumPendientes}}</p>
+							</div>
+						</div>
+						<div ng-show='historialTabCtrl.isTab(3)'>
+							<h3>Centros de Costo</h3>
+							<h2>{{historialCtrl.centroDeCosto.nombre}}</h2>
+							<select ng-options='centro.nombre for centro in historialCtrl.centroDeCostos' ng-model='historialCtrl.centroDeCosto' ng-change='historialCtrl.setGraphics("centroDeCostos")'></select>
+							<div class='graficos'>
+								<h4>Año Transcurrido</h4>
+								<p>{{historialCtrl.sumYear}}</p>
+								<h4>Ultimo mes</h4>
+								<p>{{historialCtrl.sumMonth}}</p>
+								<h4>Pendientes de Aprobar</h4>
+								<p>{{historialCtrl.sumPendientes}}</p>
+							</div>
+						</div>
+						<div ng-show='historialTabCtrl.isTab(4)'>
+							<h3>Equipo</h3>
+							<h2>{{historialCtrl.equipo.nombre}}</h2>
+							<select ng-options='equipo.nombre for equipo in historialCtrl.equipos' ng-model='historialCtrl.equipo' ng-change='historialCtrl.setGraphics("equipo")'></select>
+							<div class='graficos'>
+								<h4>Año Transcurrido</h4>
+								<p>{{historialCtrl.sumYear}}</p>
+								<h4>Ultimo mes</h4>
+								<p>{{historialCtrl.sumMonth}}</p>
+								<h4>Pendientes de Aprobar</h4>
+								<p>{{historialCtrl.sumPendientes}}</p>
+							</div>
+						</div>
+						<div ng-show='historialTabCtrl.isTab(5)'>
+							<h3>Productos</h3>
+							<h2>{{historialCtrl.producto.nombre}}</h2>
+							<select ng-options='producto.nombre for producto in historialCtrl.productos' ng-model='historialCtrl.producto' ng-change='historialCtrl.setGraphics("producto")'></select>
+							<div class='graficos'>
+								<h4>Año Transcurrido</h4>
+								<p>{{historialCtrl.sumYear}}</p>
+								<h4>Ultimo mes</h4>
+								<p>{{historialCtrl.sumMonth}}</p>
+								<h4>Pendientes de Aprobar</h4>
+								<p>{{historialCtrl.sumPendientes}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+{% endverbatim %}
+</html>

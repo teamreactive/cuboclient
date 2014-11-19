@@ -1,0 +1,8 @@
+<div ng-controller='SigninController'>
+	<form novalidate>
+		<input type='text' placeholder='Usuario' ng-model='usuario.usuario' required>
+		<input type='password' placeholder='Contrasena' ng-model='usuario.contrasena' required>
+		<button ng-click='login()'>Iniciar sesion</button>
+	</form>
+	<p ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</p>
+</div>

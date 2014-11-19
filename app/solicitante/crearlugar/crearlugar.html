@@ -1,0 +1,98 @@
+<div id='lugarForm' ng-show='nav == "3"'>
+	<div class='panel panel-default col-md-11'>
+		<div class='panel-body'>
+			<h3>Crear lugar de entrega</h3>
+			<hr>
+			<form name='lugarForm' novalidate>
+
+				<!-- Messages -->
+
+				<div ng-class='message.css' ng-show='message.message != ""'>
+					<p>{{ message.message }}</p>                        
+				</div>
+
+				<!-- Fields -->
+
+				<div class='form-group'>
+					<div class='alert alert-danger' ng-hide='validLugar()'>
+						<p>El nombre ya existe</p>                        
+					</div>
+
+					<label for='nombreLugar'>Nombre *</label>
+					<input type='text' class='form-control' id='nombreLugar' placeholder='Nombre' autocomplete='off' ng-model='form.nombre' required>
+					<span class='alerts' ng-show='!form.nombre'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group'>
+					<div class='alert alert-danger' ng-hide='validTelefono()'>
+						<p>El telefono es muy largo</p>                       
+					</div>
+					<label for='telefonoLugar'>Telefono *</label>
+					<input type='text' class='form-control' id='telefonoLugar' placeholder='Telefono' autocomplete='off' ng-model='form.telefono' required>
+					<span class='alerts' ng-show='!form.telefono'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group'>
+					<label>Ubicacion *</label>
+				</div>
+
+				<div class='form-group col-md-6'>
+					<label for='ciudadLugar'>Ciudad *</label>
+					<input type='text' class='form-control' id='ciudadLugar' placeholder='Ciudad' autocomplete='off' ng-model='form.ciudad' required>
+					<span class='alerts' ng-show='!form.ciudad'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group col-md-6'>
+					<label for='paisLugar'>Pais *</label>
+					<input type='text' class='form-control' id='paisLugar' placeholder='Pais' autocomplete='off' ng-model='form.pais' required>
+					<span class='alerts' ng-show='!form.pais'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group'>
+					<hr>
+
+					<div class='alert alert-danger' ng-hide='validDireccion()'>
+						<p>La direccion ya existe</p>                        
+					</div>
+
+					<label>Direccion *</label>
+				</div>
+
+				<div class='form-group col-md-3'>
+					<label for='seccionLugar'>Seccion *</label>
+					<select class='form-control' id='unidadProducto' ng-options='seccion for seccion in opciones.secciones' ng-model='form.seccion' required></select>
+					<span class='alerts' ng-show='!form.seccion'>Este campo es requerido</span>
+				</div>
+				
+				<div class='form-group col-md-3'>
+					<label for='numero1Lugar'>Campo 1 *</label>
+					<input type='text' class='form-control' id='numero1Lugar' placeholder='Campo 1' autocomplete='off' ng-model='form.numero1' required>
+					<span class='alerts' ng-show='!form.numero1'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group col-md-3'>
+					<label for='numero2Lugar'>Campo 2 *</label>
+					<input type='text' class='form-control' id='numero2Lugar' placeholder='Campo 2' autocomplete='off' ng-model='form.numero2' required>
+					<span class='alerts' ng-show='!form.numero2'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group col-md-3'>
+					<label for='numero3Lugar'>Campo 3 *</label>
+					<input type='text' class='form-control' id='numero3Lugar' placeholder='Campo 3' autocomplete='off' ng-model='form.numero3' required>
+					<span class='alerts' ng-show='!form.numero3'>Este campo es requerido</span>
+				</div>
+
+				<div class='form-group'>
+					<label for='descripcionLugar'>* Descripcion</label>
+					<textarea class='form-control' id='descripcionLugar' placeholder='Descripcion del lugar...' ng-model='form.descripcion' required></textarea>
+					<span class='alerts' ng-show='!form.descripcion'>Este campo es requerido</span>
+				</div>
+
+				<button class='btn btn-default' ng-click='setSubmit("3") && submit()' ng-disabled='!lugarForm.$valid || !validLugar() || !validDireccion() || !validTelefono()'>
+					Crear lugar
+				</button>
+				<span>Asegurese de llenar todos los campos marcados con *</span>
+			</form>
+		</div>
+	</div>
+</div>

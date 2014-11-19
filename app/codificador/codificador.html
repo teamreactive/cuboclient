@@ -1,0 +1,400 @@
+{% verbatim %}
+<!doctype html>
+<html ng-app='app'>
+<head>
+
+	<!-- Some meta headers -->
+
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<meta name='description' content='Compras 10.0 official website'>
+	<meta name='author' content='Reactive'>
+
+	<!-- Some CSS imports -->
+
+	{% endverbatim %}
+	{% load staticfiles %}
+	<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.min.css'>
+	<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css'>
+	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+	<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
+	<link rel='stylesheet' href='{% static 'usuarios/css/codificador.css' %}'>
+
+	<!-- Some JS scripts -->
+
+	<script src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+	<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js'></script>
+	<script src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
+	<script src='//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.jquery.min.js'></script>
+	<script src='//cdnjs.cloudflare.com/ajax/libs/chosen/1.0/chosen.proto.min.js'></script>
+	<script src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+	<script src='{% static 'usuarios/js/codificador.js' %}'></script>
+	{% verbatim %}
+
+	<!-- The page title -->
+
+	<title>Bienvenido codificador</title>
+</head>
+<body ng-controller='MainController'>
+
+	<div class='container-fluid'>
+
+		<!-- Banner -->
+
+		<div class='row' id='banner'>
+			<h1>Bienvenido codificador</h1>
+		</div>
+
+		<!-- Container -->
+
+		<div class='container'>
+
+			<!-- Separator -->
+
+			<div class='row'>
+				<hr class='col-md-11'>
+			</div>
+
+			<!-- Content -->
+
+			<div class='row'>
+
+				<!-- Nav pills -->
+
+				<div class='col-md-3' id='navigation'>
+					<div class='panel panel-default col-md-11'>
+						<div class='panel-body'>
+							<h3>Opciones</h3>
+							<hr>
+							<ul class='nav nav-pills nav-stacked'>
+								<li ng-class='nav == "1" ? "active" : ""'><a ng-click='setNav("1")'>Ver pendientes</a></li>
+								<li ng-class='nav == "2" ? "active" : ""'><a ng-click='setNav("2")'>Crear producto</a></li>
+								<li ng-class='nav == "3" ? "active" : ""'><a ng-click='setNav("3")'>Ver productos</a></li>
+								<li ng-class='nav == "4" ? "active" : ""'><a ng-click='setNav("4")'>Alterar producto</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- View frame -->
+
+				<div class='col-md-9' id='view'>
+
+					<!-- Ver pendientes -->
+
+					<div id='verPendientes' ng-show='nav == "1"'>
+						<div class='alert alert-success' ng-show="opciones.pendientes.length == 0">
+							<p>No hay productos pendientes</p>
+						</div>
+						<div class='{{ message.css }} col-md-11' ng-show='message.message != "" && opciones.pendientes.length > 0'>
+							<p>{{ message.message }}</p>
+						</div>
+						<div class='panel panel-default col-md-11' ng-repeat='producto in opciones.pendientes'>
+							<div class='panel-body'>
+								<h3>{{ producto.nombre }}</h3>
+								<hr>
+								<div class='col-md-6'>
+									<p><strong>Descripcion:</strong></p>
+									<p>{{ producto.descripcion }}</p>
+									<p><strong>Marca:</strong> {{ producto.marca }}</p>
+									<p><strong>Unidad:</strong> {{ producto.unidad.nombre }}</p>
+									<p><strong>Tipo:</strong> {{ producto.tipo.nombre }}</p>
+								</div>
+								<div class='col-md-6'>
+									<ul class='nav nav-pills nav-stacked'>
+										<li><a ng-click='editar(producto)'>Aprobar producto</a></li>
+										<li><a ng-click='rechazo == producto ? rechazo = {} : rechazo = producto'>Rechazar producto</a></li>
+										<li><a ng-click='otro == producto ? otro = {} : otro = producto'>Agregar a otro</a></li>
+									</ul>
+
+									<form name='rechazoForm' ng-show='rechazo == producto' novalidate>
+										{% endverbatim %}{% csrf_token %}{% verbatim %}
+										<hr>
+										<div class='form-group'>
+											<label for='rechazoPendiente'>Razon de rechazo *</label>
+											<textarea class='form-control' id='rechazoPendiente' ng-model='form.rechazo' required></textarea>
+											<span class='alerts' ng-show='!form.rechazo'>Este campo es requerido</span>
+										</div>
+										<button class='btn btn-default' ng-click='rechazar(producto)' ng-disabled='!rechazoForm.$valid'>
+												Rechazar
+											</button>
+									</form>
+
+									<form name='otroForm' ng-show='otro == producto' novalidate>
+										{% endverbatim %}{% csrf_token %}{% verbatim %}
+										<hr>
+										<div class='form-group'>
+											<label for='otroProducto'>Productos *</label>
+											<select class='form-control' id='otroProducto' ng-options='producto.nombre for producto in opciones.productos' ng-model='form.otroProducto' required></select>
+											<span class='alerts' ng-show='!form.otroProducto'>Este campo es requerido</span>
+										</div>
+										<button class='btn btn-default' ng-click='join(producto)' ng-disabled='!otroForm.$valid'>
+											Agregar
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Crear producto -->
+
+					<div id='productoForm' ng-show='nav == "2"'>
+						<div class='{{ message.css }} col-md-11' ng-show='message.message != ""'>
+							<p>{{ message.message }}</p>
+						</div>
+
+						<div class='panel panel-default col-md-11'>
+							<div class='panel-body'>
+								<h3>Crear producto</h3>
+								<hr>
+								<form name='productoForm' novalidate>
+									{% endverbatim %}{% csrf_token %}{% verbatim %}
+
+									<div class='form-group'>
+										<div class='alert alert-danger' ng-hide='validNombre()'>
+											<p>El nombre ya existe</p>                        
+										</div>
+										<label for='nombreProducto'>Nombre *</label>
+										<input type='text' class='form-control' id='nombreProducto' placeholder='Nombre' autocomplete='off' ng-model='form.nombre' required>
+										<span class='alerts' ng-show='!form.nombre'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='onuProducto'>Codigo ONU *</label>
+										<input type='text' class='form-control' id='onuProducto' placeholder='Codigo ONU' ng-model='form.onu' required>
+										<span class='alerts' ng-show='!form.onu'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='descripcionProucto'>Descripcion *</label>
+										<textarea class='form-control' id='descripcionProducto' ng-model='form.descripcion' required></textarea>
+										<span class='alerts' ng-show='!form.descripcion'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='referenciaProducto'>Referencia *</label>
+										<input type='text' class='form-control' id='referenciaProducto' placeholder='Referencia' ng-model='form.referencia' required>
+										<span class='alerts' ng-show='!form.referencia'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='tallaProducto'>Talla *</label>
+										<input type='text' class='form-control' id='tallaProducto' placeholder='Talla' ng-model='form.talla' required>
+										<span class='alerts' ng-show='!form.talla'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='marcaProducto'>Marca *</label>
+										<input type='text' class='form-control' id='marcaProducto' placeholder='Marca' ng-model='form.marca' required>
+										<span class='alerts' ng-show='!form.marca'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='tipoProducto'>Tipo *</label>
+										<select class='form-control' id='tipoProducto' ng-options='tipo.nombre for tipo in opciones.tipos' ng-model='form.tipo' required></select>
+										<span class='alerts' ng-show='!form.tipo'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='unidadProducto'>Unidad *</label>
+										<select class='form-control' id='unidadProducto' ng-options='unidad.nombre for unidad in opciones.unidades' ng-model='form.unidad' required></select>
+										<span class='alerts' ng-show='!form.unidad'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='familiaProducto'>Familia proveedor *</label>
+										<select class='form-control' id='familiaProducto' ng-options='familia.nombre for familia in opciones.familias' ng-model='form.familia' required></select>
+										<span class='alerts' ng-show='!form.familia'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='equipoProducto'>Equipo *</label>
+										<select class='form-control' id='equipoProducto' ng-options='equipo.nombre for equipo in opciones.equipos' ng-model='form.equipo' required></select>
+										<span class='alerts' ng-show='!form.equipo'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='centroProducto'>Centro de costo *</label>
+										<select class='form-control' id='centroProducto' ng-options='centro.nombre for centro in opciones.centros' ng-model='form.centro' required></select>
+										<span class='alerts' ng-show='!form.centro'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='solicitanteSolicitud'>Imagen *</label>
+										<input type='file' ng-model='form.imagen'>
+									</div>
+
+									<button class='btn btn-default' ng-click='crearProducto()' ng-disabled='!productoForm.$valid || !validNombre()'>
+										Crear producto
+									</button>
+									<span>Asegurese de llenar todos los campos marcados con *</span>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<!-- Ver productos -->
+
+					<div id='verProductos' ng-show='nav == "3"'>
+						<div class='{{ message.css }} col-md-11' ng-show='message.message != ""'>
+							<p>{{ message.message }}</p>
+						</div>
+						<div class='panel panel-default col-md-11' ng-repeat='producto in opciones.productos'>
+							<div class='panel-body'>
+								<h3>{{ producto.nombre }}</h3>
+								<hr>
+								<div class='col-md-6'>
+									<p><strong>Descripcion:</strong></p>
+									<p>{{ producto.descripcion }}</p>
+									<p><strong>Marca:</strong> {{ producto.marca }}</p>
+									<p ng-show='producto.unidades == null'>
+										<strong>Unidades:</strong> {{ producto.unidad.nombre }}
+									</p>
+									<p ng-hide='producto.unidades == null'>
+										<strong>Unidades:</strong>
+										<ul>
+											<li ng-repeat='unidad in producto.unidades'>{{ unidad.nombre }}</li>
+										</ul>
+									</p>
+									<p><strong>Tipo:</strong> {{ producto.tipo.nombre }}</p>
+									<p><strong>Codigo ONU:</strong> {{ producto.onu }}</p>
+									<p><strong>Referencia:</strong> {{ producto.referencia }}</p>
+									<p><strong>Talla:</strong> {{ producto.talla }}</p>
+									<p><strong>Otros nombres:</strong><p>
+									<ul><li ng-repeat='nombre in producto.nombres'>{{ nombre }}</li></ul>
+								</div>
+								<div class='col-md-6'>
+									<p><strong>Familia proveedor:</strong> {{ producto.familia.nombre}}</p>
+									<p><strong>Equipo:</strong> {{ producto.equipo.nombre }}</p>
+									<p><strong>Centro de costo:</strong> {{ producto.centro.nombre }}</p>
+									<p><strong>Foto:</strong> {{ producto.imagen }}</p>
+									<hr>
+									<ul class='nav nav-pills nav-stacked'>
+										<li><a ng-click='editar(producto)'>Editar producto</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Alterar producto -->
+
+					<div id='alterarProducto' ng-show='nav == "4"'>
+						<div class='{{ message.css }} col-md-11' ng-show='message.message != ""'>
+							<p>{{ message.message }}</p>
+						</div>
+						<div class='panel panel-default col-md-11'>
+							<div class='panel-body'>
+								<h3>Alterar producto</h3>
+								<hr>
+								<form name='alterarForm' novalidate>
+									{% endverbatim %}{% csrf_token %}{% verbatim %}
+									<div class='form-group'>
+										<label for='productoAlterar'>Producto *</label>
+										<select class='form-control' id='productoAlterar' ng-options='producto.nombre for producto in opciones.productos.concat(opciones.pendientes)' ng-model='form.temp' required></select>
+										<button class='btn btn-default' ng-click='editarProducto()' ng-disabled='form.temp == null'>
+											Editar seleccion
+										</button>
+										<span class='alerts' ng-show='!form.temp'>Este campo es requerido</span>
+									</div>
+									<hr>
+									<div class='form-group'>
+										<label for='onuProducto'>Codigo ONU *</label>
+										<input type='text' class='form-control' id='onuProducto' placeholder='Codigo ONU' ng-model='form.producto.onu' required>
+										<span class='alerts' ng-show='!form.producto.onu'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='descripcionProucto'>Descripcion *</label>
+										<textarea class='form-control' id='descripcionProducto' ng-model='form.producto.descripcion' required></textarea>
+										<span class='alerts' ng-show='!form.producto.descripcion'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='referenciaProducto'>Referencia *</label>
+										<input type='text' class='form-control' id='referenciaProducto' placeholder='Referencia' ng-model='form.producto.referencia' required>
+										<span class='alerts' ng-show='!form.producto.referencia'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='tallaProducto'>Talla *</label>
+										<input type='text' class='form-control' id='tallaProducto' placeholder='Talla' ng-model='form.producto.talla' required>
+										<span class='alerts' ng-show='!form.producto.talla'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='marcaProducto'>Marca *</label>
+										<input type='text' class='form-control' id='marcaProducto' placeholder='Marca' ng-model='form.producto.marca' required>
+										<span class='alerts' ng-show='!form.producto.marca'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='tipoProducto'>Tipo *</label>
+										<select class='form-control' id='tipoProducto' ng-options='tipo.nombre for tipo in opciones.tipos' ng-model='form.producto.tipo' required></select>
+										<span class='alerts' ng-show='!form.producto.tipo'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='unidadProducto'>Unidad *</label>
+										<select class='form-control' id='unidadProducto' ng-options='unidad.nombre for unidad in opciones.unidades' ng-model='form.producto.unidad' required></select>
+										<span class='alerts' ng-show='!form.producto.unidad'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='familiaProducto'>Familia proveedor *</label>
+										<select class='form-control' id='familiaProducto' ng-options='familia.nombre for familia in opciones.familias' ng-model='form.producto.familia' required></select>
+										<span class='alerts' ng-show='!form.producto.familia'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='equipoProducto'>Equipo *</label>
+										<select class='form-control' id='equipoProducto' ng-options='equipo.nombre for equipo in opciones.equipos' ng-model='form.producto.equipo' required></select>
+										<span class='alerts' ng-show='!form.producto.equipo'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='centroProducto'>Centro de costo *</label>
+										<select class='form-control' id='centroProducto' ng-options='centro.nombre for centro in opciones.centros' ng-model='form.producto.centro' required></select>
+										<span class='alerts' ng-show='!form.producto.centro'>Este campo es requerido</span>
+									</div>
+
+									<div class='form-group'>
+										<label for='solicitanteSolicitud'>Imagen</label>
+										<input type='file' ng-model='form.producto.imagen'>
+									</div>
+
+									<button class='btn btn-default' ng-click='descartarProducto()' ng-disabled='form.producto == null'>
+										Descartar cambios
+									</button>
+
+									<button class='btn btn-default' ng-click='alterarProducto()' ng-disabled='!alterarForm.$valid'>
+										Guardar cambios
+									</button>
+									<span>Asegurese de llenar todos los campos marcados con *</span>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Separator -->
+			
+			<div class='row'>
+				<hr class='col-md-11'>
+			</div>
+
+			<!-- Footer -->
+
+			<div class='row' id='footer'>
+				<h4>
+					<span class='glyphicon glyphicon-copyright-mark'></span>
+					Copyright 2014
+				</h4>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+{% endverbatim %}

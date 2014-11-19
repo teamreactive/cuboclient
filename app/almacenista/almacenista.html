@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app='Almacenista'>
+<head>
+<title></title>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+	<script src="{% static "usuarios/js/comprador.js" %}"></script>
+</head>
+<body>
+	<div id='main' ng-controller='MainTabController as tabCtrl'>
+		<ul >
+			<li>
+				<a ng-click='tabCtrl.setTab(1)'>Ver Compras Pendientes</a>
+			</li>
+			<li>
+				<a ng-click='tabCtrl.setTab(2)'>Recibir Compra</a>
+			</li>
+		</ul>
+		<div ng-show='tabCtrl.isTab(1)' ng-controller='PendientesController as pendientesCtrl'>
+			<div ng-repeat='compra in pendientesCtrl.compras' ng-click>
+				<h4>{{compra.fechaEntrega}}</h4>
+				<h3>Productos</h3>
+				<div ng-click='producto.' ng-repeat='producto in compra.productos'>
+					<h2>{{producto.nombre}}</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
