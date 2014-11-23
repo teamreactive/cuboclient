@@ -1,5 +1,4 @@
 angular.module("crud", [])
-
 .config(["$httpProvider", function($httpProvider){
     $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
     $httpProvider.defaults.xsrfCookieName = "csrftoken";
