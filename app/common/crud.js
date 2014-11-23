@@ -42,17 +42,16 @@ angular.module("crud", [])
 	}
 
 	function readParam(url, param, value, callback) {
-		var newUrl = "";
-		
+		var newUrl = base + url + "?";
+
 		if (typeof param == "array") {
-			newUrl = base + url + "?"
 			for (var i = 0; i < param.length; i++) {
 				newUrl += param[i] + "=" + value[i];
-				if (i == param.length - 1)
+				if (i != param.length - 1)
 					newUrl += "&";
 			}
 		} else
-			newUrl = base + url + "?" + param + "=" + value;
+			newUrl += param + "=" + value;
 
 		$http({
 			method: "GET",
