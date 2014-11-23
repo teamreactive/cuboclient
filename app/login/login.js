@@ -1,1 +1,4 @@
-angular.module("login", ["signin", "forgot"]);
+angular.module("login", [
+	"signin",
+	"forgot"
+]);
