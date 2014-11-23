@@ -4,7 +4,6 @@
 	<--! miss usuario and contacto -->
 	<--! miss usuario in getcontacto -->
 	<form name='lugarForm' novalidate>
-		<select ng-model='seccion' ng-options='secciones.nombre'></select>
 		
 		<label for='crearlugarnombre'>nombre</label>
 		<input id='crearlugarnombre'type='text' ng-model='lugar.nombre'>
@@ -12,7 +11,7 @@
 		<label for='crearlugarciudad'>ciudad</label>
 		<input id='crearlugarciudad'type='text' ng-model='lugar.ciudad'>
 
-		<select ng-model='seccion' ng-options='secciones.nombre'></select>
+		<select ng-model='seccion' ng-options='seccion.nombre for seccion in secciones'></select>
 		<input id='crearlugarnumero1'type='text' ng-model='lugar.numero1'>
 		
 		<label for='crearlugarnumero2'>#</label>
