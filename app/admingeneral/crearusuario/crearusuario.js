@@ -34,7 +34,7 @@ angular.module("crearusuario", ["crud"])
 		$scope.msg.css = "";
 		$scope.msg.msg = "Espere un momento porfavor...";
 		$scope.inProgress = true;
-		$scope.usuario.cliente = $scope.usuario.cliente.resource_uri;
+		$scope.usuario.cliente = "/api/v1/cliente/2/";
 		alert($scope.usuario.cliente);
 		service.create(url, $scope.usuario, function(status, data) {
 			if (status) {

@@ -1,11 +1,12 @@
-angular.module("crearproducto", ["crud"])
-.controller("CrearProductoController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("crearproducto", ["crud", "ngCookies"])
+.controller("CrearProductoController", ["$scope", "$http", "service","$cookies", function($scope, $http, service,$cookies) {
 	$scope.producto = {};
 	$scope.producto.nombresinput = "";
 	$scope.nombres = [];
 	$scope.servicios = servicios;
 	$scope.familias = [];
 	$scope.ans = {};
+	$scope.i = $cookies.cliente;
 	$scope.getfamilias = function(){
 		service.read("/api/v1/familia/",function(status, data){
 			if(status){
@@ -45,7 +46,21 @@ angular.module("crearproducto", ["crud"])
 
 	$scope.crearproducto = function() {
 		// TODO
-		
+		$scope.producto.nombres = [];
+		$scope.producto.familia_proveedor = $scope.producto.familia_proveedor.resource_uri;
+		$scope.producto.cliente = $cookies.cliente;
+		for(var i =0; i < $scope.nombres.length; i++)
+			$scope.producto.nombres.push($scope.nombres[i]);
+
+		service.create("/api/v1/producto/",$scope.producto,function(status,data){
+			if(status){
+				alert("producto creado exitosamente");
+			}
+			else{
+				alert("error");
+				console.log(data);
+			}
+		});
 	};
 
 	
