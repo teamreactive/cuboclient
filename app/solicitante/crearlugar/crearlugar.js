@@ -14,7 +14,7 @@ angular.module("crearlugar", ["crud"])
 		$scope.contactostatus = num;
 	};
 	$scope.getcontactos = function(){
-		service.read("api/avi/contacto".function(status, data){
+		service.read("api/avi/contacto",function(status, data){
 			if(status){
 				$scope.contactos = data.objects;
 			} else{
