@@ -37,8 +37,17 @@ angular.module("crud", [])
 	}
 
 	function readParam(url, param, value, callback) {
-		var newUrl = base + url + "?" + param + "=" + value;
-		console.log(newUrl)
+		var newUrl = base + url + "?";
+
+		if (typeof param == "array") {
+			for (var i = 0; i < param.length; i++) {
+				newUrl += param[i] + "=" + value[i];
+				if (i != param.length - 1)
+					newUrl += "&";
+			}
+		} else
+			newUrl += param + "=" + value;
+
 		$http({
 			method: "GET",
 			url: newUrl,

@@ -1,8 +1,10 @@
 <div ng-controller='AprobarOrdenController'>
 	<h3>Aprobar orden</h3>
-	<div ng-repeat='orden in ordenes'>
+	<div ng-repeat='solicitud in solicitudes'>
 		<form name='ordenForm' novalidate>
-			{{ orden }}
+			<div class='producto' ng-repeat='producto in solicitud.productos'>
+				{ producto.producto.producto.nombre } { producto.cantidad } { producto.producto.unidad }
+			</div>
 			<button ng-click='aprobarorden(orden)'>Aprobar orden</button>
 		</form>
 	</div>
