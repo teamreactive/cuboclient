@@ -55,7 +55,9 @@ angular.module("crearlugar", ["crud"])
 		});
 	};
 	$scope.eliminarcontacto = function(contacto){
-		deleteobj($scope.producto.contactos,contacto);
+		deleteobj($scope.lugar.contactos,contacto);
+		if(contacto.id != undefined)
+			$scope.contactos.push(contacto);
 	};
 
 }])
