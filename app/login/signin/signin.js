@@ -1,8 +1,28 @@
-angular.module("signin", ["crud"])
-.controller("SigninController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("signin", ["crud", "ngCookies"])
+.controller("SigninController", ["$scope", "$http", "service", "$cookies", function($scope, $http, service, $cookies) {
+	var url = "/api/v1/usuario/";
+
+	$scope.checkSession = function() {
+		if ($cookies.nombre && $cookies.cliente && $cookies.tipo) {
+			var params = ["nombre", "cliente", "tipo"];
+			var vals = [$cookies.nombre, $cookies.cliente, $cookies.tipo];
+			service.readParam(url, params, vals, function(status, data) {
+				if (status) {
+					window.location.replace("http://stackoverflow.com");
+					return true;
+				} else {
+					console.log("FALSE");
+					return false;
+				}
+			});
+		} else {
+			return false;
+		}
+	}
+	//$scope.checkSession();
+
 	$scope.usuario = {};
 	$scope.ans = {};
-	var url = "/api/v1/usuario/";
 	$scope.login = function() {
 		$scope.ans.css = "";
 		$scope.ans.msg = "Espere un momento porfavor...";
@@ -19,9 +39,13 @@ angular.module("signin", ["crud"])
 									  data[0].cliente +
 									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
 									  "; path=/";
+					document.cookie = "tipo=" +
+									  data[0].tipo +
+									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
+									  "; path=/";
 					return true;
 				} else {
-					console.log(data[0])
+					console.log(data[0]);
 					$scope.ans.css = "";
 					$scope.ans.msg = "La contrasena fue incorrecta";
 					return false;

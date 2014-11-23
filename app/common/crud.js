@@ -16,6 +16,7 @@ angular.module("crud", [])
 			callback(true, data);
 		})
 		.error(function(data) {
+			console.log(data);
 			callback(false, data);
 		});
 	}
