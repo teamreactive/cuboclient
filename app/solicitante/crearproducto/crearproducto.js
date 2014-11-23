@@ -1,9 +1,23 @@
-angular.module("crearproducto", ["crud"])
-.controller("CrearProductoController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("crearproducto", ["crud", "ngCookies"])
+.controller("CrearProductoController", ["$scope", "$http", "service","$cookies", function($scope, $http, service,$cookies) {
 	$scope.producto = {};
 	$scope.producto.nombresinput = "";
 	$scope.nombres = [];
-
+	$scope.servicios = servicios;
+	$scope.familias = [];
+	$scope.ans = {};
+	$scope.i = $cookies.cliente;
+	$scope.getfamilias = function(){
+		service.read("/api/v1/familia/",function(status, data){
+			if(status){
+				$scope.familias = data;
+				$scope.familias.push({"nombre":"--nueva familia"})
+			} else{
+				$scope.ans.familiasmsg = "Hubo un error cargando las familias";
+			}
+		});
+	};
+	$scope.getfamilias();
 	$scope.nombreschanged = function() {
 		var length = $scope.nombresinput.length;
 		if(length!=0){
@@ -31,23 +45,40 @@ angular.module("crearproducto", ["crud"])
 	};
 
 	$scope.crearproducto = function() {
-		// TODO
-		var nombres = $scope.nombres;
-		var names = [];
-		var nombre = "";
-		for (var i = 0; i < nombres.length; i++) {
-			if (nombres[i] != ",") {
-				nombre += nombres[i];
-			} else {
-				names.push(nombre);
-				nombre = "";
+		$scope.producto.familia = $scope.producto.familia.resource_uri;
+
+		service.create("/api/v1/producto/", $scope.producto, function(status, data) {
+			if(status) {
+				console.log("Producto creado exitosamente");
+				console.log(data);
+				$scope.crearnombres(data.resource_uri);
 			}
-		}
-		if (nombre.length > 0) {
-			names.push(nombre);
-			nombre = "";
-		}
+			else{
+				console.log("Ocurrio un error");
+				console.log(data);
+			}
+		});
 	};
+
+	$scope.crearnombres = function(uri) {
+		var url = "/api/v1/nombreproducto/";
+		$scope.producto.nombres = {};
+		$scope.producto.nombres.objects = [],
+		for(var i =0; i < $scope.nombres.length; i++)
+			$scope.producto.nombres.objects.push({
+				"nombre": $scope.nombres[i],
+				"producto": uri
+			});
+		console.log($scope.producto.nombres);
+		service.create(url, $scope.producto.nombres, function(status, data) {
+			if (status) {
+				console.log("Nombres agregados correctamente.");
+			} else {
+				console.log("Ocurrio un error.");
+				console.log(data);
+			}
+		})
+	}
 
 	
 
@@ -76,3 +107,4 @@ var deleteobj = function(array, obj){
 	var i = array.indexOf(obj);
 	array.splice(i,1);
 };
+var servicios = [{"id":true,"nombre":"servicio"},{"id":false,"nombre":"bien"}];

@@ -44,6 +44,10 @@ angular.module("signin", ["crud", "ngCookies"])
 									  data[0].tipo +
 									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
 									  "; path=/";
+				    document.cookie = "usuario=" +
+									  data[0].resource_uri +
+									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
+									  "; path=/";
 					return true;
 				} else {
 					console.log(data[0]);

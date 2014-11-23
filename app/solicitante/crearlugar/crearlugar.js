@@ -44,6 +44,7 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 	$scope.crear = function(){
 		var contactos = $scope.lugar.contactos;
 		$scope.lugar.seccion = $scope.seccion.id;
+		$scope.lugar.usuario = $cookies.usuario;
 		$scope.ans.msg = "Espere un momento porfavor...";
 		for(var i =0; i< contactos; i++){
 			if(contactos[i].id != undefined)
