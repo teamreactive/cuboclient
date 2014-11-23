@@ -1,11 +1,8 @@
 <div ng-controller="CrearProductoController">
 	<h3>Crear producto</h3>
 	<form name='productoForm' novalidate>
-		<div ng-repeat='nombre in producto.nombres'>
-			<input type='text' placeholder='Nombre' ng-model='nombre' required>
-			<button ng-click='quitarnombre(nombre)'>Quitar nombre</button>
-		</div>
-		<button ng-click='agregarnombre()'>Agregar nombre</button>
+		<input type='text' ng-model='producto.nombre'>
+		<textarea ng-model='nombres' placeholder='Escriba todos los nombres asociados separados por coma'></textarea>
 		<input type='text' placeholder='Codigo ONU' ng-model='producto.onu'>
 		<input type='text' placeholder='Tipo*' ng-model='producto.tipo' required>
 		<input type='text' placeholder='Descripcion*' ng-model='producto.descripcion' required>
@@ -18,10 +15,10 @@
 		</div>
 		<button ng-click='agregarunidad()'>Agregar unidad</div>
 		<input type='text' placeholder='Familia-proveedor' ng-model='producto.familia'>
-		<input type='text' placeholder='Foto' ng-model='producto.foto'>
-		<select ng-option='equipocentro' ng-model='producto.equipocentro'></select>
+		<input type='file' placeholder='Foto' ng-model='producto.foto'>
+		<select ng-options='equipocentro.nombre for equipocentro in equipocentros' ng-model='producto.equipocentro'></select>
 		<input type='text' placeholder='Equipo' ng-model='producto.equipo'>
 		<input type='text' placeholder='Centro de costo' ng-model='producto.centro'>
-		<button ng-click='crearproducto()'>Crear producto</button>
+		<input type='submit' value='Crear Producto' ng-click='crearproducto()'>
 	</form>
 </div>

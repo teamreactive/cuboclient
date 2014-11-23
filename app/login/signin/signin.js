@@ -11,9 +11,15 @@ angular.module("signin", ["crud"])
 				if ($scope.usuario.contrasena == data[0].password) {
 					$scope.ans.css = "";
 					$scope.ans.msg = "El inicio de sesion fue exitoso";
+					document.cookie = "nombre=" +
+									  data[0].nombre +
+									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+					document.cookie = "cliente=" +
+									  data[0].cliente +
+									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
 					return true;
 				} else {
-					console.log(data[0].password)
+					console.log(data[0])
 					$scope.ans.css = "";
 					$scope.ans.msg = "La contrasena fue incorrecta";
 					return false;

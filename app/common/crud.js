@@ -29,7 +29,13 @@ angular.module("crud", [])
 			content_type: "application/json"
 		})
 		.success(function(data) {
-			callback(data.objects.length > 0, data.objects);
+			var ans = data;
+			var status = true;
+			if (data.objects != null) {
+				ans = data.objects;
+				status = ans.length;
+			}
+			callback(status, ans);
 		})
 		.error(function(data) {
 			callback(false, data);
