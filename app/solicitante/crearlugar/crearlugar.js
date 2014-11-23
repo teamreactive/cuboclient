@@ -1,10 +1,5 @@
 angular.module("crearlugar", ["crud"])
 .controller("CrearLugarController", ["$scope", "$http", "service", function($scope, $http, service) {
-<<<<<<< HEAD
-	
-||||||| merged common ancestors
-
-=======
 	var url = "api/v1/lugar/";
 	$scope.secciones = secciones;
 	$scope.ans = {};
@@ -42,7 +37,6 @@ angular.module("crearlugar", ["crud"])
 				$scope.ans.msg = "ha ocurrido un error porfavor intentelo de nuevo";
 		});
 	};
->>>>>>> 3455854b480b9fbf7e0edfc631c6b2db7b338bc3
 }])
 .directive("crearlugar", function() {
 	return {
