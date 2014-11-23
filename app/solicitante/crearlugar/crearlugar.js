@@ -1,29 +1,36 @@
 angular.module("crearlugar", ["crud"])
 .controller("CrearLugarController", ["$scope", "$http", "service", function($scope, $http, service) {
-	var url = "api/v1/lugar/";
+	var url = "/api/v1/lugar/";
 	$scope.secciones = secciones;
 	$scope.ans = {};
 	$scope.buttonaddcontacto = true;
 	$scope.contactostatus = 0;
 	$scope.lugar = {};
 	$scope.lugar.contactos = [];
+	$scope.contactos = [];
+	$scope.contacto = {};
+
+	$scope.getcontactos = function(){
+			service.read("/api/v1/contacto/",function(status, data){
+			if(status){
+				$scope.contactos = data;
+			} else{
+				$scope.ans.msgcontacto = "Hubo un error cargando los contactos";
+			}
+		});
+	};
+	$scope.getcontactos();
+	
 	$scope.iscontactostatus = function(num){
 		return $scope.contactostatus == num;
 	};
 	$scope.setcontactostatus = function(num){
 		$scope.contactostatus = num;
 	};
-	$scope.getcontactos = function(){
-		service.read("api/avi/contacto",function(status, data){
-			if(status){
-				$scope.contactos = data.objects;
-			} else{
-				$scope.ans.msgcontacto = "Hubo un error cargando los contactos";
-			}
-		});
-	};
+	
 	$scope.addcontacto = function(){
 		$scope.lugar.contactos.push($scope.contacto);
+		deleteobj($scope.contactos,$scope.contacto);
 		$scope.contacto = {};
 		$scope.setcontactostatus(0);
 	};
@@ -37,6 +44,7 @@ angular.module("crearlugar", ["crud"])
 				$scope.ans.msg = "ha ocurrido un error porfavor intentelo de nuevo";
 		});
 	};
+
 }])
 .directive("crearlugar", function() {
 	return {
@@ -50,3 +58,7 @@ var secciones = [
 	{"id":"4","nombre":"diagonal"},
 	{"id":"5","nombre":"transversal"}
 ];
+var deleteobj = function(array, obj){
+	var i = array.indexOf(obj);
+	array.splice(i,1);
+};
