@@ -13,10 +13,12 @@ angular.module("signin", ["crud"])
 					$scope.ans.msg = "El inicio de sesion fue exitoso";
 					document.cookie = "nombre=" +
 									  data[0].nombre +
-									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
+									  "; path=/";
 					document.cookie = "cliente=" +
 									  data[0].cliente +
-									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
+									  "; path=/";
 					return true;
 				} else {
 					console.log(data[0])

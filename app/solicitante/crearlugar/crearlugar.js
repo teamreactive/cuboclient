@@ -1,6 +1,10 @@
-angular.module("crearlugar", ["crud"])
-.controller("CrearLugarController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("crearlugar", ["crud", "ngCookies"])
+.controller("CrearLugarController", ["$scope", "$http", "service", "$cookies" , function($scope, $http, service, $cookies) {
 	var url = "/api/v1/lugar/";
+
+	$scope.cliente = $cookies.cliente;
+
+	console.log($scope.cliente);
 
 	$scope.getcontactos = function(){
 			service.read("/api/v1/contacto/",function(status, data){
