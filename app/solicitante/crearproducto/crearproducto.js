@@ -3,7 +3,20 @@ angular.module("crearproducto", ["crud"])
 	$scope.producto = {};
 	$scope.producto.nombresinput = "";
 	$scope.nombres = [];
-
+	$scope.servicios = servicios;
+	$scope.familias = [];
+	$scope.ans = {};
+	$scope.getfamilias = function(){
+		service.read("/api/v1/familia/",function(status, data){
+			if(status){
+				$scope.familias = data;
+				$scope.familias.push({"nombre":"--nueva familia"})
+			} else{
+				$scope.ans.familiasmsg = "Hubo un error cargando las familias";
+			}
+		});
+	};
+	$scope.getfamilias();
 	$scope.nombreschanged = function() {
 		var length = $scope.nombresinput.length;
 		if(length!=0){
@@ -32,21 +45,7 @@ angular.module("crearproducto", ["crud"])
 
 	$scope.crearproducto = function() {
 		// TODO
-		var nombres = $scope.nombres;
-		var names = [];
-		var nombre = "";
-		for (var i = 0; i < nombres.length; i++) {
-			if (nombres[i] != ",") {
-				nombre += nombres[i];
-			} else {
-				names.push(nombre);
-				nombre = "";
-			}
-		}
-		if (nombre.length > 0) {
-			names.push(nombre);
-			nombre = "";
-		}
+		
 	};
 
 	
@@ -76,3 +75,4 @@ var deleteobj = function(array, obj){
 	var i = array.indexOf(obj);
 	array.splice(i,1);
 };
+var servicios = [{"id":true,"nombre":"servicio"},{"id":false,"nombre":"bien"}];
