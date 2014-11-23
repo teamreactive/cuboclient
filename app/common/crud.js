@@ -10,7 +10,7 @@ angular.module("crud", [])
 			method: "POST",
 			url: newUrl,
 			data: data,
-			content_type: "application/json"
+			content_type: "application/json",
 		})
 		.success(function(data) {
 			callback(true, data);
