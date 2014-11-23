@@ -1,4 +1,11 @@
 <div ng-controller='OrdenesCompraController'>
 	<h3>Ordenes de compra</h3>
-	<div ng-repeat='orden in ordenes'>{{ orden }}</div>
+	<div ng-repeat='orden in ordenes'>
+		{{ orden }}
+		<button ng-click='anularorden(orden)'>Anular order</button>
+		<div>
+			<textarea placeholder='Motivo de anular'></textarea>
+			<button ng-click='confirmaranular(orden)'>Confirmar accion</button>
+		</div>
+	</div>
 </div>

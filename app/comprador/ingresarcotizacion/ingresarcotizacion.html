@@ -1,7 +1,15 @@
 <div ng-controller="IngresarCotizacionController">
 	<h3>Ingresar Cotizacion</h3>
 	<form name='ingresarCotizacionForm' novalidate>
-		<input type='text' placeholder='' required>
+		<select ng-option='producto for producto in productos'></select>
+		<input type='text' placeholder='Precio unitario*' required>
+		<!-- iva: (16, 1.6, 20, 0) -->
+		<select ng-options='opt for opt in iva' required></select>
+		<input type='text' placeholder='Tiempo de entrega(dias)'>
+		<input type='text' placeholder='Referencia'>
+		<input type='text' placeholder='Validez*' required>
+		<!-- formapago: (anticipado 100%, contado, en dias) -->
+		<select ng-options='opt for opt in formapago' required></select>
 		<button ng-click='ingresarcotizacion()'>Ingresar cotizacion</button>
 	</form>
 </div>
