@@ -1,29 +1,27 @@
 <div ng-controller="CrearProductoController">
 	<h3>Crear producto</h3>
 	<form name='productoForm' novalidate>
-		<input type='text' placeholder='id*' required>
-		<input type='text' placeholder='id*' required>
 		<div ng-repeat='nombre in producto.nombres'>
-			<input type='text' placeholder='Nombre'>
+			<input type='text' placeholder='Nombre' ng-model='nombre' required>
 			<button ng-click='quitarnombre(nombre)'>Quitar nombre</button>
 		</div>
 		<button ng-click='agregarnombre()'>Agregar nombre</button>
-		<input type='text' placeholder='Codigo ONU'>
-		<input type='text' placeholder='Tipo*' required>
-		<input type='text' placeholder='Descripcion*' required>
-		<input type='text' placeholder='Referencia'>
-		<input type='text' placeholder='Talla'>
-		<input type='text' placeholder='Marca*' required>
+		<input type='text' placeholder='Codigo ONU' ng-model='producto.onu'>
+		<input type='text' placeholder='Tipo*' ng-model='producto.tipo' required>
+		<input type='text' placeholder='Descripcion*' ng-model='producto.descripcion' required>
+		<input type='text' placeholder='Referencia' ng-model='producto.referencia'>
+		<input type='text' placeholder='Talla' ng-model='producto.talla'>
+		<input type='text' placeholder='Marca*' ng-model='producto.marca' required>
 		<div ng-repeat='unidad in producto.unidades'>
-			<input type='text' placeholder='Unidad*' required>
+			<input type='text' placeholder='Unidad*' ng-model='producto.unidad' required>
 			<button ng-click='quitarunidad(unidad)'>Quitar unidad</button>
 		</div>
 		<button ng-click='agregarunidad()'>Agregar unidad</div>
-		<input type='text' placeholder='Familia-proveedor'>
-		<input type='text' placeholder='Foto'>
-		<select ng-option='equipocentro'></select>
-		<input type='text' placeholder='Equipo'>
-		<input type='text' placeholder='Centro de costo'>
+		<input type='text' placeholder='Familia-proveedor' ng-model='producto.familia'>
+		<input type='text' placeholder='Foto' ng-model='producto.foto'>
+		<select ng-option='equipocentro' ng-model='producto.equipocentro'></select>
+		<input type='text' placeholder='Equipo' ng-model='producto.equipo'>
+		<input type='text' placeholder='Centro de costo' ng-model='producto.centro'>
 		<button ng-click='crearproducto()'>Crear producto</button>
 	</form>
 </div>
