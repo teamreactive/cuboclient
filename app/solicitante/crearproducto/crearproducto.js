@@ -45,23 +45,40 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 	};
 
 	$scope.crearproducto = function() {
-		// TODO
-		$scope.producto.nombres = [];
-		$scope.producto.familia_proveedor = $scope.producto.familia_proveedor.resource_uri;
-		$scope.producto.cliente = $cookies.cliente;
-		for(var i =0; i < $scope.nombres.length; i++)
-			$scope.producto.nombres.push($scope.nombres[i]);
+		$scope.producto.familia = $scope.producto.familia.resource_uri;
 
-		service.create("/api/v1/producto/",$scope.producto,function(status,data){
-			if(status){
-				alert("producto creado exitosamente");
+		service.create("/api/v1/producto/", $scope.producto, function(status, data) {
+			if(status) {
+				console.log("Producto creado exitosamente");
+				console.log(data);
+				$scope.crearnombres(data.resource_uri);
 			}
 			else{
-				alert("error");
+				console.log("Ocurrio un error");
 				console.log(data);
 			}
 		});
 	};
+
+	$scope.crearnombres = function(uri) {
+		var url = "/api/v1/nombreproducto/";
+		$scope.producto.nombres = {};
+		$scope.producto.nombres.objects = [],
+		for(var i =0; i < $scope.nombres.length; i++)
+			$scope.producto.nombres.objects.push({
+				"nombre": $scope.nombres[i],
+				"producto": uri
+			});
+		console.log($scope.producto.nombres);
+		service.create(url, $scope.producto.nombres, function(status, data) {
+			if (status) {
+				console.log("Nombres agregados correctamente.");
+			} else {
+				console.log("Ocurrio un error.");
+				console.log(data);
+			}
+		})
+	}
 
 	
 

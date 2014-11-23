@@ -26,7 +26,7 @@
 		<label>Tipo</label>
 		<select ng-model='servicio' ng-options='servicio.nombre for servicio in servicios'></select>
 		<label>Familia</label>
-		<select ng-model='producto.familia_proveedor' ng-options='familia.nombre for familia in familias'></select>
+		<select ng-model='producto.familia' ng-options='familia.nombre for familia in familias'></select>
 		<strong>{{ans.familiasmsg}}</strong>
 
 		<label for='crearproductotalla'>Talla</label>
@@ -43,8 +43,8 @@
 		<input id='crearproductofamilia' type='text' placeholder='Familia-proveedor' ng-model='producto.familia'>
 
 		<label for='crearproductofoto'>Foto</label>
-		
 		<input id='crearproductofoto' type='file' placeholder='Foto' ng-model='producto.foto'>
+		
 		<select ng-options='equipocentro.nombre for equipocentro in equipocentros' ng-model='producto.equipocentro'></select>
 
 		<input type='text' placeholder='Equipo' ng-model='producto.equipo'>
