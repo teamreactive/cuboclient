@@ -1,0 +1,12 @@
+<div ng-controller="ActualizarEvaluacionController">
+	<h3>Actualizar evaluacion</h3>
+	<form name='crearEvaluacionForm' novalidate>
+		<!-- evaluaciones: (precio, tiempoentrega, cumplimiento tiempoentrega,
+		forma de pago, calidad(porcentaje devoluciones), tiempo en presentar oferta,
+		soporte comercial, responsabilidad social de la empresa) -->
+		<div ng-repeat='evaluacion for evaluacion in evaluaciones'>
+			<input type='text' placeholder='' required>
+		</div>
+		<button ng-click='guardarevaluacion()'>Guardar cambios</button>
+	</form>
+</div>

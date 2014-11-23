@@ -1,8 +1,4 @@
 angular.module("crud", [])
-.config(["$httpProvider", function($httpProvider){
-    $httpProvider.defaults.xsrfHeaderName = "X-CSRFToken";
-    $httpProvider.defaults.xsrfCookieName = "csrftoken";
-}])
 
 .factory("service", ["$http", function($http) {
 	var base = "http://127.0.0.1:8080"

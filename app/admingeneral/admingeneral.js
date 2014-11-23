@@ -5,5 +5,7 @@ angular.module("admingeneral", [
 	"actualizarcliente",
 	"crearcentro",
 	"creartipoequipo",
-	"crearequipo"
+	"crearequipo",
+	"creariva",
+	"actualizariva"
 ]);

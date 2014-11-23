@@ -13,6 +13,7 @@ angular.module("signin", ["crud"])
 					$scope.ans.msg = "El inicio de sesion fue exitoso";
 					return true;
 				} else {
+					console.log(data[0].password)
 					$scope.ans.css = "";
 					$scope.ans.msg = "La contrasena fue incorrecta";
 					return false;

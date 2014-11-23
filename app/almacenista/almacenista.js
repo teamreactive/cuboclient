@@ -1,3 +1,5 @@
 angular.module("almacenista", [
-	"solicitudesentrega"
+	"solicitudesentrega",
+	"ingresarproducto",
+	"ingresardevolucion"
 ]);

@@ -13,6 +13,7 @@ angular.module("forgot", ["crud"])
 					$scope.ans.css = "";
 					$scope.ans.msg = "Se ha enviado un correo con instrucciones";
 				} else {
+					console.log(data[0].contacto.email);
 					$scope.ans.css = "";
 					$scope.ans.msg = "El correo de registro no coincide";
 					return false;
