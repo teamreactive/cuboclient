@@ -18,30 +18,65 @@ angular.module("crearusuario", ["crud"])
 	$scope.clientes = [];
 	$scope.getClientes();
 
+	$scope.tipos = [
+		{
+			"num": "1",
+			"opt": "Administrador general"
+		},
+		{
+			"num": "2",
+			"opt": "Administrador Cliente"
+		},
+		{
+			"num": "3",
+			"opt": "Solicitante"
+		},
+		{
+			"num": "4",
+			"opt": "Codificador"
+		},
+		{
+			"num": "5",
+			"opt": "Aprobador de Solicitudes"
+		},
+		{
+			"num": "6",
+			"opt": "Comprador"
+		},
+		{
+			"num": "7",
+			"opt": "Aprobador de Compra"
+		},
+		{
+			"num": "8",
+			"opt": "Almacenista"
+		}
+	]
+
 	$scope.usuario = {};
 	$scope.usuario.contacto = {};
+	$scope.usuario.tipo = {};
 
 	$scope.msg = {};
 
 	$scope.inProgress = false;
-
-	$scope.pass = function() {
-		return $scope.usuario.password != $scope.usuario.rpassword;
-	}
 
 	$scope.crearusuario = function() {
 		var url = "/api/v1/usuario/";
 		$scope.msg.css = "";
 		$scope.msg.msg = "Espere un momento porfavor...";
 		$scope.inProgress = true;
-		$scope.usuario.cliente = $scope.usuario.cliente.resource_uri;
-		alert($scope.usuario.cliente);
+		$scope.usuario.cliente = $scope.usuario.cliente.resource_uri
+		$scope.usuario.password = CryptoJS.SHA512($scope.usuario.password) + "";
+		$scope.usuario.rpassword = $scope.usuario.password;
+		$scope.usuario.tipo = $scope.usuario.tipo.num;
 		service.create(url, $scope.usuario, function(status, data) {
 			if (status) {
 				$scope.msg.css = "";
 				$scope.msg.msg = "Usuario creado con exito.";
 				$scope.usuario = {};
 				$scope.usuario.contacto = {};
+				$scope.usuario.tipo = {};
 				$scope.inProgress = false;
 				return true;
 			} else {

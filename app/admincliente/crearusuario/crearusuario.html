@@ -1,10 +1,8 @@
-<div ng-controller="ActualizarUsuarioController">
+<div ng-controller="CrearUsuarioController">
 
-	<h3>Actualizar usuario</h3>
-
-	<form name='actualizarUsuarioForm' novalidate>
-
-		<select ng-options='usuario.nombre for usuario in usuarios' ng-model='usuario' ng-change='rpass()'></select>
+	<h3>Crear usuario</h3>
+	
+	<form name='crearUsuarioForm' novalidate>
 
 		<fieldset>
 
@@ -59,9 +57,9 @@
 
 		</fieldset>
 
-		<button ng-click='actualizarusuario()' ng-disabled='inProgress || pass() || !actualizarUsuarioForm.$valid'>Actualizar usuario</button>
+		<button ng-click='crearusuario()' ng-disabled='inProgress || pass() || !crearUsuarioForm.$valid'>Crear usuario</button>
 
 		<p ng-class='msg.css' ng-show='msg'>{{ msg.msg }}</p>
-		
+
 	</form>
 </div>

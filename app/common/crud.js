@@ -68,9 +68,22 @@ angular.module("crud", [])
 		});
 	}
 
-	function update() {
-		console.log("MISSING CONTENT");
-		return false;
+	function update(url, id, data, callback) {
+		var newUrl = base + url + id + "/";
+
+		$http({
+			method: "PUT",
+			url: newUrl,
+			data: data,
+			content_type: "application/json"
+		})
+		.success(function(data) {
+			callback(true, data);
+		})
+		.error(function(data) {
+			console.log(data);
+			callback(false, data);
+		})
 	}
 
 	function destroy(url, id, callback) {
