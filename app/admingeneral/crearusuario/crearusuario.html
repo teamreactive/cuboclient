@@ -8,59 +8,49 @@
 
 			<legend><span>1.</span> Informacion de registro</legend>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='cliente'>Cliente: *</label>
 				<select ng-options='cliente.razon for cliente in clientes' id='cliente' ng-model='usuario.cliente'></select>
 
-				<p class='error' ng-hide='usuario.cliente'>El cliente no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='username'>Nombre de usuario: *</label>
 				<input type='text' id='username' ng-model='usuario.nombre' required>
 
-				<p class='error' ng-hide='usuario.nombre'>El nombre no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='mail'>Email: *</label>
 				<input type='email' id='mail' ng-model='usuario.contacto.email' required>
 
-				<p class='error' ng-hide='usuario.contacto.email'>El email no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='tipo'>Tipo de usuario: *</label>
 				<select ng-options='tipo.opt for tipo in tipos' id='tipo' ng-model='usuario.tipo' required></select>
 
-				<p class='error' ng-hide='usuario.tipo'>El tipo no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='password'>Contrasena: *</label>
 				<input type='password' id='password' ng-model='usuario.password' required>
 
-				<p class='error' ng-hide='usuario.password'>La contrasena no es valida</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='rpassword'>Repetir contrasena: *</label>
 				<input type='password' id='rpassword' ng-model='usuario.rpassword' required>
 
-				<p class='error' ng-hide='usuario.password == usuario.rpassword'>Las contrasenas no coinciden</p>
-
 			</div>
+
+			<p class='error' ng-show='pass()'>Las contrasenas no coinciden</p>
 
 		</fieldset>
 
@@ -68,48 +58,38 @@
 
 			<legend><span>2.</span> Informacion de contacto</legend>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='nombre'>Nombre: *</label>
 				<input type='text' id='nombre' ng-model='usuario.contacto.nombre' required>
 
-				<p class='error' ng-hide='usuario.contacto.nombre'>El nombre no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='apellido'>Apellido: *</label>
 				<input type='text' id='apellido' ng-model='usuario.contacto.apellido' required>
 
-				<p class='error' ng-hide='usuario.contacto.apellido'>El apellido no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='celular'>Celular: *</label>
 				<input type='tel' id='celular' ng-model='usuario.contacto.celular' required>
 
-				<p class='error' ng-hide='usuario.contacto.celular'>El celular no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='telefono'>Telefono: *</label>
 				<input type='tel' id='telefono' ng-model='usuario.contacto.telefono' required>
 
-				<p class='error' ng-hide='usuario.contacto.telefono'>El telefono no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='extension'>Extension: *</label>
 				<input type='tel' id='extension' ng-model='usuario.contacto.extension' required>
-
-				<p class='error' ng-hide='usuario.contacto.extension'>La extension no es valida</p>
 
 			</div>
 
@@ -119,21 +99,17 @@
 
 			<legend><span>3.</span> Informacion de perfil</legend>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='cargo'>Cargo: *</label>
 				<input type='text' id='cargo' ng-model='usuario.contacto.cargo' required>
 
-				<p class='error' ng-hide='usuario.contacto.cargo'>El cargo no es valido</p>
-
 			</div>
 
-			<div>
+			<div class='form-group'>
 
 				<label for='perfil'>Perfil: *</label>
 				<input type='text' id='perfil' ng-model='usuario.contacto.perfil' required>
-
-				<p class='error' ng-hide='usuario.contacto.perfil'>El perfil no es valido</p>
 
 			</div>
 
@@ -144,4 +120,5 @@
 		<p ng-class='msg.css' ng-show='msg'>{{ msg.msg }}</p>
 
 	</form>
+	
 </div>

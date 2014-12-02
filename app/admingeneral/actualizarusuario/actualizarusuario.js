@@ -41,7 +41,7 @@ angular.module("actualizarusuario", ["crud"])
 		$scope.msg.msg = "Espere un momento porfavor...";
 		$scope.inProgress = true;
 		$scope.usuario.password = CryptoJS.SHA512($scope.usuario.password) + "";
-		$scope.usuario.rpassword = $scope.usuario.password;
+		$scope.rpass();
 		service.update(url, $scope.usuario.id, $scope.usuario, function(status, data) {
 			if (status) {
 				$scope.msg.css = "";

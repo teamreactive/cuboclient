@@ -61,6 +61,10 @@ angular.module("crearusuario", ["crud"])
 
 	$scope.inProgress = false;
 
+	$scope.pass = function() {
+		return $scope.usuario.password != $scope.usuario.rpassword;
+	}
+
 	$scope.crearusuario = function() {
 		var url = "/api/v1/usuario/";
 		$scope.msg.css = "";
@@ -83,7 +87,6 @@ angular.module("crearusuario", ["crud"])
 				$scope.msg.css = "";
 				$scope.msg.msg = "Ocurrio un error, revise todos los campos."
 				$scope.inProgress = false;
-				console.log(data);
 				return false;
 			}
 		});
