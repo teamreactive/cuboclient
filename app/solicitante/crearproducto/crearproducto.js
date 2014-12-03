@@ -7,11 +7,11 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 	$scope.familias = [];
 	$scope.ans = {};
 	$scope.i = $cookies.cliente;
+	$scope.submitenabled = true;
 	$scope.getfamilias = function(){
 		service.read("/api/v1/familia/",function(status, data){
 			if(status){
 				$scope.familias = data;
-				$scope.familias.push({"nombre":"--nueva familia"})
 			} else{
 				$scope.ans.familiasmsg = "Hubo un error cargando las familias";
 			}
@@ -45,8 +45,11 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 	};
 
 	$scope.crearproducto = function() {
-		$scope.producto.familia = $scope.producto.familia.resource_uri;
-
+		if($scope.producto.familia.nombre == "--nueva familia")
+			$scope.producto.familia = { "nombre": $scope.familia };
+		else
+			$scope.producto.familia = $scope.producto.familia.resource_uri;
+		$scope.submitenabled = false;
 		service.create("/api/v1/producto/", $scope.producto, function(status, data) {
 			if(status) {
 				console.log("Producto creado exitosamente");
@@ -61,23 +64,21 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 	};
 
 	$scope.crearnombres = function(uri) {
+		alert("entered");
 		var url = "/api/v1/nombreproducto/";
-		$scope.producto.nombres = {};
-		$scope.producto.nombres.objects = [],
-		for(var i =0; i < $scope.nombres.length; i++)
-			$scope.producto.nombres.objects.push({
-				"nombre": $scope.nombres[i],
-				"producto": uri
+		if($scope.nombres.length != 0){
+			var nombre = {"nombre":$scope.nombres[$scope.nombres.length-1],"producto":uri};
+			service.create(url, nombre, function(status, data) {
+				if (status) {
+					console.log("Nombres agregados correctamente.");
+					$scope.nombres.pop();
+					$scope.crearnombres(uri);
+				} else {
+					console.log("Ocurrio un error.");
+					console.log(data);
+				}
 			});
-		console.log($scope.producto.nombres);
-		service.create(url, $scope.producto.nombres, function(status, data) {
-			if (status) {
-				console.log("Nombres agregados correctamente.");
-			} else {
-				console.log("Ocurrio un error.");
-				console.log(data);
-			}
-		})
+		}
 	}
 
 	

@@ -29,6 +29,7 @@
 		<select ng-model='producto.familia' ng-options='familia.nombre for familia in familias'></select>
 		<strong>{{ans.familiasmsg}}</strong>
 
+
 		<label for='crearproductotalla'>Talla</label>
 		<input id='crearproductotalla' type='text' placeholder='Talla' ng-model='producto.talla'>
 
@@ -38,18 +39,10 @@
 		</div>
 		<button ng-click='agregarunidad()'>Agregar unidad</button>
 
-			
-		<label for='crearproductofamilia'></label>
-		<input id='crearproductofamilia' type='text' placeholder='Familia-proveedor' ng-model='producto.familia'>
-
 		<label for='crearproductofoto'>Foto</label>
 		<input id='crearproductofoto' type='file' placeholder='Foto' ng-model='producto.foto'>
-		
-		<select ng-options='equipocentro.nombre for equipocentro in equipocentros' ng-model='producto.equipocentro'></select>
 
-		<input type='text' placeholder='Equipo' ng-model='producto.equipo'>
-		<input type='text' placeholder='Centro de costo' ng-model='producto.centro'>
-		<input type='submit' value='Crear Producto' ng-click='crearproducto()'>
+		<input type='submit' value='Crear Producto' ng-click='crearproducto()' ng-disabled='!submitenabled'>
 
 	</form>
 </div>
