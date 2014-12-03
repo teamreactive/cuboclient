@@ -1,0 +1,17 @@
+#banner h1 {
+	padding: 5% 0;
+	text-align: center;
+}
+
+#footer h4 {
+	padding: 3% 0;
+	text-align: center;
+}
+
+textarea {
+	resize: none;
+}
+
+.alerts {
+	color: darkred;
+}

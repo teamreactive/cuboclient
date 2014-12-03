@@ -1,0 +1,9 @@
+<div ng-controller='ForgotController'>
+	<a ng-click='olvido = !olvido'>Olvide mi contrasena</a>
+	<form ng-show='olvido' novalidate>
+		<input type='text' placeholder='Usuario' ng-model='olvidado.usuario' required>
+		<input type='email' placeholder='Email' ng-model='olvidado.email' required>
+		<button ng-click='recuperar()'>Recuperar contrasena</button>
+	</form>
+	<p ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</p>
+</div>

@@ -1,0 +1,11 @@
+<div ng-controller='SeleccionarProveedorController'>
+	<h3>Seleccionar proveedores predeterminados</h3>
+	<form novalidate>
+		<div ng-repeat='proveedor in proveedores'>
+			{{ proveedor }}
+			<button ng-click='eliminarproveedor()'>Quitar proveedor</button>
+		</div>
+		<button ng-click='agregarproveedor()'>Agregar otro</button>
+		<button ng-click='guardarproveedores()'>Guardar</button>
+	</form>
+</div>

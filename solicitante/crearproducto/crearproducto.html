@@ -1,0 +1,48 @@
+<div ng-controller="CrearProductoController">
+	<h3>Crear producto</h3>
+	<h2>{{ i }}</h2>
+	<form name='productoForm' novalidate>
+		<label for='crearproductonombre'>Nombre</label>
+		<input id='crearproductonombre' type='text' ng-model='producto.nombre'>
+		<label>Nombre asociados</label>
+		<div ng-repeat='nombre in nombres'>
+			{{nombre}}<strong ng-click="deletenombre(nombre)">✖</strong>
+		</div>
+
+		<input ng-model='nombresinput' placeholder='Separe los nombres por coma' ng-keyup='nombreschanged()'>
+
+		<label for='crearproductoonu'>Codigo</label>
+		<input id='crearproductoonu' type='text' placeholder='Codigo ONU' ng-model='producto.onu'>
+
+		<label for='crearproductodescripcion'>Descripcion</label>
+		<input id='crearproductodescripcion' type='text' placeholder='Descripcion*' ng-model='producto.descripcion' required>
+
+		<label for='crearproductoreferencia'>Referencia</label>
+		<input id='crearproductoreferencia' type='text' placeholder='Referencia' ng-model='producto.referencia'>
+
+		<label for='crearproductomarca'>Marca</label>
+		<input id='crearproductomarca' type='text' placeholder='Marca*' ng-model='producto.marca' required>
+
+		<label>Tipo</label>
+		<select ng-model='servicio' ng-options='servicio.nombre for servicio in servicios'></select>
+		<label>Familia</label>
+		<select ng-model='producto.familia' ng-options='familia.nombre for familia in familias'></select>
+		<strong>{{ans.familiasmsg}}</strong>
+
+
+		<label for='crearproductotalla'>Talla</label>
+		<input id='crearproductotalla' type='text' placeholder='Talla' ng-model='producto.talla'>
+
+		<div ng-repeat='unidad in producto.unidades'>
+			<input type='text' placeholder='Unidad*' ng-model='producto.unidad' required>
+			<button ng-click='quitarunidad(unidad)'>Quitar unidad</button>
+		</div>
+		<button ng-click='agregarunidad()'>Agregar unidad</button>
+
+		<label for='crearproductofoto'>Foto</label>
+		<input id='crearproductofoto' type='file' placeholder='Foto' ng-model='producto.foto'>
+
+		<input type='submit' value='Crear Producto' ng-click='crearproducto()' ng-disabled='!submitenabled'>
+
+	</form>
+</div>

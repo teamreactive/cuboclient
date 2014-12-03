@@ -1,0 +1,14 @@
+<div ng-controller="ActualizarProveedorController">
+	<h3>Actualizar proveedor</h3>
+	<form name='actualizarProveedorForm' novalidate>
+		<select ng-option='proveedor for proveedor in proveedores'></select>
+		<input type='text' placeholder='Razon social*' required>
+		<input type='text' placeholder='Sigla*' required>
+		<input type='text' placeholder='NIT*' required>
+		<input type='text' placeholder='Numero de verificacion del NIT*' required>
+		<input type='text' placeholder='Direccion*' required>
+		<input type='text' placeholder='Telefono*' required>
+		<input type='text' placeholder='Logo*' required>
+		<button ng-click='actualizarproveedor()'>Actualizar proveedor</button>
+	</form>
+</div>

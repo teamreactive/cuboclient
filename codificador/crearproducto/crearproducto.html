@@ -1,0 +1,28 @@
+<div ng-controller="CrearProductoController">
+	<h3>Crear producto</h3>
+	<form name='productoForm' novalidate>
+		<input type='text' placeholder='id*' required>
+		<div ng-repeat='nombre in producto.nombres'>
+			<input type='text' placeholder='Nombre'>
+			<button ng-click='quitarnombre(nombre)'>Quitar nombre</button>
+		</div>
+		<button ng-click='agregarnombre()'>Agregar nombre</button>
+		<input type='text' placeholder='Codigo ONU'>
+		<input type='text' placeholder='Tipo*' required>
+		<input type='text' placeholder='Descripcion*' required>
+		<input type='text' placeholder='Referencia'>
+		<input type='text' placeholder='Talla'>
+		<input type='text' placeholder='Marca*' required>
+		<div ng-repeat='unidad in producto.unidades'>
+			<input type='text' placeholder='Unidad*' required>
+			<button ng-click='quitarunidad(unidad)'>Quitar unidad</button>
+		</div>
+		<button ng-click='agregarunidad()'>Agregar unidad</div>
+		<input type='text' placeholder='Familia-proveedor'>
+		<input type='text' placeholder='Foto'>
+		<select ng-option='equipocentro'></select>
+		<input type='text' placeholder='Equipo'>
+		<input type='text' placeholder='Centro de costo'>
+		<button ng-click='crearproducto()'>Crear producto</button>
+	</form>
+</div>
