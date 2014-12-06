@@ -1,0 +1,14 @@
+<div ng-controller='CambiarClaveController'>
+	<h3>Cambio de contrasena</h3>
+
+	<form novalidate>
+		<input type='text' placeholder='Usuario' ng-model='cambio.usuario' required>
+		<input type='password' placeholder='Contrasena actual' ng-model='cambio.claveactual' required>
+		<input type='password' placeholder='Nueva contrasena' ng-model='cambio.nuevaclave' required>
+		<input type='password' placeholder='Repetir nueva contrasena' ng-model='cambio.rnuevaclave' required>
+		<p ng-show='invalidnew()'>Las contrasenas nuevas no coinciden</p>
+		<button ng-click='cambiar()' ng-disabled='invalidnew()'>Cambiar contrasena</button>
+	</form>
+
+	<p ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</p>
+</div>

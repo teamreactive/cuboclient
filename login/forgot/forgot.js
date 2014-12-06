@@ -9,9 +9,21 @@ angular.module("forgot", ["crud"])
 		$scope.ans.msg = "Espere un momento porfavor...";
 		service.readParam(url, "nombre", $scope.olvidado.usuario, function(status, data) {
 			if (status) {
-				if (data[0].contacto.email == $scope.olvidado.email) {
-					$scope.ans.css = "";
-					$scope.ans.msg = "Se ha enviado un correo con instrucciones";
+				if (data[0].contacto.email == $scope.olvidado.email.toUpperCase()) {
+					var murl = "/mail/"
+					var mdata = {
+						"user": $scope.olvidado.usuario,
+						"mail": data[0].contacto.email
+					}
+					service.create(murl, mdata, function(status, data) {
+						if (status) {
+							$scope.ans.css = "";
+							$scope.ans.msg = "Se ha enviado un correo con instrucciones"
+						} else {
+							$scope.ans.css = "";
+							$scope.ans.msg = "No se pudo enviar el correo"
+						}
+					})
 				} else {
 					console.log(data[0].contacto.email);
 					$scope.ans.css = "";

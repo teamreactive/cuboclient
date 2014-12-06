@@ -18,6 +18,7 @@ angular.module("crud", [])
 		})
 		.error(function(data) {
 			console.log(data);
+			$(data).appendTo( "body" );
 			callback(false, data);
 		});
 	}
@@ -40,6 +41,7 @@ angular.module("crud", [])
 			callback(status, ans);
 		})
 		.error(function(data) {
+			console.log(data)
 			callback(false, data);
 		});
 	}
@@ -55,6 +57,8 @@ angular.module("crud", [])
 			}
 		} else
 			newUrl += param + "=" + value;
+
+		console.log(newUrl)
 
 		$http({
 			method: "GET",

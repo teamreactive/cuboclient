@@ -34,7 +34,7 @@ angular.module("signin", ["crud", "ngCookies"])
 
 		service.readParam(url, "nombre", $scope.usuario.usuario, function(status, data) {
 			if (status) {
-				var hash = CryptoJS.SHA512($scope.usuario.contrasena) + "";
+				var hash = CryptoJS.SHA512(CryptoJS.SHA512($scope.usuario.contrasena) + "") + "";
 				if (hash == data[0].password) {
 					$scope.ans.css = "";
 					$scope.ans.msg = "El inicio de sesion fue exitoso";

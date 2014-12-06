@@ -1,0 +1,3 @@
+angular.module("restaurar", [
+	"cambiarclave"
+]);
