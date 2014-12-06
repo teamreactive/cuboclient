@@ -64,6 +64,18 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 		if(contacto.id != undefined)
 			$scope.contactos.push(contacto);
 	};
+	$scope.checknombre = function(){
+		$scope.nombrestatus = "espere..."
+		service.readParam("/api/v1/lugar/","nombre",$scope.lugar.nombre,function(status,data){
+			if(status){
+				$scope.nombrestatus = "nombre no disponible"
+			}
+			else{
+				$scope.nombrestatus = "nombre disponible"
+			}
+
+		});
+	};
 
 }])
 .directive("crearlugar", function() {

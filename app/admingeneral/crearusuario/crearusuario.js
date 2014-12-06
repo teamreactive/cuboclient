@@ -33,22 +33,26 @@ angular.module("crearusuario", ["crud"])
 		},
 		{
 			"num": "4",
-			"opt": "Codificador"
+			"opt": "Consolidador"
 		},
 		{
 			"num": "5",
-			"opt": "Aprobador de Solicitudes"
+			"opt": "Codificador"
 		},
 		{
 			"num": "6",
-			"opt": "Comprador"
+			"opt": "Aprobador de Solicitudes"
 		},
 		{
 			"num": "7",
-			"opt": "Aprobador de Compra"
+			"opt": "Comprador"
 		},
 		{
 			"num": "8",
+			"opt": "Aprobador de Compra"
+		},
+		{
+			"num": "9",
 			"opt": "Almacenista"
 		}
 	]
