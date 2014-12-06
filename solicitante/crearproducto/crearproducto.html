@@ -1,6 +1,5 @@
 <div ng-controller="CrearProductoController">
 	<h3>Crear producto</h3>
-	<h2>{{ i }}</h2>
 	<form name='productoForm' novalidate>
 		<label for='crearproductonombre'>Nombre</label>
 		<input id='crearproductonombre' type='text' ng-model='producto.nombre'>
@@ -28,16 +27,16 @@
 		<label>Familia</label>
 		<select ng-model='producto.familia' ng-options='familia.nombre for familia in familias'></select>
 		<strong>{{ans.familiasmsg}}</strong>
+		<strong ng-show='producto.familia.nombre == "--otra familia"'>esta nueva familia sera agregada por el codificador</strong>
 
-
-		<label for='crearproductotalla'>Talla</label>
-		<input id='crearproductotalla' type='text' placeholder='Talla' ng-model='producto.talla'>
-
-		<div ng-repeat='unidad in producto.unidades'>
-			<input type='text' placeholder='Unidad*' ng-model='producto.unidad' required>
+		<div ng-repeat='unidad in producto.units'>
+			<label>Unidad*</label>
+			<input type='text' placeholder='Ej: Caja, Bulto, Kg ...' ng-model='unidad.unidad' required>
+			<label>Talla</label>
+			<input type='text' placeholder='Ej: Grande, Mediana ...' ng-model='unidad.talla' required>
 			<button ng-click='quitarunidad(unidad)'>Quitar unidad</button>
 		</div>
-		<button ng-click='agregarunidad()'>Agregar unidad</button>
+		<button ng-click='agregarunidad()'>Agregar unidad/talla</button>
 
 		<label for='crearproductofoto'>Foto</label>
 		<input id='crearproductofoto' type='file' placeholder='Foto' ng-model='producto.foto'>

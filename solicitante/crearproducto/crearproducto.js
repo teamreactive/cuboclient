@@ -7,6 +7,7 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 	$scope.familias = [];
 	$scope.ans = {};
 	$scope.i = $cookies.cliente;
+	$scope.cliente = $cookies.cliente;
 	$scope.submitenabled = true;
 	$scope.getfamilias = function(){
 		service.read("/api/v1/familia/",function(status, data){
@@ -33,23 +34,21 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 	};
 
 	$scope.quitarunidad = function(unidad) {
-		var i = $scope.producto.unidades.indexOf(unidad);
-		$scope.producto.unidades.splice(i, 1);
+		var i = $scope.producto.units.indexOf(unidad);
+		$scope.producto.units.splice(i, 1);
 	};
 
 	$scope.agregarunidad = function() {
-		if ($scope.producto.unidades == null)
-			$scope.producto.unidades = [];
-		var max = $scope.producto.unidades.length;
-		$scope.producto.unidades.push(max);
+		if ($scope.producto.units == null)
+			$scope.producto.units = [];
+		var max = $scope.producto.units.length;
+		$scope.producto.units.push({"unidad":"","talla":""});
 	};
 
 	$scope.crearproducto = function() {
-		if($scope.producto.familia.nombre == "--nueva familia")
-			$scope.producto.familia = { "nombre": $scope.familia };
-		else
-			$scope.producto.familia = $scope.producto.familia.resource_uri;
+		$scope.producto.familia = $scope.producto.familia.resource_uri;
 		$scope.submitenabled = false;
+		$scope.producto.cliente = $scope.cliente;
 		service.create("/api/v1/producto/", $scope.producto, function(status, data) {
 			if(status) {
 				console.log("Producto creado exitosamente");
@@ -61,6 +60,23 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 				console.log(data);
 			}
 		});
+	};
+	$scope.crearunits = function(uri) {
+		var url = "/api/v1/unidadproducto/";
+		if($scope.producto.units.length != 0){
+			var unidad = $scope.producto.units[$scope.producto.units.length-1];
+			unidad["producto"] = uri;
+			service.create(url, unidad, function(status,data){
+				if(status) {
+					console.log("unidad agregada correctamente.");
+					$scope.producto.units.pop();
+					$scope.crearunits(uri);
+				} else {
+					console.log("Ocurrio un error.");
+					console.log(data);
+				}
+			})
+		}
 	};
 
 	$scope.crearnombres = function(uri) {
@@ -78,6 +94,8 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 					console.log(data);
 				}
 			});
+		} else {
+			$scope.crearunits(uri);
 		}
 	}
 
