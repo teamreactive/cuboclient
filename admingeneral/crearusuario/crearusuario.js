@@ -82,6 +82,7 @@ angular.module("crearusuario", ["crud"])
 				$scope.usuario.contacto = {};
 				$scope.usuario.tipo = {};
 				$scope.inProgress = false;
+				location.reload();
 				return true;
 			} else {
 				$scope.msg.css = "";
