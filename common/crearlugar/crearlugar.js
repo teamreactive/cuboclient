@@ -80,7 +80,7 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 }])
 .directive("crearlugar", function() {
 	return {
-		templateUrl: "crearlugar/crearlugar.html"
+		templateUrl: "../common/crearlugar/crearlugar.html"
 	};
 });
 var secciones = [

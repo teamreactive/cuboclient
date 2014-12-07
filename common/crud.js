@@ -1,8 +1,8 @@
 angular.module("crud", [])
 
 .factory("service", ["$http", function($http) {
-	//var base = "http://127.0.0.1:8080";
-	var base = "https://morning-reef-7939.herokuapp.com"
+	var base = "http://127.0.0.1:8080";
+	//var base = "https://morning-reef-7939.herokuapp.com"
 
 	function create(url, data, callback) {
 		var newUrl = base + url;
@@ -18,7 +18,6 @@ angular.module("crud", [])
 		})
 		.error(function(data) {
 			console.log(data);
-			$(data).appendTo( "body" );
 			callback(false, data);
 		});
 	}

@@ -1,20 +1,13 @@
 angular.module("crearproducto", ["crud"])
-.controller("CrearProductoController", ["$scope", "$http", "service", function($scope, $http, service) {
-
+.controller("CrearProductoController", ["$cookies", "$scope", "$http", "service", function($cookies, $scope, $http, service) {
 	$scope.crear = {};
-	$scope.crear.nombres = [{"k": 0, "v": ""}];
-	$scope.crear.unidades = [];
+
+	$scope.ans = {};
 
 	$scope.tipo = [
-		{
-			"k": false,
-			"v": "Bien"
-		},
-		{
-			"k": true,
-			"v": "Servicio"
-		}
-	]
+		{ "k": "BIEN", "v": "Bien" },
+		{ "k": "SERVICIO",  "v": "Servicio" }
+	];
 
 	$scope.ec = 1;
 	$scope.equipocentro = [
@@ -26,54 +19,116 @@ angular.module("crearproducto", ["crud"])
 			"k": 2,
 			"v": "Centro de costo"
 		}
-	]
+	];
 
-	$scope.fmsg = "Cargando familias...";
 	$scope.familias = [];
-	service.read("/api/v1/familia", function(status, data) {
-		if (status) {
+	var url = "/api/v1/familia/";
+	service.read(url, function(status, data) {
+		if (status || data.length > 0) {
 			$scope.familias = data;
-			$scope.fmsg = "No hay ninguna familia-proveedor"
-			console.log("Familias cargadas satisfactoriamente");
+			console.log(url + " " + data.length);
+			return true;
 		} else {
-			console.log("Error cargando familias");
+			console.log("Error cargando " + url);
+			return false;
 		}
 	});
 
-	$scope.agregarnombre = function() {
-		var name = {
-			"k": $scope.crear.nombres.length,
+	$scope.equipos = [];
+	var url = "/api/v1/equipo/";
+	service.read(url, function(status, data) {
+		if (status || data.length > 0) {
+			$scope.equipos = data;
+			console.log(url + " " + data.length);
+			return true;
+		} else {
+			console.log("Error cargando " + url);
+			return false;
+		}
+	});
+
+	$scope.centros = [];
+	var url = "/api/v1/centro/";
+	service.read(url, function(status, data) {
+		if (status || data.length > 0) {
+			$scope.centros = data;
+			console.log(url + " " + data.length);
+			return true;
+		} else {
+			console.log("Error cargando " + url);
+			return false;
+		}
+	});
+
+	$scope.nombres = [{"k": 0, "v": ""}];
+	$scope.unidades = [{"k": 0, "v": ""}];
+
+	$scope.agregar = function(source) {
+		var target = {
+			"k": source.length,
 			"v": ""
 		};
-		$scope.crear.nombres.push(name);
-	}
+		var i = source.indexOf(target);
+		if (i == -1) {
+			source.push(target);
+		}
+	};
 
-	$scope.quitarnombre = function(nombre) {
-		if ($scope.crear.nombres.length > 1) { 
-			var i = $scope.crear.nombres.indexOf(nombre);
+	$scope.quitar = function(target, source) {
+		if (source.length > 1) {
+			var i = source.indexOf(target);
 			if (i != -1) {
-				$scope.crear.nombres.splice(i, 1);
+				source.splice(i, 1);
 			}
 		}
-	}
+	};
 
-	$scope.agregarunidad = function() {
-		var unidad = {
-			"k": $scope.crear.unidades.length,
-			"v": ""
-		};
-		$scope.crear.unidades.push(unidad);
-	}
-
-	$scope.quitarunidad = function(unidad) {
-		var i = $scope.crear.unidades.indexOf(unidad);
-		if (i != -1) {
-			$scope.crear.unidades.splice(i, 1);
+	function arreglar(source, target, val) {
+		var temp = [];
+		for (var i = 0; i < source.length; i++) {
+			var actual = source[i].v.toUpperCase();
+			if (temp.indexOf(actual) == -1) {
+				temp.push(actual);
+			}
 		}
+		for (var i = 0; i < temp.length; i++) {
+			if (val == "nombre") {
+				target.push({ "nombre": temp[i] });
+			} else if (val == "unidad") {
+				target.push({ "unidad": temp[i] });
+			}
+		}
+		return true;
+	};
+
+	$scope.crearproducto = function() {
+		if (!$cookies.cliente) {
+			$scope.ans.css = "alert alert-warning";
+			$scope.ans.msg = "No hay sesion iniciada";
+		}
+		$scope.crear.cliente = $cookies.cliente;
+		$scope.crear.nombres = [];
+		$scope.crear.unidades = [];
+		arreglar($scope.nombres, $scope.crear.nombres, "nombre");
+		arreglar($scope.unidades, $scope.crear.unidades, "unidad");
+		console.log($scope.crear);
+		$scope.ans.css = "alert alert-info";
+		$scope.ans.msg = "Espere un momento...";
+		var url = "/api/v1/producto/";
+		service.create(url, $scope.crear, function(status, data) {
+			if (status) {
+				console.log("Producto creado");
+				$scope.ans.css = "alert alert-success";
+				$scope.ans.msg = "Producto creado con exito";
+			} else {
+				$scope.ans.css = "alert alert-warning";
+				$scope.ans.msg = "Error al crear producto";
+			}
+		});
 	}
 }])
 .directive("crearproducto", function() {
 	return {
-		templateUrl: "crearproducto/crearproducto.html"
+		templateUrl: "../common/crearproducto/crearproducto.html"
 	};
 });

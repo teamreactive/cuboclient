@@ -1,20 +1,15 @@
-<div ng-controller="CrearProductoController">
+<div ng-controller='CrearProductoController as p'>
 	<h3>Crear producto</h3>
 
 	<form name='productoForm' novalidate>
 		<div class='form-group'>
-			<label>ID *</label>
-			<input type='text'required>
-		</div>
-
-		<div class='form-group'>
-			<div ng-repeat='nombre in crear.nombres'>
+			<div ng-repeat='nombre in nombres'>
 				<label>Nombre *</label>
 				<input type='text' ng-model='nombre.v' required>
-				<button ng-click='quitarnombre(nombre)' ng-disabled='crear.nombres.length <= 1'>Quitar nombre</button>
+				<button ng-click='quitar(nombre, nombres)' ng-disabled='nombres.length <= 1'>Quitar nombre</button>
 			</div>
 
-			<button ng-click='agregarnombre()'>Agregar nombre</button>
+			<button ng-click='agregar(nombres)'>Agregar nombre</button>
 		</div>
 
 		<div class='form-group'>
@@ -24,7 +19,7 @@
 
 		<div class='form-group'>
 			<label>Tipo *</label>
-			<select ng-options='t.k as t.v for t in tipo' ng-model='crear.servicio' required></select>
+			<select ng-options='t.k as t.v for t in tipo' ng-model='crear.tipo' required></select>
 		</div>
 
 		<div class='form-group'>
@@ -49,21 +44,18 @@
 		</div>
 
 		<div class='form-group'>
-			<div ng-repeat='unidad in crear.unidades'>
+			<div ng-repeat='unidad in unidades'>
 				<label>Unidad *</label>
 				<input type='text' ng-model='unidad.v' required>
-				<button ng-click='quitarunidad(unidad)'>Quitar unidad</button>
+				<button ng-click='quitar(unidad, unidades)' ng-disabled='unidades.length <= 1'>Quitar unidad</button>
 			</div>
 
-			<button ng-click='agregarunidad()'>Agregar unidad</div>
+			<button ng-click='agregar(unidades)'>Agregar unidad</button>
 		</div>
 
 		<div class='form-group'>
 			<label>Familia-proveedor</label>
-			<select ng-options='f for f in familias' ng-show='familias'></select>
-			<div class='alert alert-info' ng-hide='familias'>
-				<p>{{ fmsg }}</p>
-			</div>
+			<select ng-options='f.resource_uri as f.nombre for f in familias' ng-model='crear.familia'></select>
 		</div>
 
 		<div class='form-group'>
@@ -73,19 +65,21 @@
 
 		<div class='form-group'>
 			<label>Seleccione equipo o centro de costo</label>
-			<select ng-options='e for e in equipocentro'></select>
+			<select ng-options='e.k as e.v for e in equipocentro' ng-model='ec'></select>
 		</div>
 
 		<div class='form-group' ng-show='ec == 1'>
 			<label>Equipo</label>
-			<input type='text' ng-model='crear.equipo'>
+			<select ng-options='e.resource_uri as e.nombre for e in equipos' ng-model='crear.equipo'></select>
 		</div>
 
 		<div class='form-group' ng-show='ec == 2'>
 			<label>Centro de costo</label>
-			<input type='text' ng-model='crear.centro'>
+			<select ng-options='c.resource_url as c.nombre for c in centros' ng-model='crear.centro'></select>
 		</div>
 
 		<button ng-click='crearproducto()'>Crear producto</button>
+
+		<div ng-class='ans.css'>{{ ans.msg }}</div>
 	</form>
 </div>
