@@ -1,20 +1,64 @@
 <div ng-controller="CrearSolicitudController">
 	<h3>Crear solicitud</h3>
+	<h2>{{ usuario }}  tipo: {{ tipo }}</h2>
 	<form name='solicitudForm' novalidate>
-		<div ng-repeat='producto in productos'>
-			<input type='text' placeholder='Producto*' required>
-			<input type='text' placeholder='Cantidad*' required>
-			<input type='text' placeholder='Unidad*' required>
-			<button ng-click='quitarproducto()'>Quitar producto</button>
+		<div id='agregar-productos'>
+			<h3>Productos:</h3>
+			<input ng-model='searchproducto' placeholder='Buscar Productos...' ng-focus='search = true' ng-blur='search = false'>
+			<div id='searchproductosbox' ng-show='search || wait' ng-mouseover='wait = true' ng-mouseleave='wait = false' >
+				<div ng-repeat='producto in productos | filter:searchproducto | limitTo:10' ng-mouseover='producto.show = true' ng-mouseleave='producto.show = false' ng-click='agregarproducto(producto)'>{{producto.nombre}}
+					<div ng-show='producto.show'>
+						<strong>Descripcion: </strong>{{producto.descripcion}}<br>
+						<strong>Referencia: </strong>{{producto.referencia}}<br>
+						<strong>Marca: </strong>{{producto.marca}}<br>
+						<strong>Nombres: </strong><span ng-repeat='nombre in producto.nombres'><span ng-show='$index != 0'>, </span>{{nombre.nombre}}</span>
+					</div>
+				</div>
+			</div>
 		</div>
-		<button ng-click='agregarproducto'>Agregar producto</button>
-		<input type='text' placeholder='Lugar de entrega*' required>
-		<input type='text' placeholder='Fecha requerida*' required>
-		<select ng-option='opt for opt in centroequipo'></select>
-		<input type='text' placeholder='Centro de costo*' required>
-		<input type='text' placeholder='Equipo*' required>
-		<input type='text' placeholder='Solicitante*' required>
-		<textarea placeholder='Comentarios*' required></textarea>
-		<button ng-click='crearsolicitud()'>Crear solicitud</button>
+		<div ng-repeat='linea in lineas'>
+			<strong>{{$index+1}}</strong> {{linea.producto.nombre}}
+			<label>unidad</label>
+			<select ng-options='unidad.unidad+" "+unidad.talla for unidad in linea.producto.unidades' ng-model='linea.unidad' required></select>
+			<label>cantidad</label><input type='text' ng-model='linea.cantidad' required>
+		</div>
+
+		<div id='solicitante-for-consolidador' ng-show='tipo == "4"'>
+			<label>solicitante</label>
+			<select ng-options='usuario.solicitante.nombre for usuario in solicitantes' ng-model='solicitante'>
+				<option value=''>--otro solicitante</option>
+			</select>
+			<div id="otro-solicitante" ng-show='solicitante == undefined'>
+				<select ng-options='usuario.nombre for usuario in allsolicitantes' ng-model='otrosolicitante'></select>
+			</div>
+		</div>
+
+
+		<label>Lugar</label>
+		<select ng-options='lugar.nombre for lugar in lugares' ng-model='lugar' required></select>
+		
+		<label>fecha requerida</label>
+		<input type='text' placeholder='Fecha requerida*'  ng-model='fecharequerida' required>
+		
+		<label>centro de costo</label>
+		<select ng-options='centro.nombre for centro in centros' ng-model='centro'>
+		</select>
+
+		<label>Equipo</label>
+		<select ng-options='equipo.nombre for equipo in equipos' ng-model='equipo'>
+		</select>
+
+		<div id='crear-solicitud-aprobador'>
+		<strong>Aprobador: </strong>{{aprobador.nombre}}
+		<a href ng-show='!iscambiaraprobador' ng-click='cambiaraprobador()'>cambiar aprobador</a>
+		<select ng-options='usuario.nombre for usuario in aprobadores' ng-model='aprobador' ng-change='iscambiaraprobador = false' ng-show='iscambiaraprobador'></select>
+		</div>
+
+		<textarea placeholder='Comentarios para el aprobador de solicitudes' ng-model='solicitud.comentariosaprobador'></textarea>
+
+		<textarea placeholder='Comentarios para comprador' ng-model='solicitud.comentarioscomprador'></textarea>
+
+		<span ng-show='!solicitudForm.$valid || !validForm()'>La informacion no esta completa!!</span>
+		<button ng-click='crearsolicitud()' ng-disabled='!solicitudForm.$valid || !validForm()'>Crear solicitud</button>
 	</form>
 </div>

@@ -4,8 +4,6 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 
 	$scope.cliente = $cookies.cliente;
 
-	console.log($scope.cliente);
-
 	$scope.getcontactos = function(){
 			service.read("/api/v1/contacto/",function(status, data){
 			if(status){
@@ -55,6 +53,8 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 				$scope.ans.msg = "lugar creado exitosamente";
 				$scope.init();
 				alert("lugar creado exitosamente");
+				$scope.nombrestatus = "";
+				location.reload();
 			} else 
 				$scope.ans.msg = "ha ocurrido un error porfavor intentelo de nuevo";
 		});
@@ -63,6 +63,18 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 		deleteobj($scope.lugar.contactos,contacto);
 		if(contacto.id != undefined)
 			$scope.contactos.push(contacto);
+	};
+	$scope.checknombre = function(){
+		$scope.nombrestatus = "espere..."
+		service.readParam("/api/v1/lugar/","nombre",$scope.lugar.nombre,function(status,data){
+			if(status){
+				$scope.nombrestatus = "nombre no disponible"
+			}
+			else{
+				$scope.nombrestatus = "nombre disponible"
+			}
+
+		});
 	};
 
 }])

@@ -1,26 +1,28 @@
 <div ng-controller="CrearLugarController">
 	<h3>Crear lugar</h3>
 
-	<p>CLIENTE -> {{ cliente }}</p>
+	<!-- <p>CLIENTE -> {{ cliente }}</p>-->
 
 	<!-- miss usuario -->
 	<!-- miss usuario in getcontacto -->
 	<form name='lugarForm' novalidate>
 		
 		<label for='crearlugarnombre'>nombre</label>
-		<input id='crearlugarnombre'type='text' ng-model='lugar.nombre'>
+		<input id='crearlugarnombre' type='text' ng-model='lugar.nombre' ng-change='checknombre()' required>
+		<strong ng-show='lugar.nombre != ""'>{{nombrestatus}}</strong>
 
 		<label for='crearlugarciudad'>ciudad</label>
 		<input id='crearlugarciudad'type='text' ng-model='lugar.ciudad'>
 
-		<select ng-model='seccion' ng-options='seccion.nombre for seccion in secciones' required>*</select>
-		<input id='crearlugarnumero1'type='text' ng-model='lugar.numero1'>
+		<select ng-model='seccion' ng-options='seccion.nombre for seccion in secciones' required>
+		</select>
+		<input id='crearlugarnumero1'type='text' ng-model='lugar.numero1' required>
 		
 		<label for='crearlugarnumero2'>#</label>
-		<input id='crearlugarnumero2'type='text' ng-model='lugar.numero2'>
+		<input id='crearlugarnumero2'type='text' ng-model='lugar.numero2' required>
 		
 		<label for='crearlugarnumero3'>-</label>
-		<input id='crearlugarnumero3'type='text' ng-model='lugar.numero3'>
+		<input id='crearlugarnumero3'type='text' ng-model='lugar.numero3' required>
 		
 		<label for='crearlugardescripcion'>descripcion</label>
 		<input id='crearlugardescripcion'type='text' ng-model='lugar.descripcion'>
@@ -37,7 +39,7 @@
 		<div id='anadircontacto' ng-show='!iscontactostatus(0)'>
 			<div ng-show='iscontactostatus(1) && contactos.length != 0'>
 				<label for='crearlugarselectcontacto'>seleccionar contacto existente</label>
-				<select id='crearlugarselectcontacto' ng-options='contacto.nombre+" "+contacto.apellido for contacto in contactos' ng-model='contacto' ng-change='addcontacto()'></select>
+				<select id='crearlugarselectcontacto' ng-options='contacto.nombre+" "+contacto.apellido for contacto in contactos' ng-model='contacto' ng-change='addcontacto()' required></select>
 				<strong>{{ ans.msgcontacto }}</strong>
 			</div>
 
@@ -46,13 +48,13 @@
 			<div ng-id='crearlugarcrearcontacto' ng-show='iscontactostatus(2)'>
 				<h4>Crear un nuevo contacto</h4>
 				<label for='crearlugarcrearcontactonombre'>nombre</label>
-				<input ng-model='contacto.nombre' id='crearlugarcrearcontactonombre' type='text'>
+				<input ng-model='contacto.nombre' id='crearlugarcrearcontactonombre' type='text' required>
 
 				<label for='crearlugarcrearcontactoapellido'>apellido</label>
-				<input ng-model='contacto.apellido' id='crearlugarcrearcontactoapellido' type='text'>
+				<input ng-model='contacto.apellido' id='crearlugarcrearcontactoapellido' type='text' required>
 
 				<label for='crearlugarcrearcontactotelefono'>telefono</label>
-				<input ng-model='contacto.telefono' id='crearlugarcrearcontactotelefono' type='text'>
+				<input ng-model='contacto.telefono' id='crearlugarcrearcontactotelefono' type='text' required>
 
 				<label for='crearlugarcrearcontactoextension'>extension</label>
 				<input ng-model='contacto.extension' id='crearlugarcrearcontactoextension' type='text'>
@@ -73,7 +75,7 @@
 				<button ng-click='setcontactostatus(0); contacto = {}'>cancelar</button>
 			</div>
 		</div>
-		<input type='submit' ng-click='crear()' value='crear lugar'>
+		<input type='submit' ng-click='crear()' value='crear lugar' ng-disabled='nombrestatus!="nombre disponible"'>
 		<strong>{{ ans.msg }}</strong>
 	</form>
 </div>

@@ -58,8 +58,6 @@ angular.module("crud", [])
 		} else
 			newUrl += param + "=" + value;
 
-		console.log(newUrl)
-
 		$http({
 			method: "GET",
 			url: newUrl,
