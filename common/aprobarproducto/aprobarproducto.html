@@ -1,0 +1,12 @@
+<div ng-controller='AprobarProductoController'>
+	<h3>Aprobar producto</h3>
+
+	<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+	<div ng-repeat='p in productos'>
+		<form name='productoForm' novalidate>
+			<p>Nombre: {{ p.nombres[0].nombre }}</p>
+			<button ng-click='aprobarproducto(p, $index)'>Aprobar producto</button>
+		</form>
+	</div>
+</div>

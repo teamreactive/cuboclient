@@ -1,0 +1,22 @@
+<div ng-controller="EnviarCotizacionController">
+	<h3>Enviar cotizacion</h3>
+
+	<form name='enviarCotizacionForm' novalidate>
+		<div class='form-group'>
+			<label>Cotizacion</label>
+			<select ng-model='enviar.cotizacion' ng-options='c for c in cotizaciones' required></select>
+
+			<div ng-class='ans1.css'>{{ ans1.msg }}</div>
+		</div>
+
+		<div class='form-group'>
+			<label>Proveedores</label>
+			<br>
+			<select ng-model='enviar.proveedores' ng-options='p.razon for p in proveedores' multiple required></select>
+
+			<div ng-class='ans2.css'>{{ ans2.msg }}</div>
+		</div>
+
+		<button ng-click='enviarcotizacion()'>Enviar cotizacion</button>
+	</form>
+</div>

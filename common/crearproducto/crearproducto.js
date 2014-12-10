@@ -1,4 +1,4 @@
-angular.module("crearproducto", ["crud"])
+angular.module("crearproducto", ["crud", "ngCookies"])
 .controller("CrearProductoController", ["$cookies", "$scope", "$http", "service", function($cookies, $scope, $http, service) {
 	$scope.crear = {};
 
@@ -24,7 +24,7 @@ angular.module("crearproducto", ["crud"])
 	$scope.familias = [];
 	var url = "/api/v1/familia/";
 	service.read(url, function(status, data) {
-		if (status || data.length > 0) {
+		if (status || data.length == 0) {
 			$scope.familias = data;
 			console.log(url + " " + data.length);
 			return true;
@@ -37,7 +37,7 @@ angular.module("crearproducto", ["crud"])
 	$scope.equipos = [];
 	var url = "/api/v1/equipo/";
 	service.read(url, function(status, data) {
-		if (status || data.length > 0) {
+		if (status || data.length == 0) {
 			$scope.equipos = data;
 			console.log(url + " " + data.length);
 			return true;
@@ -50,7 +50,7 @@ angular.module("crearproducto", ["crud"])
 	$scope.centros = [];
 	var url = "/api/v1/centro/";
 	service.read(url, function(status, data) {
-		if (status || data.length > 0) {
+		if (status || data.length == 0) {
 			$scope.centros = data;
 			console.log(url + " " + data.length);
 			return true;
@@ -105,24 +105,28 @@ angular.module("crearproducto", ["crud"])
 		if (!$cookies.cliente) {
 			$scope.ans.css = "alert alert-warning";
 			$scope.ans.msg = "No hay sesion iniciada";
+			return false;
 		}
 		$scope.crear.cliente = $cookies.cliente;
 		$scope.crear.nombres = [];
 		$scope.crear.unidades = [];
 		arreglar($scope.nombres, $scope.crear.nombres, "nombre");
 		arreglar($scope.unidades, $scope.crear.unidades, "unidad");
-		console.log($scope.crear);
 		$scope.ans.css = "alert alert-info";
 		$scope.ans.msg = "Espere un momento...";
 		var url = "/api/v1/producto/";
+		console.log($scope.crear);
 		service.create(url, $scope.crear, function(status, data) {
 			if (status) {
 				console.log("Producto creado");
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Producto creado con exito";
+				location.reload();
+				return true;
 			} else {
 				$scope.ans.css = "alert alert-warning";
 				$scope.ans.msg = "Error al crear producto";
+				return false;
 			}
 		});
 	}

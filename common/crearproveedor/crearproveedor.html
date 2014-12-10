@@ -1,0 +1,58 @@
+<div ng-controller="CrearProveedorController">
+	<h3>Crear proveedor</h3>
+
+	<form name='crearProveedorForm' novalidate>
+		<div class='form-group'>
+			<label>Razon social *</label>
+			<input type='text' ng-model='proveedor.razon' required>
+		</div>
+
+		<div class='form-group'>
+			<label>Sigla *</label>
+			<input type='text' ng-model='proveedor.sigla' required>
+		</div>
+
+		<div class='form-group'>
+			<label>NIT *</label>
+			<input type='text' ng-model='proveedor.nit' required>
+		</div>
+
+		<div class='form-group'>
+			<label>Numero de verificacion *</label>
+			<input type='text' ng-model='proveedor.verificacion' required>
+		</div>
+
+		<div class='form-group'>	
+			<label>Ciudad *</label>
+			<input type='text' ng-model='proveedor.lugar.ciudad' required>
+		</div>
+
+		<div class='form-group'>
+			<label>Direccion *</label>
+			<select ng-model='proveedor.lugar.seccion' ng-options='s.k as s.v for s in secciones' required>
+			</select>
+
+			<input type='text' ng-model='proveedor.lugar.numero1' required>
+
+			<label>#</label>
+			<input type='text' ng-model='proveedor.lugar.numero2' required>
+
+			<label>-</label>
+			<input type='text' ng-model='proveedor.lugar.numero3' required>
+		</div>
+
+		<div class='form-group'>
+			<label>Telefono *</label>
+			<input type='tel' ng-model='proveedor.lugar.telefono' required>
+		</div>
+
+		<div class='form-group'>
+			<label>Logo *</label>
+			<input type='file' ng-model='proveedor.logo' required>
+		</div>
+
+		<button ng-click='crearproveedor()'>Crear proveedor</button>
+	</form>
+
+	<div ng-class='ans.css'>{{ ans.msg }}</div>
+</div>
