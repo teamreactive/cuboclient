@@ -1,8 +1,8 @@
 angular.module("crud", ["ngCookies"])
 
 .factory("service", ["$cookies", "$http", function($cookies, $http) {
-	var base = "http://127.0.0.1:8080";
-	//var base = "https://morning-reef-7939.herokuapp.com"
+	//var base = "http://127.0.0.1:8080";
+	var base = "https://morning-reef-7939.herokuapp.com"
 
 	function create(url, data, callback) {
 		var newUrl = base + url;

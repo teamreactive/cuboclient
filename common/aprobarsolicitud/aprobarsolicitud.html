@@ -1,0 +1,14 @@
+<div ng-controller='AprobarSolicitudController'>
+	<h3>Aprobar solicitudes</h3>
+
+	<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+	<div ng-repeat='s in solicitudes'>
+		<form name='solicitudForm' novalidate>
+			<p>{{ $index+1 }}. Solicitud #{{ s.id }}</p>
+			<p>Estado: {{ s.estado }}</p>
+			<p>Lugar de entrega: {{ s.lugar.nombre }}</p>
+			<button ng-click='aprobarsolicitud(s, $index)'>Aprobar solicitud</button>
+		</form>
+	</div>
+</div>

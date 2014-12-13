@@ -4,7 +4,7 @@
 	<form name='ingresarCotizacionForm' novalidate>
 		<div class='form-group'>
 			<label>Producto *</label>
-			<select ng-option='producto for producto in productos' ng-model='cotizacion.producto'></select>
+			<select ng-options='p.resource_uri as p.nombres[0].nombre for p in productos' ng-model='cotizacion.producto' required></select>
 		</div>
 
 		<div class='form-group'>
@@ -13,19 +13,18 @@
 		</div>
 
 		<div class='form-group'>
-			<!-- iva: (16, 1.6, 20, 0) -->
-			<label>IVA *</label>
+			<label>IVA (%) *</label>
 			<select ng-options='opt for opt in iva' ng-model='cotizacion.iva' required></select>
 		</div>
 
 		<div class='form-group'>
 			<label>Tiempo de entrega(dias) *</label>
-			<input type='text' ng-model='cotizacion.tiempo'>
+			<input type='text' ng-model='cotizacion.tiempo' required>
 		</div>
 
 		<div class='form-group'>
 			<label>Referencia *</label>
-			<input type='text' ng-model='cotizacion.referencia'>
+			<input type='text' ng-model='cotizacion.referencia' required>
 		</div>
 
 		<div class='form-group'>
@@ -34,16 +33,17 @@
 		</div>
 
 		<div class='form-group'>
-			<!-- formapago: (anticipado 100%, contado, en dias) -->
 			<label>Forma de pago *</label>
-			<select ng-options='opt for opt in formapago' ng-model='cotizacion.formapago' required></select>
+			<select ng-options='f for f in formapago' ng-model='cotizacion.formapago' required></select>
 		</div>
 
 		<div class='form-group'>
 			<label>Proveedor *</label>
-			
+			<select ng-options='p.razon for p in proveedores' ng-model='cotizacion.proveedor' required></select>
 		</div>
 
 		<button ng-click='ingresarcotizacion()'>Ingresar cotizacion</button>
 	</form>
+
+	<div ng-class='ans.css'>{{ ans.msg }}</div>
 </div>
