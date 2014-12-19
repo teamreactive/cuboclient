@@ -1,12 +1,17 @@
-<div class='container' ng-controller="CrearProveedorController">
+<div class='container' ng-controller="ActualizarProveedorController">
 	<div class='panel panel-default'>
 		<div class='panel-body'>
 
-			<h3>Crear proveedor</h3>
+			<h3>Actualizar proveedor</h3>
 
 			<hr>
 
-			<form name='crearProveedorForm' novalidate>
+			<form name='actualizarProveedorForm' novalidate>
+				<div class='form-group'>
+					<label>Proveedor *</label>
+					<select class='form-control' ng-model='proveedor' ng-options='p.razon for p in proveedores' ng-change='setCopy()' required></select>
+				</div>
+
 				<div class='form-group'>
 					<label>Razon social *</label>
 					<input class='form-control' type='text' ng-model='proveedor.razon' ng-change='checkrazon()' required>
@@ -33,37 +38,37 @@
 
 				<div class='form-group'>	
 					<label>Ciudad *</label>
-					<input class='form-control' type='text' ng-model='proveedor.ciudad' required>
+					<input class='form-control' type='text' ng-model='proveedor.lugar.ciudad' required>
 				</div>
 
 				<div class='form-group'>
 
 					<div class='col-md-3'>
 						<label>Direccion *</label>
-						<select class='form-control' ng-model='proveedor.seccion' ng-options='s.k as s.v for s in secciones' required>
+						<select class='form-control' ng-model='proveedor.lugar.seccion' ng-options='s.k as s.v for s in secciones' required>
 						</select>
 					</div>
 
 					<div class='col-md-3'>
 						<label><br></label>
-						<input class='form-control' type='text' ng-model='proveedor.numero1' required>
+						<input class='form-control' type='text' ng-model='proveedor.lugar.numero1' required>
 					</div>
 
 					<div class='col-md-3'>
 						<label>#</label>
-						<input class='form-control' type='text' ng-model='proveedor.numero2' required>
+						<input class='form-control' type='text' ng-model='proveedor.lugar.numero2' required>
 					</div>
 
 					<div class='col-md-3'>
 						<label>-</label>
-						<input class='form-control' type='text' ng-model='proveedor.numero3' required>
+						<input class='form-control' type='text' ng-model='proveedor.lugar.numero3' required>
 					</div>
 
 				</div>
 
 				<div class='form-group'>
 					<label>Telefono *</label>
-					<input class='form-control' type='tel' ng-model='proveedor.telefono' required>
+					<input class='form-control' type='tel' ng-model='proveedor.lugar.telefono' required>
 				</div>
 
 				<div class='form-group'>
@@ -71,11 +76,13 @@
 					<input type='file' ng-model='proveedor.logo'>
 				</div>
 
-				<div class='form-group alert alert-warning' ng-show='!crearProveedorForm.$valid'>
+				<div class='form-group alert alert-warning' ng-show='!actualizarProveedorForm.$valid'>
 					<p>Debe llenar todos los campos marcados con *</p>
 				</div>
 
-				<button class='btn btn-default' ng-click='crearproveedor()' ng-disabled='!crearProveedorForm.$valid || !valid'>Crear proveedor</button>
+				<button class='btn btn-default' ng-click='actualizarproveedor()' ng-disabled='!actualizarProveedorForm.$valid || !valid'>Actualizar proveedor</button>
+
+				<button class='btn btn-default' ng-click='descartar()'>Descartar cambios</button>
 			</form>
 
 			<br>

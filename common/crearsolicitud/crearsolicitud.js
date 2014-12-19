@@ -19,9 +19,12 @@ angular.module("crearsolicitud", ["crud", "ngCookies"])
 		}
 	];
 
+	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
 	$scope.lugares = [];
 	var urllugares = "/api/v1/lugar/";
-	service.read(urllugares, function(status, data) {
+	service.readParam(urllugares, "cliente", cliente, function(status, data) {
 		if(status || data.length == 0) {
 			$scope.lugares = data;
 			console.log(urllugares + " " + data.length);
@@ -47,7 +50,7 @@ angular.module("crearsolicitud", ["crud", "ngCookies"])
 
 	$scope.centros = [];
 	var urlcentros = "/api/v1/centro/";
-	service.read(urlcentros, function(status, data) {
+	service.readParam(urlcentros, "cliente", cliente, function(status, data) {
 		if (status || data.length == 0){
 			$scope.centros = data;
 			console.log(urlcentros + " " + data.length);
@@ -58,7 +61,7 @@ angular.module("crearsolicitud", ["crud", "ngCookies"])
 
 	$scope.equipos = [];
 	var urlequipos = "/api/v1/equipo/";
-	service.read(urlequipos, function(status, data) {
+	service.readParam(urlequipos, "cliente", cliente, function(status, data) {
 		if (status || data.length == 0) {
 			$scope.equipos = data;
 			console.log(urlequipos + " " + data.length);
@@ -69,7 +72,7 @@ angular.module("crearsolicitud", ["crud", "ngCookies"])
 
 	$scope.productos = [];
 	var urlproductos = "/api/v1/producto/";
-	service.read(urlproductos, function(status, data) {
+	service.readParam(urlproductos, "cliente", cliente, function(status, data) {
 		if (status || data.length == 0){
 			$scope.productos = data;
 			console.log(urlproductos + " " + data.length);
@@ -79,11 +82,6 @@ angular.module("crearsolicitud", ["crud", "ngCookies"])
 	});
 
 	$scope.crearsolicitud = function() {
-		if (!$cookies.usuario) {
-			$scope.ans.css = "alert alert-warning";
-			$scope.ans.msg = "No se encontro usuario";
-			return false;
-		}
 		$scope.ans.css = "alert alert-info";
 		$scope.ans.msg = "Espere un momento...";
 		if ($scope.solicitante) {

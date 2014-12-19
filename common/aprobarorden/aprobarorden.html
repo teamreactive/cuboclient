@@ -1,0 +1,14 @@
+<div ng-controller='AprobarOrdenController'>
+	<h3>Aprobar ordenes</h3>
+
+	<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+	<div ng-repeat='o in ordenes'>
+		<form name='ordenForm' novalidate>
+			<p>{{ $index+1 }}. Orden #{{ o.id }}</p>
+			<p>Estado: {{ o.estado }}</p>
+			<p>Lugar de entrega: {{ o.lugar.nombre }}</p>
+			<button ng-click='aprobarorden(o, $index)'>Aprobar orden</button>
+		</form>
+	</div>
+</div>

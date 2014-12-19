@@ -1,14 +1,52 @@
-<div ng-controller='CambiarClaveController'>
-	<h3>Cambio de contrasena</h3>
+<div class='container' ng-controller='CambiarClaveController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
 
-	<form novalidate>
-		<input type='text' placeholder='Usuario' ng-model='cambio.usuario' required>
-		<input type='password' placeholder='Contrasena actual' ng-model='cambio.claveactual' required>
-		<input type='password' placeholder='Nueva contrasena' ng-model='cambio.nuevaclave' required>
-		<input type='password' placeholder='Repetir nueva contrasena' ng-model='cambio.rnuevaclave' required>
-		<p ng-show='invalidnew()'>Las contrasenas nuevas no coinciden</p>
-		<button ng-click='cambiar()' ng-disabled='invalidnew()'>Cambiar contrasena</button>
-	</form>
+			<h3>Cambio de contrasena</h3>
 
-	<p ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</p>
+			<form name='cambiarClaveForm' novalidate>
+
+				<div class='form-group'>
+					<label>Cliente *</label>
+					<select class='form-control' ng-options='c.id as c.razon for c in clientes' ng-model='cambio.cliente' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Usuario *</label>
+					<input class='form-control' type='text' ng-model='cambio.usuario' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Contrasena actual *</label>
+					<input class='form-control' type='password' ng-model='cambio.claveactual' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Nueva contrasena *</label>
+					<input class='form-control' type='password' ng-model='cambio.nuevaclave' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Repetir nueva contrasena *</label>
+					<input class='form-control' type='password' ng-model='cambio.rnuevaclave' required>
+				</div>
+
+				<div class='form-group'>
+					<p class='alert alert-warning' ng-show='invalidnew()'>Las contrasenas nuevas no coinciden</p>
+				</div>
+
+				<div class='form-group'>
+					<p class='alert alert-warning' ng-show='!cambiarClaveForm.$valid'>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='cambiar()' ng-disabled='invalidnew() || !cambiarClaveForm.$valid'>Cambiar contrasena</button>
+
+			</form>
+
+			<br>
+
+			<div ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
 </div>

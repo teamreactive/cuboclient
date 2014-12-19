@@ -3,7 +3,11 @@
 <head>
 	<meta charset='utf-8'>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-cookies.js'></script>
 	<script src='solicitante.js'></script>
@@ -14,11 +18,28 @@
 	<script src='../common/crud.js'></script>
 </head>
 <body>
-	<h1>Compras 10.0</h1>
-	<h2>Bienvenido solicitante</h2>
-	<div crearsolicitud></div>
-	<div solicitudescompra></div>
-	<div crearlugar></div>
-	<div crearproducto></div>
+	<div class='container'>	
+		<h1>Compras 10.0</h1>
+		<h2>Bienvenido solicitante/consolidador</h2>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified' ng-init='op = 1'>
+			<li ng-class='(op == 1) ? "active" : ""'><a ng-click='op = 1'>Crear solicitud</a></li>
+			<li ng-class='(op == 2) ? "active" : ""'><a ng-click='op = 2'>Ver solicitudes de compra</a></li>
+			<li ng-class='(op == 3) ? "active" : ""'><a ng-click='op = 3'>Crear lugar</a></li>
+			<li ng-class='(op == 4) ? "active" : ""'><a ng-click='op = 4'>Crear producto</a></li>
+			<li ng-class='(op == 5) ? "active" : ""'><a ng-click='op = 5'>Cerrar sesion</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div ng-show='op == 1' crearsolicitud></div>
+	<div ng-show='op == 2' solicitudescompra></div>
+	<div ng-show='op == 3' crearlugar></div>
+	<div ng-show='op == 4' crearproducto></div>
 </body>
 </html>

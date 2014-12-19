@@ -1,0 +1,13 @@
+<div ng-controller='SolicitudesEntregaController'>
+	<h3>Solicitudes de entrega</h3>
+
+	<div ng-repeat='s in solicitudes'>
+		<p>{{ $index+1 }}. Solicitud #{{ s.id }}</p>
+		<p>Estado: {{ s.estado }}</p>
+		<p>Lugar de entrega: {{ s.lugar.nombre }}</p>
+	</div>
+
+	<div ng-hide='solicitudes' ng-class='ans.css'>
+		<p>{{ ans.msg }}</p>
+	</div>
+</div>

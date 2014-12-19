@@ -1,65 +1,84 @@
-<div ng-controller="CrearSolicitudController">
-	<h3>Crear solicitud</h3>
+<div class='container' ng-controller='CrearSolicitudController'>
+	<div class='panel panel-default'>
+  		<div class='panel-body'>
 
-	<form name='solicitudForm' novalidate>
+			<h3>Crear solicitud</h3>
 
-		<div class='form-group' ng-show='solicitantes'>
-			<label>Solicitante *</label>
-			<select ng-options='s.solicitante for s in solicitantes' ng-model='solicitud.solicitante' required></select>
+			<hr>
+
+			<form name='crearSolicitudForm' novalidate>
+
+				<div class='form-group' ng-show='solicitantes'>
+					<label>Solicitante *</label>
+					<select class='form-control' ng-options='s.solicitante for s in solicitantes' ng-model='solicitud.solicitante' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Productos *</label>
+					<br>
+					<select class='form-control' ng-options='p.nombres[0].nombre for p in productos' ng-model='pedidos' multiple required></select>
+				</div>
+
+				<div class='form-group'>
+					<div ng-repeat='p in pedidos'>
+						<div class='col-md-4'>
+							<label>Producto #{{ $index+1 }}</label>
+							<br>
+							<label>{{ p.nombres[0].nombre }}</label>
+						</div>
+
+						<div class='col-md-4'>
+							<label>Unidad *</label>
+							<select class='form-control' ng-model='p.unidad' ng-options='itm.unidad for itm in p.unidades' required></select>
+						</div>
+
+						<div class='col-md-4'>
+							<label>Cantidad *</label>
+							<input class='form-control'type='num' ng-model='p.cantidad' required>
+						</div>
+					</div>
+				</div>
+
+				<div class='form-group'>
+					<label>Lugar de entrega *</label>
+					<select class='form-control' ng-options='l.resource_uri as l.nombre for l in lugares' ng-model='solicitud.lugar' required></select>
+				</div>
+				
+				<div class='form-group'>
+					<label>Fecha requerida *</label>
+					<input class='form-control' type='text' ng-model='solicitud.fecharequerida' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Seleccione lugar o centro de costo</label>
+					<select class='form-control' ng-options='ec.k as ec.v for ec in equipocentro' ng-model='ec'></select>
+				</div>
+				
+				<div class='form-group' ng-show='ec == 1'>
+					<label>Centro de costo *</label>
+					<select class='form-control' ng-options='c.resource_uri as c.nombre for c in centros' ng-model='solicitud.centro' required></select>
+				</div>
+
+				<div class='form-group' ng-show='ec == 2'>
+					<label>Equipo *</label>
+					<select class='form-control' ng-options='e.resource_uri as e.nombre for e in equipos' ng-model='solicitud.equipo' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Comentarios</label>
+					<br>
+					<textarea class='form-control' ng-model='solicitud.comentarios'></textarea>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!crearSolicitudForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' type='button' ng-click='crearsolicitud()' ng-disabled='!crearSolicitudForm.$valid'>Crear solicitud</button>
+			</form>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
 		</div>
-
-		<div class='form-group'>
-			<label>Productos *</label>
-			<br>
-			<select ng-options='p.nombres[0].nombre for p in productos' ng-model='pedidos' multiple required></select>
-		</div>
-
-		<div class='form-group'>
-			<div ng-repeat='p in pedidos'>
-				<label>Producto #{{ $index+1 }}</label>
-				<label>{{ p.nombres[0].nombre }}</label>
-
-				<label>Unidad</label>
-				<select ng-model='p.unidad' ng-options='itm.unidad for itm in p.unidades'></select>
-
-				<label>Cantidad</label>
-				<input type='num' ng-model='p.cantidad'>
-			</div>
-		</div>
-
-		<div class='form-group'>
-			<label>Lugar de entrega *</label>
-			<select ng-options='l.resource_uri as l.nombre for l in lugares' ng-model='solicitud.lugar' required></select>
-		</div>
-		
-		<div class='form-group'>
-			<label>Fecha requerida *</label>
-			<input type='text' ng-model='solicitud.fecharequerida' required>
-		</div>
-
-		<div class='form-group'>
-			<label>Seleccione lugar o centro de costo</label>
-			<select ng-options='ec.k as ec.v for ec in equipocentro' ng-model='ec'></select>
-		</div>
-		
-		<div class='form-group' ng-show='ec == 1'>
-			<label>Centro de costo *</label>
-			<select ng-options='c.resource_uri as c.nombre for c in centros' ng-model='solicitud.centro' required></select>
-		</div>
-
-		<div class='form-group' ng-show='ec == 2'>
-			<label>Equipo *</label>
-			<select ng-options='e.resource_uri as e.nombre for e in equipos' ng-model='solicitud.equipo' required></select>
-		</div>
-
-		<div class='form-group'>
-			<label>Comentarios</label>
-			<br>
-			<textarea ng-model='solicitud.comentarios'></textarea>
-		</div>
-
-		<button ng-click='crearsolicitud()'>Crear solicitud</button>
-	</form>
-
-	<div ng-class='ans.css'>{{ ans.msg }}</div>
+	</div>
 </div>

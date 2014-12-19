@@ -1,13 +1,18 @@
-angular.module("aprobarproducto", ["crud"])
-.controller("AprobarProductoController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("aprobarproducto", ["crud", "ngCookies"])
+.controller("AprobarProductoController", ["$scope", "$cookies", "$http", "service", function($scope, $cookies, $http, service) {
 	$scope.ans = {};
 	$scope.ans.css = "alert alert-info";
 	$scope.ans.msg = "Cargando productos pendientes...";
 
+	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
 	$scope.productos = [];
 	var urlproductos = "/api/v1/producto/";
-	service.readParam(urlproductos, "activo", false, function(status, data) {
-		if (status || data.length == 0){
+	var keys = ["cliente", "activo"];
+	var vals = [cliente, false];
+	service.readParam(urlproductos, keys, vals, function(status, data) {
+		if (status || data.length == 0) {
 			$scope.productos = data;
 			console.log(urlproductos + " " + data.length);
 			if (data.length == 0) {

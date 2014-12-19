@@ -1,49 +1,57 @@
-<div ng-controller="IngresarCotizacionController">
-	<h3>Ingresar Cotizacion</h3>
+<div class='container' ng-controller="IngresarCotizacionController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
 
-	<form name='ingresarCotizacionForm' novalidate>
-		<div class='form-group'>
-			<label>Producto *</label>
-			<select ng-options='p.resource_uri as p.nombres[0].nombre for p in productos' ng-model='cotizacion.producto' required></select>
+			<h3>Ingresar Cotizacion</h3>
+
+			<hr>
+
+			<form name='ingresarCotizacionForm' novalidate>
+				<div class='form-group'>
+					<label>Producto *</label>
+					<select class='form-control' ng-options='p.resource_uri as p.nombres[0].nombre for p in productos' ng-model='cotizacion.producto' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Precio unitario *</label>
+					<input class='form-control' type='text' ng-model='cotizacion.preciounitario' required>
+				</div>
+
+				<div class='form-group'>
+					<label>IVA (%) *</label>
+					<select class='form-control' ng-options='opt for opt in iva' ng-model='cotizacion.iva' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Tiempo de entrega(dias) *</label>
+					<input class='form-control' type='text' ng-model='cotizacion.tiempo' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Referencia *</label>
+					<input class='form-control' type='text' ng-model='cotizacion.referencia' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Validez(dias) *</label>
+					<input class='form-control' type='text' ng-model='cotizacion.validez' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Forma de pago *</label>
+					<select class='form-control' ng-options='f for f in formapago' ng-model='cotizacion.formapago' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Proveedor *</label>
+					<select class='form-control' ng-options='p.razon for p in proveedores' ng-model='cotizacion.proveedor' required></select>
+				</div>
+
+				<button class='btn btn-default' ng-click='ingresarcotizacion()' ng-disabled='!ingresarCotizacionForm.$valid'>Ingresar cotizacion</button>
+			</form>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
 		</div>
-
-		<div class='form-group'>
-			<label>Precio unitario *</label>
-			<input type='text' ng-model='cotizacion.preciounitario' required>
-		</div>
-
-		<div class='form-group'>
-			<label>IVA (%) *</label>
-			<select ng-options='opt for opt in iva' ng-model='cotizacion.iva' required></select>
-		</div>
-
-		<div class='form-group'>
-			<label>Tiempo de entrega(dias) *</label>
-			<input type='text' ng-model='cotizacion.tiempo' required>
-		</div>
-
-		<div class='form-group'>
-			<label>Referencia *</label>
-			<input type='text' ng-model='cotizacion.referencia' required>
-		</div>
-
-		<div class='form-group'>
-			<label>Validez *</label>
-			<input type='text' ng-model='cotizacion.validez' required>
-		</div>
-
-		<div class='form-group'>
-			<label>Forma de pago *</label>
-			<select ng-options='f for f in formapago' ng-model='cotizacion.formapago' required></select>
-		</div>
-
-		<div class='form-group'>
-			<label>Proveedor *</label>
-			<select ng-options='p.razon for p in proveedores' ng-model='cotizacion.proveedor' required></select>
-		</div>
-
-		<button ng-click='ingresarcotizacion()'>Ingresar cotizacion</button>
-	</form>
-
-	<div ng-class='ans.css'>{{ ans.msg }}</div>
+	</div>
 </div>

@@ -1,22 +1,35 @@
-<div ng-controller="EnviarCotizacionController">
-	<h3>Enviar cotizacion</h3>
+<div class='container' ng-controller='EnviarCotizacionController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
 
-	<form name='enviarCotizacionForm' novalidate>
-		<div class='form-group'>
-			<label>Cotizacion</label>
-			<select ng-model='enviar.cotizacion' ng-options='c for c in cotizaciones' required></select>
+			<h3>Enviar cotizacion</h3>
 
-			<div ng-class='ans1.css'>{{ ans1.msg }}</div>
+			<hr>
+
+			<form name='enviarCotizacionForm' novalidate>
+				<div class='form-group'>
+					<label>Cotizacion *</label>
+					<select class='form-control' ng-model='enviar.cotizacion' ng-options='c for c in cotizaciones' ng-show='cotizaciones' required></select>
+				</div>
+
+				<div class='form-group' ng-class='ans1.css'>{{ ans1.msg }}</div>
+
+				<div class='form-group'>
+					<label>Proveedores *</label>
+					<select class='form-control' ng-model='enviar.proveedores' ng-options='p.razon for p in proveedores' ng-show='proveedores' multiple required></select>
+				</div>
+
+				<div class='form-group' ng-class='ans2.css'>{{ ans2.msg }}</div>
+
+				<div class='alert alert-warning' ng-show='!enviarCotizacionForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='enviarcotizacion()' ng-disabled ='!enviarCotizacionForm.$valid'>Enviar cotizacion</button>
+			</form>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
 		</div>
-
-		<div class='form-group'>
-			<label>Proveedores</label>
-			<br>
-			<select ng-model='enviar.proveedores' ng-options='p.razon for p in proveedores' multiple required></select>
-
-			<div ng-class='ans2.css'>{{ ans2.msg }}</div>
-		</div>
-
-		<button ng-click='enviarcotizacion()'>Enviar cotizacion</button>
-	</form>
+	</div>
 </div>

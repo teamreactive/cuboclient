@@ -29,14 +29,14 @@ angular.module("signin", ["crud", "ngCookies"])
 	$scope.ans = {};
 
 	$scope.login = function() {
-		$scope.ans.css = "";
+		$scope.ans.css = "alert alert-info";
 		$scope.ans.msg = "Espere un momento porfavor...";
 
 		service.readParam(url, "nombre", $scope.usuario.usuario, function(status, data) {
 			if (status) {
 				var hash = CryptoJS.SHA512(CryptoJS.SHA512($scope.usuario.contrasena) + "") + "";
 				if (hash == data[0].password) {
-					$scope.ans.css = "";
+					$scope.ans.css = "alert alert-success";
 					$scope.ans.msg = "El inicio de sesion fue exitoso";
 
 					document.cookie = "nombre=" +
@@ -62,12 +62,12 @@ angular.module("signin", ["crud", "ngCookies"])
 					return true;
 				} else {
 					console.log(data[0]);
-					$scope.ans.css = "";
+					$scope.ans.css = "alert alert-danger";
 					$scope.ans.msg = "La contrasena fue incorrecta";
 					return false;
 				}
 			} else {
-				$scope.ans.css = "";
+				$scope.ans.css = "alert alert-danger";
 				$scope.ans.msg = "El usuario no fue encontrado";
 				return false;
 			}

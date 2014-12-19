@@ -1,0 +1,80 @@
+<div class='container' ng-controller='ActualizarContactoController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Actualizar contacto</h3>
+
+			<hr>
+
+			<form name='actualizarContactoForm' novalidate>
+				<div class='form-group'>
+					<label>Contacto *</label>
+					<select class='form-control' ng-options='c.show for c in contactos' ng-model='contacto' ng-change='setCopy()' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Proveedor *</label>
+					<select class='form-control' ng-options='p.resource_uri as p.razon for p in proveedores' ng-model='contacto.proveedor' required></select>
+				</div>
+
+				<div class='form-group'>
+					<label>Nombre *</label>
+					<input class='form-control' type='text' ng-model='contacto.nombre' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Apellido *</label>
+					<input class='form-control' type='text' ng-model='contacto.apellido' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Telefono fijo *</label>
+					<input class='form-control' type='tel' ng-model='contacto.telefono' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Extension</label>
+					<input class='form-control' type='tel' ng-model='contacto.extension'>
+				</div>
+
+				<div class='form-group'>
+					<label>Celular</label>
+					<input class='form-control' type='tel' ng-model='contacto.celular'>
+				</div>
+
+				<div class='form-group'>
+					<label>Correo electronico *</label>
+					<input class='form-control' type='email' ng-model='contacto.email' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Cargo *</label>
+					<input class='form-control' type='text' ng-model='contacto.cargo' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Perfil *</label>
+					<input class='form-control' type='text' ng-model='contacto.perfil' required>
+				</div>
+
+				<div class='form-group'>
+					<label>Familia-proveedor *</label>
+					<select class='form-control' ng-options='f.resource_uri as f.nombre for f in familias' ng-model='contacto.familia' required></select>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!actualizarContactoForm.$valid'>
+					<p>Debe llenar todos los campos marcados por *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='actualizarcontacto()' ng-disabled='!actualizarContactoForm.$valid'>Crear contacto</button>
+
+				<button class='btn btn-default' ng-click='descartar()'>Descartar cambios</button>
+			</form>
+
+			<br>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
+</div>

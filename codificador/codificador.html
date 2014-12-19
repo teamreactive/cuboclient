@@ -1,22 +1,39 @@
 <!doctype html>
 <html ng-app='codificador'>
 <head>
-	<meta charset="utf-8">
+	<meta charset='utf-8'>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-cookies.js'></script>
 	<script src='codificador.js'></script>
 	<script src='../common/crearproducto/crearproducto.js'></script>
 	<script src='../common/aprobarproducto/aprobarproducto.js'></script>
-	<script src='actualizarproducto/actualizarproducto.js'></script>
+	<script src='../common/actualizarproducto/actualizarproducto.js'></script>
 	<script src='../common/crud.js'></script>
 </head>
 <body>
-	<h1>Compras 10.0</h1>
-	<h2>Bienvenido codificador</h2>
-	<div crearproducto></div>
-	<div aprobarproducto></div>
-	<!--<div actualizarproducto></div>-->
+	<div class='container'>
+		<h1>Compras 10.0</h1>
+		<h2>Bienvenido codificador</h2>
+	</div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified' ng-init='op = 1'>
+			<li ng-class='(op == 1) ? "active" : ""'><a ng-click='op = 1'>Crear producto</a></li>
+			<li ng-class='(op == 2) ? "active" : ""'><a ng-click='op = 2'>Aprobar producto</a></li>
+			<li ng-class='(op == 3) ? "active" : ""'><a ng-click='op = 3'>Actualizar producto</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div ng-show='op == 1' crearproducto></div>
+	<div ng-show='op == 2' aprobarproducto></div>
+	<div ng-show='op == 3' actualizarproducto></div>
 </body>
 </html>

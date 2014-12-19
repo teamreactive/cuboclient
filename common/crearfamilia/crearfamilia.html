@@ -1,0 +1,32 @@
+<div class='container' ng-controller="CrearFamiliaController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Crear familia-proveedor</h3>
+
+			<hr>
+
+			<form name='crearFamiliaForm' novalidate>
+				<div class='form-group'>
+					<label>Nombre *</label>
+					<input class='form-control' type='text' ng-model='familia.nombre' ng-change='checknombre()' required>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!valid'>
+					<p>Ya existe un nombre para esa familia</p>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!crearFamiliaForm.$valid'>
+					<p>Debe llenar todos los campos con *</p>
+				</div>
+
+				<button class='btn btn-default' type='button' ng-click='crearfamilia()' ng-disabled='!crearFamiliaForm.$valid || !valid'>Crear familia-proveedor</button>
+			</form>
+
+			<br>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
+</div>

@@ -1,5 +1,5 @@
-angular.module("enviarcotizacion", ["crud"])
-.controller("EnviarCotizacionController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("enviarcotizacion", ["crud", "ngCookies"])
+.controller("EnviarCotizacionController", ["$scope", "$cookies", "$http", "service", function($scope, $cookies, $http, service) {
 	$scope.enviar = {};
 
 	$scope.ans = {};
@@ -12,9 +12,14 @@ angular.module("enviarcotizacion", ["crud"])
 	$scope.ans2.css = "alert alert-info";
 	$scope.ans2.msg = "Cargando proveedores...";
 
+	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
 	$scope.cotizaciones = [];
 	var urlcotizacion = "/api/v1/solicitud/";
-	service.readParam(urlcotizacion, "estado", "0200", function(status, data) {
+	var keys = ["cliente", "estado"];
+	var vals = [cliente, "0200"];
+	service.readParam(urlcotizacion, keys, vals, function(status, data) {
 		if (status || data.length == 0) {
 			$scope.cotizaciones = data;
 			console.log(urlcotizacion + " " + data.length);
@@ -33,7 +38,7 @@ angular.module("enviarcotizacion", ["crud"])
 
 	$scope.proveedores = [];
 	var urlproveedor = "/api/v1/proveedor/";
-	service.read(urlproveedor, function(status, data) {
+	service.readParam(urlproveedor, "cliente", cliente, function(status, data) {
 		if (status) {
 			$scope.proveedores = data;
 			console.log(urlproveedor + " " + data.length);

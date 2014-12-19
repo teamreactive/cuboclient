@@ -1,12 +1,15 @@
-angular.module("ingresarcotizacion", ["crud"])
-.controller("IngresarCotizacionController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("ingresarcotizacion", ["crud", "ngCookies"])
+.controller("IngresarCotizacionController", ["$scope", "$cookies", "$http", "service", function($scope, $cookies, $http, service) {
 	$scope.cotizacion = {};
 
 	$scope.ans = {};
 
+	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
 	$scope.productos = [];
 	var urlproducto = "/api/v1/producto/";
-	service.read(urlproducto, function(status, data) {
+	service.readParam(urlproducto, "cliente", cliente, function(status, data) {
 		if (status || data.length == 0) {
 			$scope.productos = data;
 			console.log(urlproducto + " " + data.length);
@@ -21,7 +24,7 @@ angular.module("ingresarcotizacion", ["crud"])
 
 	$scope.proveedores = [];
 	var urlproveedor = "/api/v1/proveedor/";
-	service.read(urlproveedor, function(status, data) {
+	service.readParam(urlproveedor, "cliente", cliente, function(status, data) {
 		if (status || data.length == 0) {
 			$scope.proveedores = data;
 			console.log(urlproveedor + " " + data.length);
@@ -32,6 +35,8 @@ angular.module("ingresarcotizacion", ["crud"])
 
 	$scope.ingresarcotizacion = function() {
 		console.log($scope.cotizacion);
+		$scope.cotizacion.cliente = cliente;
+
 		var url = "/api/v1/cotizacion/";
 		service.create(url, $scope.cotizacion, function(status, data) {
 			if (status) {

@@ -1,12 +1,17 @@
-<div class='container' ng-controller='CrearProductoController'>
+<div class='container' ng-controller='ActualizarProductoController'>
 	<div class='panel panel-default'>
   		<div class='panel-body'>
 
-			<h3>Crear producto</h3>
+			<h3>Actualizar producto</h3>
 
 			<hr>
 
-			<form name='crearProductoForm' novalidate>
+			<form name='actualizarProductoForm' novalidate>
+				<div class='form-group'>
+					<label>Producto *</label>
+					<select class='form-control' ng-options='p.nombres[0].nombre for p in productos' ng-model='producto' ng-change='setCopy()' required></select>
+				</div>
+
 				<div ng-repeat='nombre in nombres'>
 					<div class='form-group'>
 						<label>Nombre *</label>
@@ -97,11 +102,13 @@
 					<select class='form-control' ng-options='c.resource_url as c.nombre for c in centros' ng-model='producto.centro'></select>
 				</div>
 
-				<div class='form-group alert alert-warning' ng-show='!crearProductoForm.$valid'>
+				<div class='form-group alert alert-warning' ng-show='!$scope.actualizarProductoForm.$valid'>
 					<p>Debe llenar todos los campos marcados con *</p>
 				</div>
 
-				<button class='btn btn-default' ng-click='productoproducto()' ng-disabled='!crearProductoForm.$valid || !valid'>producto producto</button>
+				<button class='btn btn-default' ng-click='productoproducto()' ng-disabled='!$scope.actualizarProductoForm.$valid || !valid'>Actualizar producto</button>
+
+				<button class='btn btn-default' ng-click='descartar()'>Descartar cambios</button>
 			</form>
 
 			<div ng-class='ans.css'>{{ ans.msg }}</div>

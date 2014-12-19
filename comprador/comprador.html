@@ -1,7 +1,13 @@
 <!doctype html>
 <html ng-app='comprador'>
 <head>
+	<meta charset='utf-8'>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-cookies.js'></script>
 	<script src='comprador.js'></script>
@@ -12,25 +18,58 @@
 	<script src='../common/solicitudescompra/solicitudescompra.js'></script>
 	<script src='../common/solicitudescotizacion/solicitudescotizacion.js'></script>
 	<script src='../common/ordenescompra/ordenescompra.js'></script>
-	<script src='actualizarproveedor/actualizarproveedor.js'></script>
-	<script src='crearfamilia/crearfamilia.js'></script>
-	<script src='actualizarfamilia/actualizarfamilia.js'></script>
-	<script src='crearcontacto/crearcontacto.js'></script>
-	<script src='actualizarcontacto/actualizarcontacto.js'></script>
+	<script src='../common/actualizarproveedor/actualizarproveedor.js'></script>
+	<script src='../common/crearfamilia/crearfamilia.js'></script>
+	<script src='../common/actualizarfamilia/actualizarfamilia.js'></script>
+	<script src='../common/crearcontacto/crearcontacto.js'></script>
+	<script src='../common/actualizarcontacto/actualizarcontacto.js'></script>
 </head>
 <body>
-	<h1>Compras 10.0</h1>
-	<h2>Bienvenido comprador</h2>
-	<div enviarcotizacion></div>
-	<div crearproveedor></div>
-	<div ingresarcotizacion></div>
-	<div solicitudescompra></div>
-	<div solicitudescotizacion></div>
-	<div ordenescompra></div>
-	<!--<div actualizarproveedor></div>
-	<div crearfamilia></div>
-	<div actualizarfamilia></div>
-	<div crearcontacto></div>
-	<div actualizarcontacto></div>-->
+	<div class='container'>
+		<h1>Compras 10.0</h1>
+		<h2>Bienvenido comprador</h2>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified' ng-init='op = 1'>
+			<li ng-class='(op == 1) ? "active" : ""'><a ng-click='op = 1'>Enviar cotizacion</a></li>
+			<li ng-class='(op == 2) ? "active" : ""'><a ng-click='op = 2'>Crear proveedor</a></li>
+			<li ng-class='(op == 3) ? "active" : ""'><a ng-click='op = 3'>Ingresar cotizacion</a></li>
+			<li ng-class='(op == 4) ? "active" : ""'><a ng-click='op = 4'>Solicitudes de compra</a></li>
+			<li ng-class='(op == 5) ? "active" : ""'><a ng-click='op = 5'>Solicitudes de cotizacion</a></li>
+			<li ng-class='(op == 6) ? "active" : ""'><a ng-click='op = 6'>Ordenes de compra</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified'>
+			<li ng-class='(op == 7) ? "active" : ""'><a ng-click='op = 7'>Actualizar proveedor</a></li>
+			<li ng-class='(op == 8) ? "active" : ""'><a ng-click='op = 8'>Crear familia</a></li>
+			<li ng-class='(op == 9) ? "active" : ""'><a ng-click='op = 9'>Actualizar familia</a></li>
+			<li ng-class='(op == 10) ? "active" : ""'><a ng-click='op = 10'>Crear contacto</a></li>
+			<li ng-class='(op == 11) ? "active" : ""'><a ng-click='op = 11'>Actualizar contacto</a></li>
+			<!--<li ng-class='(op == 12) ? "active" : ""'><a ng-click='op = 12'>Calificar proveedor</a></li>-->
+			<li ng-class='(op == 13) ? "active" : ""'><a ng-click='op = 13'>Cerrar sesion</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div ng-show='op == 1' enviarcotizacion></div>
+	<div ng-show='op == 2' crearproveedor></div>
+	<div ng-show='op == 3' ingresarcotizacion></div>
+	<div ng-show='op == 4' solicitudescompra></div>
+	<div ng-show='op == 5' solicitudescotizacion></div>
+	<div ng-show='op == 6' ordenescompra></div>
+	<div ng-show='op == 7' actualizarproveedor></div>
+	<div ng-show='op == 8' crearfamilia></div>
+	<div ng-show='op == 9' actualizarfamilia></div>
+	<div ng-show='op == 10' crearcontacto></div>
+	<div ng-show='op == 11' actualizarcontacto></div>
+	<!--<div ng-show='op == 12' calificarproveedor></div>-->
 </body>
 </html>

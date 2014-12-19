@@ -1,15 +1,28 @@
 angular.module("cambiarclave", ["crud"])
 .controller("CambiarClaveController", ["$scope", "$http", "service", function($scope, $http, service) {
-	$scope.ans = {}
-	$scope.cambio = {}
+	$scope.ans = {};
+	$scope.cambio = {};
 
-	var url = "/api/v1/usuario/";
+	$scope.clientes = {};
+
+	var urlcliente = "/api/v1/cliente/";
+	service.read(urlcliente, function(status, data) {
+		if (status || data.length == 0) {
+			$scope.clientes = data;
+			console.log(urlcliente + " " + data.length);
+		} else {
+			console.log("Error al cargar clientes");
+		}
+	});
 
 	$scope.cambiar = function() {
-		$scope.ans.css = ""
-		$scope.ans.msg = "Espere un momento porfavor..."
+		$scope.ans.css = "alert alert-info";
+		$scope.ans.msg = "Espere un momento porfavor...";
 
-		service.readParam(url, "nombre", $scope.cambio.usuario, function(status, data) {
+		var url = "/api/v1/usuario/";
+		var keys = ["cliente", "nombre"];
+		var vals = [$scope.cambio.cliente, $scope.cambio.usuario];
+		service.readParam(url, keys, vals, function(status, data) {
 			if (status) {
 				var hash = CryptoJS.SHA512(CryptoJS.SHA512($scope.cambio.claveactual) + "") + "";
 				if (hash == data[0].password) {
@@ -18,21 +31,21 @@ angular.module("cambiarclave", ["crud"])
 					}
 					service.update(url, data[0].id, data2, function(status, data) {
 						if (status) {
-							$scope.ans.css = "";
+							$scope.ans.css = "alert alert-success";
 							$scope.ans.msg = "El cambio de contrasena fue exitoso"; 
 						} else {
-							$scope.ans.css = "";
+							$scope.ans.css = "alert alert-danger";
 							$scope.ans.msg = "Ocurrio un error, intente de nuevo";
 						}
 					})
 				} else {
 					console.log(data[0]);
-					$scope.ans.css = "";
+					$scope.ans.css = "alert alert-danger";
 					$scope.ans.msg = "La contrasena actual fue incorrecta";
 					return false;
 				}
 			} else {
-				$scope.ans.css = "";
+				$scope.ans.css = "alert alert-danger";
 				$scope.ans.msg = "El usuario no fue encontrado";
 				return false;
 			}

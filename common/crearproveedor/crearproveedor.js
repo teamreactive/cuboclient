@@ -28,12 +28,37 @@ angular.module("crearproveedor", ["crud", "ngCookies"])
 		}
 	];
 
+	$scope.valid = true;
+	$scope.checkrazon = function() {
+		if (!$scope.proveedor.razon) {
+			$scope.valid = true;
+			return true;
+		} else {
+			var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+			var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+			var keys = ["cliente", "razon"];
+			var vals = [cliente, $scope.proveedor.razon];
+			var urlprov = "/api/v1/proveedor/"
+			service.readParam(urlprov, keys, vals, function(status, data) {
+				if (status || data.length == 0) {
+					if (data.length > 0) {
+						$scope.valid = false;
+						return false;
+					} else {
+						$scope.valid = true;
+						return true;
+					}
+				} else {
+					console.log("No se pudo verificar el nombre");
+					$scope.valid = false;
+					return false;
+				} 
+			});
+		}	
+	}
+
 	$scope.crearproveedor = function() {
-		if (!$cookies.cliente) {
-			$scope.ans.css = "alert alert-warning";
-			$scope.ans.msg = "No se encontro cliente";
-			return false;
-		}
+		$scope.proveedor.cliente = $cookies.cliente;
 		$scope.proveedor.lugar.cliente = $cookies.cliente;
 		console.log($scope.proveedor);
 		var url = "/api/v1/proveedor/";
@@ -41,6 +66,7 @@ angular.module("crearproveedor", ["crud", "ngCookies"])
 			if (status) {
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Proveedor creado con exito";
+				location.reload();
 				return true;
 			} else {
 				$scope.ans.css = "alert alert-danger";

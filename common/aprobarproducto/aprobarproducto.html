@@ -1,12 +1,32 @@
-<div ng-controller='AprobarProductoController'>
-	<h3>Aprobar producto</h3>
+<div class='container' ng-controller='AprobarProductoController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
 
-	<div ng-class='ans.css'>{{ ans.msg }}</div>
+			<h3>Aprobar producto</h3>
 
-	<div ng-repeat='p in productos'>
-		<form name='productoForm' novalidate>
-			<p>Nombre: {{ p.nombres[0].nombre }}</p>
-			<button ng-click='aprobarproducto(p, $index)'>Aprobar producto</button>
-		</form>
+			<hr>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+			<div class='panel panel-default' ng-repeat='p in productos'>
+				<div class='panel-body'>
+					<form name='productoForm' novalidate>
+						<p><strong>Nombre:</strong> {{ p.nombres[0].nombre }}</p>
+						<p><strong>Onu:</strong> {{ p.onu }}</p>
+						<p><strong>Tipo:</strong> {{ p.tipo }}</p>
+						<p><strong>Descripcion:</strong> {{ p.descripcion }}</p>
+						<p><strong>Referencia:</strong> {{ p.referencia }}</p>
+						<p><strong>Talla:</strong> {{ p.talla }}</p>
+						<p><strong>Marca:</strong> {{ p.marca }}</p>
+						<p><strong>Unidades:</strong></p>
+						<ul>
+							<li ng-repeat='u in p.unidades'>{{ u.unidad }}</li>
+						</ul>
+						<button class='btn btn-default' ng-click='aprobarproducto(p, $index)'>Aprobar producto</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
 	</div>
 </div>

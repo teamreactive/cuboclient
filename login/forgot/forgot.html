@@ -1,9 +1,27 @@
-<div ng-controller='ForgotController'>
-	<a ng-click='olvido = !olvido'>Olvide mi contrasena</a>
-	<form ng-show='olvido' novalidate>
-		<input type='text' placeholder='Usuario' ng-model='olvidado.usuario' required>
-		<input type='email' placeholder='Email' ng-model='olvidado.email' required>
-		<button ng-click='recuperar()'>Recuperar contrasena</button>
-	</form>
-	<p ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</p>
+<div class='container' ng-controller='ForgotController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<button class='btn btn-default btn-lg btn-block' type='button' ng-click='olvido = !olvido'>Olvide mi contrasena</button>
+
+			<form name='olvidoForm' ng-show='olvido' novalidate>
+				<hr>
+
+				<div class='form-group'>
+					<input class='form-control input-lg' type='text' placeholder='Usuario' ng-model='olvidado.usuario' required>
+				</div>
+
+				<div class='form-group'>
+					<input class='form-control input-lg' type='email' placeholder='Email' ng-model='olvidado.email' required>
+				</div>
+
+				<button class='btn btn-info btn-lg btn-block' type='button' ng-click='recuperar()' ng-disabled='!olvidoForm.$valid'>Recuperar contrasena</button>
+			</form>
+
+			<br>
+
+			<div ng-show='ans' ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
 </div>

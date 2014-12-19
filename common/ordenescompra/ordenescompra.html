@@ -1,13 +1,23 @@
-<div ng-controller='OrdenesCompraController'>
-	<h3>Ordenes de compra</h3>
+<div class='container' ng-controller='OrdenesCompraController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
 
-	<div ng-repeat='s in ordenes'>
-		<p>{{ $index+1 }}. Orden #{{ s.id }}</p>
-		<p>Estado: {{ s.estado }}</p>
-		<p>Lugar de entrega: {{ s.lugar.nombre }}</p>
-	</div>
+			<h3>Ordenes de compra</h3>
 
-	<div ng-hide='ordenes' ng-class='ans.css'>
-		<p>{{ ans.msg }}</p>
+			<hr>
+
+			<div class='panel panel-default' ng-repeat='o in ordenes'>
+				<div class='panel-body'>
+					<p>{{ $index+1 }}. Orden #{{ o.id }}</p>
+					<p>Estado: {{ o.estado }}</p>
+					<p>Lugar de entrega: {{ o.lugar.nombre }}</p>
+				</div>
+			</div>
+
+			<div ng-hide='ordenes' ng-class='ans.css'>
+				<p>{{ ans.msg }}</p>
+			</div>
+
+		</div>
 	</div>
 </div>

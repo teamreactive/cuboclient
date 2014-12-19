@@ -1,5 +1,5 @@
-angular.module("crearproducto", ["crud", "ngCookies"])
-.controller("CrearProductoController", ["$cookies", "$scope", "$http", "service", function($cookies, $scope, $http, service) {
+angular.module("actualizarproducto", ["crud", "ngCookies"])
+.controller("ActualizarProductoController", ["$cookies", "$scope", "$http", "service", function($cookies, $scope, $http, service) {
 	$scope.producto = {};
 
 	$scope.ans = {};
@@ -23,6 +23,17 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 
 	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
 	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
+	$scope.productos = {};
+	var urlproducto = "/api/v1/producto";
+	service.readParam(urlproducto, "cliente", cliente, function(status, data) {
+		if (status || data.length == 0) {
+			$scope.productos = data;
+			console.log(urlproducto + " " + data.length);
+		} else {
+			console.log("Error cargando " + urlproducto);
+		}
+	});
 
 	$scope.familias = [];
 	var urlfamilia = "/api/v1/familia/";
@@ -59,6 +70,49 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 
 	$scope.nombres = [{"k": 0, "v": ""}];
 	$scope.unidades = [{"k": 0, "v": ""}];
+
+	$scope.copy = {};
+	$scope.setCopy = function() {
+		$scope.copy = jQuery.extend(true, {}, $scope.producto);
+
+		$scope.nombres = [];
+		for (var i = 0; i < $scope.producto.nombres.length; i++) {
+			var actual = $scope.producto.nombres[i];
+			var nuevo = {"k": i+1, "v": actual.nombre};
+			$scope.nombres.push(nuevo);
+		}
+
+		if ($scope.nombres.length == 0) {
+			$scope.nombres = [{"k": 0, "v": ""}];
+		}
+
+		$scope.unidades = [];
+		for (var i = 0; i < $scope.producto.unidades.length; i++) {
+			var actual = $scope.producto.unidades[i];
+			var nuevo = {"k": i+1, "v": actual.unidad};
+			$scope.unidades.push(nuevo);
+		}
+
+		if ($scope.unidades.length == 0) {
+			$scope.unidades = [{"k": 0, "v": ""}];
+		}
+
+		console.log($scope.nombres);
+
+		return true;
+	}
+
+	$scope.descartar = function() {
+		console.log("HERE");
+		var index = $scope.productos.indexOf($scope.producto);
+		console.log(index);
+		if (index != -1) {
+			$scope.productos.splice(index, 1);
+		}
+		$scope.producto = $scope.copy;
+		$scope.productos.push($scope.producto);
+		return true;
+	}
 
 	$scope.agregar = function(source) {
 		var target = {
@@ -144,17 +198,16 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 		return true;
 	};
 
-	$scope.crearproducto = function() {
-		$scope.producto.cliente = $cookies.cliente;
-		$scope.producto.nombres = [];
-		$scope.producto.unidades = [];
-		arreglar($scope.nombres, $scope.producto.nombres, "nombre");
-		arreglar($scope.unidades, $scope.producto.unidades, "unidad");
+	$scope.actualizarproducto = function() {
+		$scope.crear.nombres = [];
+		$scope.crear.unidades = [];
+		arreglar($scope.nombres, $scope.crear.nombres, "nombre");
+		arreglar($scope.unidades, $scope.crear.unidades, "unidad");
 		$scope.ans.css = "alert alert-info";
 		$scope.ans.msg = "Espere un momento...";
 		var url = "/api/v1/producto/";
-		console.log($scope.producto);
-		service.create(url, $scope.producto, function(status, data) {
+		console.log($scope.crear);
+		service.create(url, $scope.crear, function(status, data) {
 			if (status) {
 				console.log("Producto creado");
 				$scope.ans.css = "alert alert-success";
@@ -169,8 +222,8 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 		});
 	}
 }])
-.directive("crearproducto", function() {
+.directive("actualizarproducto", function() {
 	return {
-		templateUrl: "../common/crearproducto/crearproducto.html"
+		templateUrl: "../common/actualizarproducto/actualizarproducto.html"
 	};
 });
