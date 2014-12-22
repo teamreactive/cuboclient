@@ -209,14 +209,12 @@ angular.module("actualizarproducto", ["crud", "ngCookies"])
 		console.log($scope.crear);
 		service.create(url, $scope.crear, function(status, data) {
 			if (status) {
-				console.log("Producto creado");
 				$scope.ans.css = "alert alert-success";
-				$scope.ans.msg = "Producto creado con exito";
-				location.reload();
+				$scope.ans.msg = "Producto actualizar con exito";
 				return true;
 			} else {
 				$scope.ans.css = "alert alert-warning";
-				$scope.ans.msg = "Error al crear producto";
+				$scope.ans.msg = "Error al actualizar producto";
 				return false;
 			}
 		});

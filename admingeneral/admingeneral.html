@@ -1,18 +1,46 @@
 <!doctype html>
 <html ng-app='admingeneral'>
 <head>
+	<meta charset='utf-8'>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-cookies.js'></script>
 	<script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js"></script>	
 	<script src='admingeneral.js'></script>
-	<script src='crearusuario/crearusuario.js'></script>
-	<script src='actualizarusuario/actualizarusuario.js'></script>
-	<script src='crearcliente/crearcliente.js'></script>
-	<script src='actualizarcliente/actualizarcliente.js'></script>
-	<script src='crearcentro/crearcentro.js'></script>
-	<script src='creartipoequipo/creartipoequipo.js'></script>
-	<script src='crearequipo/crearequipo.js'></script>
-	<script src='creariva/creariva.js'></script>
-	<script src='actualizariva/actualizariva.js'></script>
+	
+	<script src='../common/actualizarcliente/actualizarcliente.js'></script>
+	<script src='../common/actualizarcontacto/actualizarcontacto.js'></script>
+	<script src='../common/actualizarfamilia/actualizarfamilia.js'></script>
+	<script src='../common/actualizarproducto/actualizarproducto.js'></script>
+	<script src='../common/actualizarproveedor/actualizarproveedor.js'></script>
+	<script src='../common/actualizarusuario/actualizarusuario.js'></script>
+	<script src='../common/aprobarorden/aprobarorden.js'></script>
+	<script src='../common/aprobarproducto/aprobarproducto.js'></script>
+	<script src='../common/aprobarsolicitud/aprobarsolicitud.js'></script>
+	<script src='../common/crearcentro/crearcentro.js'></script>
+	<script src='../common/crearcliente/crearcliente.js'></script>
+	<script src='../common/crearcontacto/crearcontacto.js'></script>
+	<script src='../common/crearequipo/crearequipo.js'></script>
+	<script src='../common/crearfamilia/crearfamilia.js'></script>
+	<script src='../common/crearlugar/crearlugar.js'></script>
+	<script src='../common/crearproducto/crearproducto.js'></script>
+	<script src='../common/crearproveedor/crearproveedor.js'></script>
+	<script src='../common/crearsolicitud/crearsolicitud.js'></script>
+	<script src='../common/creartipoequipo/creartipoequipo.js'></script>
+	<script src='../common/crearusuario/crearusuario.js'></script>
+	<script src='../common/enviarcotizacion/enviarcotizacion.js'></script>
+	<script src='../common/ingresarcotizacion/ingresarcotizacion.js'></script>
+	<script src='../common/ingresardevolucion/ingresardevolucion.js'></script>
+	<script src='../common/ingresarproducto/ingresarproducto.js'></script>
+	<script src='../common/ordenescompra/ordenescompra.js'></script>
+	<script src='../common/solicitudescompra/solicitudescompra.js'></script>
+	<script src='../common/solicitudescotizacion/solicitudescotizacion.js'></script>
+	<script src='../common/solicitudesentrega/solicitudesentrega.js'></script>
 	<script src='../common/crud.js'></script>
 	<style>
 		.error {
@@ -21,16 +49,102 @@
 	</style>
 </head>
 <body>
-	<h1>Compras 10.0</h1>
-	<h2>Bienvenido administrador</h2>
-	<div crearusuario></div>
-	<div actualizarusuario></div>
-	<div crearcliente></div>
-	<div actualizarcliente></div>
-	<div crearcentro></div>
-	<div creartipoequipo></div>
-	<div crearequipo></div>
-	<div creariva></div>
-	<div actualizariva></div>
+	<div class='container'>
+		<h1>Compras 10.0</h1>
+		<h2>Bienvenido administrador</h2>
+	</div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified' ng-init='op = 1'>
+			<li ng-class='(op == 1) ? "active" : ""'><a ng-click='op = 1'>Actualiar cliente</a></li>
+			<li ng-class='(op == 2) ? "active" : ""'><a ng-click='op = 2'>Actualizar contacto</a></li>
+			<li ng-class='(op == 3) ? "active" : ""'><a ng-click='op = 3'>Actualizar familia</a></li>
+			<li ng-class='(op == 4) ? "active" : ""'><a ng-click='op = 4'>Actualizar producto</a></li>
+			<li ng-class='(op == 5) ? "active" : ""'><a ng-click='op = 5'>Actualizar proveedor</a></li>
+			<li ng-class='(op == 6) ? "active" : ""'><a ng-click='op = 6'>Actualizar usuario</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified'>
+			<li ng-class='(op == 7) ? "active" : ""'><a ng-click='op = 7'>Aprobar orden</a></li>
+			<li ng-class='(op == 8) ? "active" : ""'><a ng-click='op = 8'>Aprobar producto</a></li>
+			<li ng-class='(op == 9) ? "active" : ""'><a ng-click='op = 9'>Aprobar solicitud</a></li>
+			<li ng-class='(op == 10) ? "active" : ""'><a ng-click='op = 10'>Crear centro</a></li>
+			<li ng-class='(op == 11) ? "active" : ""'><a ng-click='op = 11'>Crear cliente</a></li>
+			<li ng-class='(op == 12) ? "active" : ""'><a ng-click='op = 12'>Crear contacto</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified'>
+			<li ng-class='(op == 13) ? "active" : ""'><a ng-click='op = 13'>Crear equipo</a></li>
+			<li ng-class='(op == 14) ? "active" : ""'><a ng-click='op = 14'>Crear familia</a></li>
+			<li ng-class='(op == 15) ? "active" : ""'><a ng-click='op = 15'>Crear lugar</a></li>
+			<li ng-class='(op == 16) ? "active" : ""'><a ng-click='op = 16'>Crear producto</a></li>
+			<li ng-class='(op == 17) ? "active" : ""'><a ng-click='op = 17'>Crear proveedor</a></li>
+			<li ng-class='(op == 18) ? "active" : ""'><a ng-click='op = 18'>Crear solicitud</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified' ng-init='op = 1'>
+			<li ng-class='(op == 19) ? "active" : ""'><a ng-click='op = 19'>Crear tipo de equipo</a></li>
+			<li ng-class='(op == 20) ? "active" : ""'><a ng-click='op = 20'>Crear usuario</a></li>
+			<li ng-class='(op == 21) ? "active" : ""'><a ng-click='op = 21'>Enviar cotizacion</a></li>
+			<li ng-class='(op == 22) ? "active" : ""'><a ng-click='op = 22'>Ingresar cotizacion</a></li>
+			<li ng-class='(op == 23) ? "active" : ""'><a ng-click='op = 23'>Ingresar devolucion</a></li>
+			<li ng-class='(op == 24) ? "active" : ""'><a ng-click='op = 24'>Ingresar producto</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div class='container'>
+		<ul class='nav nav-pills nav-justified' ng-init='op = 1'>
+			<li ng-class='(op == 25) ? "active" : ""'><a ng-click='op = 25'>Ordenes de compra</a></li>
+			<li ng-class='(op == 26) ? "active" : ""'><a ng-click='op = 26'>Solicitudes de compra</a></li>
+			<li ng-class='(op == 27) ? "active" : ""'><a ng-click='op = 27'>Solicitudes de cotizacion</a></li>
+			<li ng-class='(op == 28) ? "active" : ""'><a ng-click='op = 28'>Solicitudes de entrega</a></li>
+			<li ng-class='(op == 29) ? "active" : ""'><a ng-click='op = 29'>Cerrar sesion</a></li>
+		</ul>
+	</div>
+
+	<div class='container'><hr></div>
+
+	<div ng-show='op == 1' actualizarcliente></div>
+	<div ng-show='op == 2' actualizarcontacto></div>
+	<div ng-show='op == 3' actualizarfamilia></div>
+	<div ng-show='op == 4' actualizarproducto></div>
+	<div ng-show='op == 5' actualizarproveedor></div>
+	<div ng-show='op == 6' actualizarusuario></div>
+	<div ng-show='op == 7' aprobarorden></div>
+	<div ng-show='op == 8' aprobarproducto></div>
+	<div ng-show='op == 9' aprobarsolicitud></div>
+	<div ng-show='op == 10' crearcentro></div>
+	<div ng-show='op == 11' crearcliente></div>
+	<div ng-show='op == 12' crearcontacto></div>
+	<div ng-show='op == 13' crearequipo></div>
+	<div ng-show='op == 14' crearfamilia></div>
+	<div ng-show='op == 15' crearlugar></div>
+	<div ng-show='op == 16' crearproducto></div>
+	<div ng-show='op == 17' crearproveedor></div>
+	<div ng-show='op == 18' crearsolicitud></div>
+	<div ng-show='op == 19' creartipoequipo></div>
+	<div ng-show='op == 20' crearusuario></div>
+	<div ng-show='op == 21' enviarcotizacion></div>
+	<div ng-show='op == 22' ingresarcotizacion></div>
+	<div ng-show='op == 23' ingresardevolucion></div>
+	<div ng-show='op == 24' ingresarproducto></div>
+	<div ng-show='op == 25' ordenescompra></div>
+	<div ng-show='op == 26' solicitudescompra></div>
+	<div ng-show='op == 27' solicitudescotizacion></div>
+	<div ng-show='op == 28' solicitudesentrega></div>
 </body>
 </html>

@@ -4,6 +4,6 @@ angular.module("ingresardevolucion", ["crud"])
 }])
 .directive("ingresardevolucion", function() {
 	return {
-		templateUrl: "ingresardevolucion/ingresardevolucion.html"
+		templateUrl: "../common/ingresardevolucion/ingresardevolucion.html"
 	};
 });

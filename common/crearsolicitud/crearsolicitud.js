@@ -97,7 +97,6 @@ angular.module("crearsolicitud", ["crud", "ngCookies"])
 			if(status){
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Solicitud creada con exito";
-				location.reload();
 				return true;
 			} else {
 				$scope.ans.css = "alert alert-danger";

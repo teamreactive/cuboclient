@@ -159,7 +159,6 @@ angular.module("crearproducto", ["crud", "ngCookies"])
 				console.log("Producto creado");
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Producto creado con exito";
-				location.reload();
 				return true;
 			} else {
 				$scope.ans.css = "alert alert-warning";

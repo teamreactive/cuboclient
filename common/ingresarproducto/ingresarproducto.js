@@ -4,6 +4,6 @@ angular.module("ingresarproducto", ["crud"])
 }])
 .directive("ingresarproducto", function() {
 	return {
-		templateUrl: "ingresarproducto/ingresarproducto.html"
+		templateUrl: "../common/ingresarproducto/ingresarproducto.html"
 	};
 });

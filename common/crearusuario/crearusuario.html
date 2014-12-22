@@ -1,0 +1,85 @@
+<div class='container' ng-controller="CrearUsuarioController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Crear usuario</h3>
+			
+			<form name='crearUsuarioForm' novalidate>
+				<fieldset>
+					<legend><span>1.</span> Informacion de registro</legend>
+
+					<div class='form-group'>
+						<label for='cliente'>Cliente: *</label>
+						<select class='form-control' ng-options='cliente.razon for cliente in clientes' id='cliente' ng-model='usuario.cliente'></select>
+					</div>
+
+					<div class='form-group'>
+						<label for='username'>Nombre de usuario: *</label>
+						<input class='form-control' type='text' id='username' ng-model='usuario.nombre' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='mail'>Email: *</label>
+						<input class='form-control' type='email' id='mail' ng-model='usuario.email' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='tipo'>Tipo de usuario: *</label>
+						<select class='form-control' ng-options='tipo.opt for tipo in tipos' id='tipo' ng-model='usuario.tipo' required></select>
+					</div>
+
+					<div class='form-group'>
+						<label for='password'>Contrasena: *</label>
+						<input class='form-control' type='password' id='password' ng-model='usuario.password' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='rpassword'>Repetir contrasena: *</label>
+						<input class='form-control' type='password' id='rpassword' ng-model='usuario.rpassword' required>
+					</div>
+
+					<p class='error' ng-show='pass()'>Las contrasenas no coinciden</p>
+
+				</fieldset>
+
+				<fieldset>
+					<legend><span>2.</span> Informacion de contacto</legend>
+
+					<div class='form-group'>
+						<label for='nombre'>Nombre: *</label>
+						<input class='form-control' type='text' id='nombre' ng-model='usuario.contacto.nombre' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='apellido'>Apellido: *</label>
+						<input class='form-control' type='text' id='apellido' ng-model='usuario.contacto.apellido' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='celular'>Celular: *</label>
+						<input class='form-control' type='tel' id='celular' ng-model='usuario.contacto.celular' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='telefono'>Telefono: *</label>
+						<input class='form-control' type='tel' id='telefono' ng-model='usuario.contacto.telefono' required>
+					</div>
+
+					<div class='form-group'>
+						<label for='extension'>Extension: *</label>
+						<input class='form-control' type='tel' id='extension' ng-model='usuario.contacto.extension' required>
+					</div>
+				</fieldset>
+
+				<div class='form-group alert alert-warning' ng-show='!crearUsuarioForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='crearusuario()' ng-disabled='inProgress || pass() || !crearUsuarioForm.$valid'>Crear usuario</button>
+			</form>
+
+			<div ng-class='msg.css' ng-show='msg'>{{ msg.msg }}</div>
+
+		</div>
+	</div>
+</div>

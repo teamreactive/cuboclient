@@ -1,0 +1,37 @@
+<div class='container' ng-controller="CrearEquipoController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Crear equipo</h3>
+
+			<hr>
+			
+			<form name='crearEquipoForm' novalidate>
+				<div class='form-group'>
+					<label>Nombre *</label>
+					<input class='form-control' type='text' ng-model='equipo.nombre' ng-change='checknombre()' required>
+				</div>
+
+				<div class='form-group' ng-class='nombremsg.css' ng-hide='validnombre'>
+					<p>{{ nombremsg.msg }}</p>
+				</div>
+
+				<div class='form-group'>
+					<label>Tipo de equipo *</label>
+					<select class='form-control' ng-options='t.nombre for t in tipos' ng-model='tipoequipo' required></select>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!crearEquipoForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='crearequipo()' ng-disabled='!crearEquipoForm.$valid'>Crear equipo</button>
+			</form>
+
+			<br>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
+</div>

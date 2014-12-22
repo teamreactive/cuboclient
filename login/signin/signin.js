@@ -1,14 +1,32 @@
 angular.module("signin", ["crud", "ngCookies"])
 .controller("SigninController", ["$scope", "$http", "service", "$cookies", function($scope, $http, service, $cookies) {
-
-	/**
-	$scope.checkSession = function() {
+	
+	/**function checkSession() {
 		if ($cookies.nombre && $cookies.cliente && $cookies.tipo) {
 			var params = ["nombre", "cliente", "tipo"];
 			var vals = [$cookies.nombre, $cookies.cliente, $cookies.tipo];
 			service.readParam(url, params, vals, function(status, data) {
 				if (status) {
-					window.location.replace("http://stackoverflow.com");
+					if ($cookies.tipo == "ADMINGENERAL") {
+						window.location.replace("/admingeneral/admingeneral.html");
+					} else if ($cookies.tipo == "ALMACENISTA") {
+						window.location.replace("/almacenista/almacenista.html");
+					} else if ($cookies.tipo == "APROBADORCOMPRAS") {
+						window.location.replace("/aprobadorcompras/aprobadorcompras.html");
+					} else if ($cookies.tipo == "APROBADORSOLICITUDES") {
+						window.location.replace("/aprobadorsolicitudes/aprobadorsolicitudes.html");
+					} else if ($cookies.tipo == "CODIFICADOR") {
+						window.location.replace("/codificador/codificador.html");
+					} else if ($cookies.tipo == "COMPRADOR") {
+						window.location.replace("/comprador/comprador.html");
+					} else if ($cookies.tipo == "RECEPCIONISTA") {
+						window.location.replace("/recpcionista/recepcionista.html");
+					} else if ($cookies.tipo == "SOLICITANTE") {
+						window.location.replace("/solicitante/solicitante.html");
+					} else {
+						console.log("MEGAFALSE");
+						return false;
+					}
 					return true;
 				} else {
 					console.log("FALSE");
@@ -19,8 +37,8 @@ angular.module("signin", ["crud", "ngCookies"])
 			return false;
 		}
 	}
-	$scope.checkSession();
-	**/
+	checkSession();**/
+	
 
 	var url = "/api/v1/usuario/";
 
@@ -32,15 +50,15 @@ angular.module("signin", ["crud", "ngCookies"])
 		$scope.ans.css = "alert alert-info";
 		$scope.ans.msg = "Espere un momento porfavor...";
 
-		service.readParam(url, "nombre", $scope.usuario.usuario, function(status, data) {
+		service.readParam(url, "usuario", $scope.usuario.usuario, function(status, data) {
 			if (status) {
-				var hash = CryptoJS.SHA512(CryptoJS.SHA512($scope.usuario.contrasena) + "") + "";
+				var hash = CryptoJS.SHA512($scope.usuario.contrasena) + "";
 				if (hash == data[0].password) {
 					$scope.ans.css = "alert alert-success";
 					$scope.ans.msg = "El inicio de sesion fue exitoso";
 
 					document.cookie = "nombre=" +
-									  data[0].nombre +
+									  data[0].usuario +
 									  "; expires=Fri, 31 Dec 9999 23:59:59 GMT" +
 									  "; path=/";
 

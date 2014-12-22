@@ -1,14 +1,32 @@
-<div ng-controller='AprobarSolicitudController'>
-	<h3>Aprobar solicitudes</h3>
+<div class='container' ng-controller='AprobarSolicitudController'>
+	<div class='panel panel-default'>
+		<div class='panel-body'>
 
-	<div ng-class='ans.css'>{{ ans.msg }}</div>
+			<h3>Aprobar solicitudes</h3>
 
-	<div ng-repeat='s in solicitudes'>
-		<form name='solicitudForm' novalidate>
-			<p>{{ $index+1 }}. Solicitud #{{ s.id }}</p>
-			<p>Estado: {{ s.estado }}</p>
-			<p>Lugar de entrega: {{ s.lugar.nombre }}</p>
-			<button ng-click='aprobarsolicitud(s, $index)'>Aprobar solicitud</button>
-		</form>
+			<hr>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+			<div class='panel panel-default' ng-repeat='s in solicitudes'>
+				<div class='panel-body'>
+					<form name='solicitudForm' novalidate>
+						<h4>{{ $index+1 }}. Solicitud #{{ s.id }}</h4>
+						<p><strong>Estado:</strong> {{ s.estado }}</p>
+						<p><strong>Lugar:</strong> {{ s.lugar.nombre }}</p>
+						<p><strong>Fecha de creacion:</strong> {{ s.fechacreacion.substring(0, 10) }}</p>
+						<p><strong>Fecha requerida:</strong> {{ s.fecharequerida }}</p>
+						<p><strong>Solicitante:</strong> {{ s.solicitante.nombre }}</p>
+						<p><strong>Consolidador:</strong> {{ s.consolidador.nombre }}</p>
+						<p><strong>Centro de costo:</strong> {{ s.centro.nombre }}</p>
+						<p><strong>Equipo:</strong> {{ s.equipo.nombre }}</p>
+						<p><strong>Productos:</strong></p>
+						<ul><li ng-repeat='p in s.productos'>{{ p.nombres[0].nombre }}</li></ul>
+						<button class='btn btn-default' ng-click='aprobarsolicitud(s, $index)'>Aprobar solicitud</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
 	</div>
 </div>

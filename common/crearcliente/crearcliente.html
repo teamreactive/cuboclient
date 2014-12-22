@@ -1,0 +1,94 @@
+<div class='container' ng-controller="CrearClienteController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Crear cliente</h3>
+
+			<hr>
+
+			<form name='crearClienteForm' novalidate>
+				<div class='form-group'>
+					<label>NIT *</label>
+					<input class='form-control' type='text' ng-model='cliente.nit' ng-change='checknit()' required>
+				</div>
+
+				<div class='form-group' ng-class='nitmsg.css' ng-hide='!cliente.nit'>
+					<p>{{ nitmsg.msg }}</p>
+				</div>
+
+				<div class='form-group'>
+					<label>Codigo de verificacion</label>
+					<input class='form-control' type='text' ng-model='cliente.verificacion'>
+				</div>
+
+				<div class='form-group'>
+					<label>Razon social *</label>
+					<input class='form-control' type='text' ng-model='cliente.razon' ng-change='checkrazon()' required>
+				</div>
+
+				<div class='form-group' ng-class='razonmsg.css' ng-hide='!cliente.razon'>
+					<p>{{ razonmsg.msg }}</p>
+				</div>
+
+				<div class='form-group'>
+					<label>Sigla</label>
+					<input class='form-control' type='text' ng-model='cliente.sigla'>
+				</div>
+
+				<div class='form-group'>	
+					<label>Ciudad</label>
+					<input class='form-control' type='text' ng-model='cliente.ciudad'>
+				</div>
+
+				<div class='form-group'>
+					<div class='col-md-3'>
+						<label>Direccion</label>
+						<select class='form-control' ng-model='cliente.seccion' ng-options='s.k as s.v for s in secciones'>
+						</select>
+					</div>
+
+					<div class='col-md-3'>
+						<label><br></label>
+						<input class='form-control' type='text' ng-model='cliente.numero1'>
+					</div>
+
+					<div class='col-md-3'>
+						<label>#</label>
+						<input class='form-control' type='text' ng-model='cliente.numero2'>
+					</div>
+
+					<div class='col-md-3'>
+						<label>-</label>
+						<input class='form-control' type='text' ng-model='cliente.numero3'>
+					</div>
+				</div>
+
+				<div class='form-group'>
+					<label>Telefono</label>
+					<input class='form-control' type='tel' ng-model='cliente.telefono'>
+				</div>
+
+				<div class='form-group'>
+					<label>Sector</label>
+					<input class='form-control' type='text' ng-model='cliente.sector'>
+				</div>
+
+				<div class='form-group'>
+					<label>Logo</label>
+					<input type='file' ng-model='cliente.logo'>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!crearClienteForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='crearcliente()' ng-disabled='!crearClienteForm.$valid || !validnit || !validrazon'>Crear cliente</button>
+			</form>
+
+			<br>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
+</div>

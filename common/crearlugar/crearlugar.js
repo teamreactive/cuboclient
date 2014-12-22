@@ -66,7 +66,6 @@ angular.module("crearlugar", ["crud", "ngCookies"])
 			if (status) {
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Lugar creado exitosamente";
-				location.reload();
 				return true;
 			} else 
 				$scope.ans.css = "alert alert-danger";

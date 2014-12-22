@@ -1,0 +1,32 @@
+<div class='container' ng-controller="CrearTipoEquipoController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Crear tipo de equipo</h3>
+
+			<hr>
+
+			<form name='crearTipoEquipoForm' novalidate>
+				<div class='form-group'>
+					<label>Nombre *</label>
+					<input class='form-control' type='text' ng-model='tipo.nombre' ng-change='checknombre()' required>
+				</div>
+
+				<div class='form-group' ng-class='nombremsg.css' ng-hide='validnombre'>
+					<p>{{ nombremsg.msg }}</p>
+				</div>
+
+				<div class='form-group alert alert-warning' ng-show='!crearTipoEquipoForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button class='btn btn-default' ng-click='creartipoequipo()' ng-disabled='!crearTipoEquipoForm.$valid'>Crear tipo de equipo</button>
+			</form>
+
+			<br>
+
+			<div ng-class='ans.css'>{{ ans.msg }}</div>
+
+		</div>
+	</div>
+</div>

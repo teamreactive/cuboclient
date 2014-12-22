@@ -73,7 +73,6 @@ angular.module("actualizarfamilia", ["crud", "ngCookies"])
 			if (status) {
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Familia-proveedor actualizada con exito";
-				location.reload();
 				return true;
 			} else {
 				$scope.ans.css = "alert alert-danger";

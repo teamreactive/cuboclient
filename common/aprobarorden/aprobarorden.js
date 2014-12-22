@@ -1,12 +1,17 @@
-angular.module("aprobarorden", ["crud"])
-.controller("AprobarOrdenController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("aprobarorden", ["crud", "ngCookies"])
+.controller("AprobarOrdenController", ["$scope", "$cookies", "$http", "service", function($scope, $cookies, $http, service) {
 	$scope.ans = {};
 	$scope.ans.css = "alert alert-info";
 	$scope.ans.msg = "Cargando ordenes pendientes...";
 
+	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
 	$scope.ordenes = [];
 	var urlordenes = "/api/v1/solicitud/";
-	service.readParam(urlordenes, "activo", false, function(status, data) {
+	var keys = ["cliente", "activo"];
+	var vals = [cliente, false];
+	service.readParam(urlordenes, keys, vals, function(status, data) {
 		if (status || data.length == 0){
 			$scope.ordenes = data;
 			console.log(urlordenes + " " + data.length);

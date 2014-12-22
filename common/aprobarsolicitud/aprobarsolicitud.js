@@ -1,12 +1,17 @@
-angular.module("aprobarsolicitud", ["crud"])
-.controller("AprobarSolicitudController", ["$scope", "$http", "service", function($scope, $http, service) {
+angular.module("aprobarsolicitud", ["crud", "ngCookies"])
+.controller("AprobarSolicitudController", ["$scope", "$cookies", "$http", "service", function($scope, $cookies, $http, service) {
 	$scope.ans = {};
 	$scope.ans.css = "alert alert-info";
 	$scope.ans.msg = "Cargando solicitudes pendientes...";
 
+	var clientecookie = $cookies.cliente.substring(0, $cookies.cliente.length-1);
+	var cliente = clientecookie.substring(clientecookie.lastIndexOf("/")+1, clientecookie.length);
+
 	$scope.solicitudes = [];
 	var urlproductos = "/api/v1/solicitud/";
-	service.readParam(urlproductos, "activo", false, function(status, data) {
+	var keys = ["cliente", "activo"];
+	var vals = [cliente, false];
+	service.readParam(urlproductos, keys, vals, function(status, data) {
 		if (status || data.length == 0){
 			$scope.solicitudes = data;
 			console.log(urlproductos + " " + data.length);

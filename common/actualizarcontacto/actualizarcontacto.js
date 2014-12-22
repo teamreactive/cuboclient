@@ -77,7 +77,6 @@ angular.module("actualizarcontacto", ["crud", "ngCookies"])
 			if (status) {
 				$scope.ans.css = "alert alert-success";
 				$scope.ans.msg = "Contacto actualizado con exito";
-				location.reload();
 				return true;
 			} else {
 				$scope.ans.css = "alert alert-danger";

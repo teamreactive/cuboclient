@@ -1,0 +1,92 @@
+<div class='container' ng-controller="ActualizarUsuarioController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Actualizar usuario</h3>
+
+			<hr>
+
+			<form name='actualizarUsuarioForm' novalidate>
+				<div class='form-group'>
+					<label>Cliente *</label>
+					<select class='form-control' ng-options='c.resource_uri as c.razon for c in clientes' ng-model='cliente' ng-change='loadUsers()'></select>
+				</div>
+
+				<div class='form-group alert alert-info' ng-show='loading'>
+					<p>Cargando usuarios...</p>
+				</div>
+
+				<div class='form-group'>
+					<label>Usuario: *</label>
+					<select class='form-control' ng-disabled='!cliente || loading' ng-options='u.nombre for u in usuarios' ng-change='setCopy()' ng-model='usuario'></select>
+				</div>
+
+				<fieldset>
+					<legend><span>1.</span> Informacion de registro</legend>
+
+					<div class='form-group'>
+						<label>Nombre de usuario: *</label>
+						<input class='form-control' type='text' ng-model='usuario.nombre' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Email: *</label>
+						<input class='form-control' type='email' ng-model='usuario.email' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Contrasena: *</label>
+						<input class='form-control' type='password' ng-model='usuario.password' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Repetir contrasena: *</label>
+						<input class='form-control' type='password' ng-model='usuario.rpassword' required>
+					</div>
+
+					<p class='error' ng-show='pass()'>Las contrasenas no coinciden</p>
+				</fieldset>
+
+				<fieldset>
+					<legend><span>2.</span> Informacion de contacto</legend>
+
+					<div class='form-group'>			
+						<label>Nombre: *</label>
+						<input class='form-control' type='text' ng-model='usuario.nombre' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Apellido: *</label>
+						<input class='form-control' type='text' ng-model='usuario.apellido' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Celular: *</label>
+						<input class='form-control' type='tel' ng-model='usuario.celular' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Telefono: *</label>
+						<input class='form-control' type='tel' ng-model='usuario.telefono' required>
+					</div>
+
+					<div class='form-group'>
+						<label>Extension: *</label>
+						<input class='form-control' type='tel' ng-model='usuario.extension' required>
+					</div>
+				</fieldset>
+
+				<div class='form-group alert alert-warning' ng-show='!actualizarUsuarioForm.$valid'>
+					<p>Debe llenar todos los campos marcados con *</p>
+				</div>
+
+				<button type='button' class='btn btn-default' ng-click='actualizarusuario()' ng-disabled='inProgress || pass() || !actualizarUsuarioForm.$valid'>Actualizar usuario</button>
+
+				<button type='button' class='btn btn-default' ng-click='descartar()'>Descartar cambios</button>
+			</form>
+
+			<div ng-class='msg.css' ng-show='msg'>{{ msg.msg }}</div>
+
+		</div>
+	</div>
+</div>

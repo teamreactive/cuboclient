@@ -20,35 +20,35 @@ angular.module("crearusuario", ["crud"])
 
 	$scope.tipos = [
 		{
-			"num": "1",
+			"num": "ADMINGENERAL",
 			"opt": "Administrador general"
 		},
 		{
-			"num": "2",
+			"num": "ADMINCLIENTE",
 			"opt": "Administrador Cliente"
 		},
 		{
-			"num": "3",
+			"num": "SOLICITANTE",
 			"opt": "Solicitante"
 		},
 		{
-			"num": "4",
+			"num": "CODIFICADOR",
 			"opt": "Codificador"
 		},
 		{
-			"num": "5",
+			"num": "APROBADORSOLICITUDES",
 			"opt": "Aprobador de Solicitudes"
 		},
 		{
-			"num": "6",
+			"num": "COMPRADOR",
 			"opt": "Comprador"
 		},
 		{
-			"num": "7",
-			"opt": "Aprobador de Compra"
+			"num": "APROBADORCOMPRAS",
+			"opt": "Aprobador de Compras"
 		},
 		{
-			"num": "8",
+			"num": "ALMACENISTA",
 			"opt": "Almacenista"
 		}
 	]
@@ -82,7 +82,6 @@ angular.module("crearusuario", ["crud"])
 				$scope.usuario.contacto = {};
 				$scope.usuario.tipo = {};
 				$scope.inProgress = false;
-				location.reload();
 				return true;
 			} else {
 				$scope.msg.css = "";
@@ -95,6 +94,6 @@ angular.module("crearusuario", ["crud"])
 }])
 .directive("crearusuario", function() {
 	return {
-		templateUrl: "crearusuario/crearusuario.html"
+		templateUrl: "../common/crearusuario/crearusuario.html"
 	};
 });

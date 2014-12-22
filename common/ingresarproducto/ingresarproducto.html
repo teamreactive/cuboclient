@@ -1,0 +1,23 @@
+<div class='container' ng-controller="IngresarProductoController">
+	<div class='panel panel-default'>
+		<div class='panel-body'>
+
+			<h3>Ingresar producto</h3>
+
+			<hr>
+
+			<form name='ingresarProductoForm' novalidate>
+				<div class='form-group'>
+					<input class='form-control' type='text' placeholder='' required>
+				</div>
+
+				<div class='form-group'>
+					<select class='form-control' ng-option='opt for opt in parcialtotal'></select>
+				</div>
+
+				<button class='btn btn-default' ng-click='ingresarproducto()'>Ingresar producto</button>
+			</form>
+
+		</div>
+	</div>
+</div>
